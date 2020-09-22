@@ -15,4 +15,4 @@ docker-compose up -d
 
 ## License
 
-Copyright © 2020, Iot Platform.
+Copyright © 2020, IoT Platform.
