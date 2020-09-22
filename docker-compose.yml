@@ -18,8 +18,8 @@ services:
     environment:
       - MONGO_URL=mongodb://database:27017/iot-platform
     volumes:
-      - ./api:/usr/src/app/api
-      - /usr/src/app/api/node_modules
+      - .:/usr/src/app
+      - /usr/src/app/web/node_modules
     ports:
       - 8080:8080
     depends_on:
