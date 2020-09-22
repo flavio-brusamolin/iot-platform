@@ -1,0 +1,23 @@
+{
+  "name": "iot-platform-api",
+  "version": "1.0.0",
+  "description": "Generic IoT Platform for management and integrations - API.",
+  "scripts": {
+    "dev": "tsnd --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flavio-brusamolin/iot-platform.git"
+  },
+  "author": "Flavio and Leonardo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flavio-brusamolin/iot-platform/issues"
+  },
+  "homepage": "https://github.com/flavio-brusamolin/iot-platform#readme",
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.63",
+    "typescript": "^4.0.3"
+  }
+}
