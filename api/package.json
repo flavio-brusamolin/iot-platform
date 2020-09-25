@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/flavio-brusamolin/iot-platform#readme",
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.7.36",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "eslint": "^7.9.0",
@@ -27,5 +30,10 @@
     "eslint-plugin-standard": "^4.0.1",
     "ts-node-dev": "^1.0.0-pre.63",
     "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.7"
   }
 }
