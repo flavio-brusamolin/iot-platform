@@ -8,14 +8,13 @@ interface SignInContract {
 }
 
 export class SignInController {
-  public constructor(
+  public constructor (
     private readonly validator: Validator,
     private readonly authenticateUser: AuthenticateUser
-  ) { }
+  ) {}
 
-  public async handle(httpRequest: HttpRequest<SignInContract>): Promise<HttpResponse> {
+  public async handle (httpRequest: HttpRequest<SignInContract>): Promise<HttpResponse> {
     const error = this.validator.validate(httpRequest.body)
-
     if (error) {
       return badRequest(error)
     }
@@ -26,7 +25,6 @@ export class SignInController {
       email,
       password
     })
-
     if (!token) {
       return unauthorized()
     }
