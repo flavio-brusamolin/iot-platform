@@ -8,11 +8,11 @@ import { AddUserRepository } from '../../../../data/protocols/db/add-user-reposi
 export class UserMongoRepository implements LoadUserByEmailRepository, AddUserRepository {
   public async loadByEmail (email: string): Promise<User> {
     const userRecord = await UserMongoSchema.findOne({ email })
-    return UserMongoMapper.toEntity(userRecord)
+    return userRecord && UserMongoMapper.toEntity(userRecord)
   }
 
   public async add (userData: AddUserModel): Promise<User> {
     const userRecord = await UserMongoSchema.create(userData)
-    return UserMongoMapper.toEntity(userRecord)
+    return userRecord && UserMongoMapper.toEntity(userRecord)
   }
 }

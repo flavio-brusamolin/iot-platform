@@ -17,7 +17,7 @@ export class DbAddUser implements AddUser {
       return null
     }
 
-    const encryptedPassword = await this.encrypter.encrypt(user.password)
+    const encryptedPassword = await this.encrypter.encrypt(userData.password)
 
     const newUser = await this.addUserRepository.add({
       ...userData,

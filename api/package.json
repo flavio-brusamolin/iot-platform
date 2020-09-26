@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Generic IoT Platform for management and integrations - API.",
   "scripts": {
-    "dev": "tsnd --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "dev": "tsnd --respawn --transpile-only --ignore-watch node_modules --no-notify src/main/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +18,7 @@
   "homepage": "https://github.com/flavio-brusamolin/iot-platform#readme",
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.8",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.36",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
@@ -33,6 +34,8 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "fast-glob": "^3.2.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7"
   }
