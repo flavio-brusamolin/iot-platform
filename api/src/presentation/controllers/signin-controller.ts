@@ -1,5 +1,5 @@
 import { HttpRequest, HttpResponse, Validator } from '../protocols'
-import { badRequest, ok, unauthorized } from '../helpers/http-helper'
+import { badRequest, ok, serverError, unauthorized } from '../helpers/http-helper'
 import { AuthenticateUser } from '../../domain/use-cases/authenticate-user'
 
 interface SignInContract {
@@ -14,21 +14,26 @@ export class SignInController {
   ) {}
 
   public async handle (httpRequest: HttpRequest<SignInContract>): Promise<HttpResponse> {
-    const error = this.validator.validate(httpRequest.body)
-    if (error) {
-      return badRequest(error)
+    try {
+      const error = this.validator.validate(httpRequest.body)
+      if (error) {
+        return badRequest(error)
+      }
+
+      const { email, password } = httpRequest.body
+
+      const token = await this.authenticateUser.authenticate({
+        email,
+        password
+      })
+      if (!token) {
+        return unauthorized()
+      }
+
+      return ok({ token })
+    } catch (error) {
+      console.error(error)
+      return serverError()
     }
-
-    const { email, password } = httpRequest.body
-
-    const token = await this.authenticateUser.authenticate({
-      email,
-      password
-    })
-    if (!token) {
-      return unauthorized()
-    }
-
-    return ok({ token })
   }
 }
