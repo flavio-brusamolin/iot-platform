@@ -3,9 +3,9 @@ import { JoiAdapter } from '../../../adapters/joi/joi-adapter'
 
 export const makeSignUpValidator = (): JoiAdapter => {
   const schema = joi.object({
-    name: joi.string().required(),
+    name: joi.string().required().min(3).max(30),
     email: joi.string().required().email(),
-    password: joi.string().required()
+    password: joi.string().required().min(6)
   })
 
   return new JoiAdapter(schema)
