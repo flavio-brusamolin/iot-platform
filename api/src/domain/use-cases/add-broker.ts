@@ -1,11 +1,16 @@
-import { Broker, Credentials } from '../models/broker'
+import { Broker } from '../models/broker'
 
 export interface AddBrokerModel {
-  name: string
   userId: string
-  credentials: Credentials
+  name: string
+  credentials: {
+    username: string
+    password: string
+    address: string
+    port: number
+  }
 }
 
 export interface AddBroker {
-  add: (userData: AddBrokerModel) => Promise<Broker>
+  add: (brokerData: AddBrokerModel) => Promise<Broker>
 }

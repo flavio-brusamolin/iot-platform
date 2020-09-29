@@ -1,7 +1,7 @@
 import { CreateBrokerController } from '../../../../presentation/controllers/broker/create-broker-controller'
-import { makeDbCreateUser } from '../../use-cases/create-broker-factory'
 import { makeCreateBrokerValidator } from './create-broker-validator-factory'
+import { makeDbAddBroker } from '../../use-cases/db-add-broker-factory'
 
 export const makeCreateBrokerController = (): CreateBrokerController => {
-  return new CreateBrokerController(makeCreateBrokerValidator(), makeDbCreateUser())
+  return new CreateBrokerController(makeCreateBrokerValidator(), makeDbAddBroker())
 }

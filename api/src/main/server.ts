@@ -1,5 +1,5 @@
 import express from 'express'
-import MongoHelper from '../infra/db/mongoose/helpers/mongo-helper'
+import MongoHelper from '../infra/db/mongo/helpers/mongo-helper'
 import env from './config/env'
 import setupRoutes from './config/routes'
 import setupMiddlewares from './config/middlewares'

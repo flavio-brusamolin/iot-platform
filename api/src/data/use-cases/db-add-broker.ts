@@ -7,9 +7,8 @@ export class DbAddBroker implements AddBroker {
     private readonly addBrokerRepository: AddBrokerRepository
   ) {}
 
-  public async add (userData: AddBrokerModel): Promise<Broker> {
-    const newBroker = this.addBrokerRepository.add(userData)
-
+  public async add (brokerData: AddBrokerModel): Promise<Broker> {
+    const newBroker = await this.addBrokerRepository.add(brokerData)
     return newBroker
   }
 }

@@ -1,5 +1,5 @@
 import { DbAuthenticateUser } from '../../../data/use-cases/db-authenticate-user'
-import { UserMongoRepository } from '../../../infra/db/mongoose/user/user-mongo-repository'
+import { UserMongoRepository } from '../../../infra/db/mongo/user/user-mongo-repository'
 import { BCryptAdapter } from '../../../infra/criptography/bcrypt/bcrypt-adapter'
 import { JwtAdapter } from '../../../infra/token/jwt/jwt-adapter'
 import env from '../../config/env'

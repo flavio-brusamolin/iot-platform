@@ -1,16 +1,16 @@
 import { Schema, model } from 'mongoose'
 
 const BrokerMongoSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   userId: {
     type: String,
     required: true
   },
+  name: {
+    type: String,
+    required: true
+  },
   credentials: {
-    userName: {
+    username: {
       type: String,
       required: true
     },
@@ -23,7 +23,7 @@ const BrokerMongoSchema = new Schema({
       required: true
     },
     port: {
-      type: String,
+      type: Number,
       required: true
     }
   }
