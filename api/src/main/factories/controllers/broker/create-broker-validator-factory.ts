@@ -3,12 +3,12 @@ import { JoiAdapter } from '../../../adapters/joi/joi-adapter'
 
 export const makeCreateBrokerValidator = (): JoiAdapter => {
   const schema = joi.object({
-    name: joi.string().required(),
+    name: joi.string().required().min(3).max(30),
     credentials: joi.object({
-      username: joi.string().required(),
-      password: joi.string().required(),
-      address: joi.string().required(),
-      port: joi.number().required()
+      username: joi.string().required().trim(),
+      password: joi.string().required().trim(),
+      address: joi.string().required().trim(),
+      port: joi.number().integer().positive().required()
     }).required()
   })
 
