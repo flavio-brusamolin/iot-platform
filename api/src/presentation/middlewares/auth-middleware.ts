@@ -1,4 +1,4 @@
-import { CheckUserAuthentication } from '../../domain/use-cases/check-user-authentication'
+import { CheckUserAuthentication } from '../../domain/use-cases/user/check-user-authentication'
 import { HttpRequest, HttpResponse, Middleware } from '../protocols'
 import { ok, serverError, unauthorized } from '../helpers/http-helper'
 

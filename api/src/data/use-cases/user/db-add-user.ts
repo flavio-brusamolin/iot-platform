@@ -1,8 +1,8 @@
-import { User } from '../../domain/models/user'
-import { AddUser, AddUserModel } from '../../domain/use-cases/add-user'
-import { LoadUserByEmailRepository } from '../protocols/db/load-user-by-email-repository'
-import { Encrypter } from '../protocols/criptography/encrypter'
-import { AddUserRepository } from '../protocols/db/add-user-repository'
+import { User } from '../../../domain/models/user'
+import { AddUser, AddUserModel } from '../../../domain/use-cases/user/add-user'
+import { LoadUserByEmailRepository } from '../../protocols/db/user/load-user-by-email-repository'
+import { Encrypter } from '../../protocols/criptography/encrypter'
+import { AddUserRepository } from '../../protocols/db/user/add-user-repository'
 
 export class DbAddUser implements AddUser {
   public constructor (

@@ -1,7 +1,7 @@
-import { AuthenticateUser, AuthenticateUserModel } from '../../domain/use-cases/authenticate-user'
-import { LoadUserByEmailRepository } from '../protocols/db/load-user-by-email-repository'
-import { CriptographyComparator } from '../protocols/criptography/criptography-comparator'
-import { TokenGenerator } from '../protocols/token/token-generator'
+import { AuthenticateUser, AuthenticateUserModel } from '../../../domain/use-cases/user/authenticate-user'
+import { LoadUserByEmailRepository } from '../../protocols/db/user/load-user-by-email-repository'
+import { CriptographyComparator } from '../../protocols/criptography/criptography-comparator'
+import { TokenGenerator } from '../../protocols/token/token-generator'
 
 export class DbAuthenticateUser implements AuthenticateUser {
   public constructor (

@@ -1,5 +1,5 @@
-import { SignInController } from '../../../../presentation/controllers/signin-controller'
-import { makeDbAuthenticateUser } from '../../use-cases/db-authenticate-user-factory'
+import { SignInController } from '../../../../../presentation/controllers/user/signin-controller'
+import { makeDbAuthenticateUser } from '../../../use-cases/user/db-authenticate-user-factory'
 import { makeSignInValidator } from './signin-validator-factory'
 
 export const makeSignInController = (): SignInController => {

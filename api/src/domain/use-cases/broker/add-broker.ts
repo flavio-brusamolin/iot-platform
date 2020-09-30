@@ -1,4 +1,4 @@
-import { Broker } from '../models/broker'
+import { Broker } from '../../models/broker'
 
 export interface AddBrokerModel {
   userId: string

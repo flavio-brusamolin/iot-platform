@@ -1,9 +1,9 @@
 import UserMongoSchema from './user-mongo-schema'
 import UserMongoMapper from './user-mongo-mapper'
 import { User } from '../../../../domain/models/user'
-import { AddUserModel } from '../../../../domain/use-cases/add-user'
-import { LoadUserByEmailRepository } from '../../../../data/protocols/db/load-user-by-email-repository'
-import { AddUserRepository } from '../../../../data/protocols/db/add-user-repository'
+import { AddUserModel } from '../../../../domain/use-cases/user/add-user'
+import { LoadUserByEmailRepository } from '../../../../data/protocols/db/user/load-user-by-email-repository'
+import { AddUserRepository } from '../../../../data/protocols/db/user/add-user-repository'
 
 export class UserMongoRepository implements LoadUserByEmailRepository, AddUserRepository {
   public async loadByEmail (email: string): Promise<User> {

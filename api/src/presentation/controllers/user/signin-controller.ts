@@ -1,6 +1,6 @@
-import { Controller, HttpRequest, HttpResponse, Validator } from '../protocols'
-import { badRequest, ok, serverError, unauthorized } from '../helpers/http-helper'
-import { AuthenticateUser } from '../../domain/use-cases/authenticate-user'
+import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocols'
+import { badRequest, ok, serverError, unauthorized } from '../../helpers/http-helper'
+import { AuthenticateUser } from '../../../domain/use-cases/user/authenticate-user'
 
 interface SignInContract {
   email: string

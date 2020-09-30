@@ -1,4 +1,4 @@
-import { AddBroker } from '../../../domain/use-cases/add-broker'
+import { AddBroker } from '../../../domain/use-cases/broker/add-broker'
 import { badRequest, created, serverError } from '../../helpers/http-helper'
 import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocols'
 

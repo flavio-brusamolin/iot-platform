@@ -1,5 +1,5 @@
 import joi from 'joi'
-import { JoiAdapter } from '../../../adapters/joi/joi-adapter'
+import { JoiAdapter } from '../../../../adapters/joi/joi-adapter'
 
 export const makeSignInValidator = (): JoiAdapter => {
   const schema = joi.object({

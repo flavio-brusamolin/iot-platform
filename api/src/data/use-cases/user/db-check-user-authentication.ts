@@ -1,5 +1,5 @@
-import { CheckUserAuthentication } from '../../domain/use-cases/check-user-authentication'
-import { TokenVerifier } from '../protocols/token/token-verifier'
+import { CheckUserAuthentication } from '../../../domain/use-cases/user/check-user-authentication'
+import { TokenVerifier } from '../../protocols/token/token-verifier'
 
 export class DbCheckUserAuthentication implements CheckUserAuthentication {
   public constructor (private readonly tokenVerifier: TokenVerifier) {}

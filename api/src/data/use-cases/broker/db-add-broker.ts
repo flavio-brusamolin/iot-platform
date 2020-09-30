@@ -1,6 +1,6 @@
-import { AddBroker, AddBrokerModel } from '../../domain/use-cases/add-broker'
-import { Broker } from '../../domain/models/broker'
-import { AddBrokerRepository } from '../protocols/db/add-broker-repository'
+import { AddBroker, AddBrokerModel } from '../../../domain/use-cases/broker/add-broker'
+import { Broker } from '../../../domain/models/broker'
+import { AddBrokerRepository } from '../../protocols/db/broker/add-broker-repository'
 
 export class DbAddBroker implements AddBroker {
   public constructor (

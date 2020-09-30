@@ -1,8 +1,8 @@
-import { Controller, HttpRequest, HttpResponse, Validator } from '../protocols'
-import { badRequest, conflict, created, serverError } from '../helpers/http-helper'
-import { DuplicateFieldError } from '../errors'
-import { AddUser } from '../../domain/use-cases/add-user'
-import { AuthenticateUser } from '../../domain/use-cases/authenticate-user'
+import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocols'
+import { badRequest, conflict, created, serverError } from '../../helpers/http-helper'
+import { DuplicateFieldError } from '../../errors'
+import { AddUser } from '../../../domain/use-cases/user/add-user'
+import { AuthenticateUser } from '../../../domain/use-cases/user/authenticate-user'
 
 interface SignUpContract {
   name: string
