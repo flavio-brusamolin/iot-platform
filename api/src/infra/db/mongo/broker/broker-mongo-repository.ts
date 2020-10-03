@@ -13,6 +13,6 @@ export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRe
 
   public async load (userId: string): Promise<Broker[]> {
     const brokerRecords = await BrokerMongoSchema.find({ userId })
-    return brokerRecords.map(record => BrokerMongoMapper.toEntity(record))
+    return brokerRecords.map(BrokerMongoMapper.toEntity)
   }
 }
