@@ -6,7 +6,6 @@ export class DbLoadBrokers implements LoadBrokers {
   public constructor (private readonly loadBrokersRepository: LoadBrokersRepository) {}
 
   public async load (userId: string): Promise<Broker[]> {
-    const brokers = await this.loadBrokersRepository.load(userId)
-    return brokers
+    return await this.loadBrokersRepository.load(userId)
   }
 }
