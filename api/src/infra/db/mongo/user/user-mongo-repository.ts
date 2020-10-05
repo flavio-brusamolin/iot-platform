@@ -13,6 +13,6 @@ export class UserMongoRepository implements LoadUserByEmailRepository, AddUserRe
 
   public async add (userData: AddUserModel): Promise<User> {
     const userRecord = await UserMongoSchema.create(userData)
-    return userRecord && UserMongoMapper.toEntity(userRecord)
+    return UserMongoMapper.toEntity(userRecord)
   }
 }

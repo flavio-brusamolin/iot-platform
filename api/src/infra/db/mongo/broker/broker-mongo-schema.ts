@@ -2,7 +2,8 @@ import { Schema, model } from 'mongoose'
 
 const BrokerMongoSchema = new Schema({
   userId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'users',
     required: true
   },
   name: {

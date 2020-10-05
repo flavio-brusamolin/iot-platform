@@ -8,7 +8,7 @@ import { LoadBrokersRepository } from '../../../../data/protocols/db/broker/load
 export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRepository {
   public async add (brokerData: AddBrokerModel): Promise<Broker> {
     const brokerRecord = await BrokerMongoSchema.create(brokerData)
-    return brokerRecord && BrokerMongoMapper.toEntity(brokerRecord)
+    return BrokerMongoMapper.toEntity(brokerRecord)
   }
 
   public async load (userId: string): Promise<Broker[]> {
