@@ -26,11 +26,11 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
 
   public async loadMemberById (teamId: string, memberId: string): Promise<Member> {
     const member = await TeamMongoSchema.findOne({
-      id: teamId,
+      _id: teamId,
       'members.userId': memberId
     })
 
-    return member.toObject() // check if mappers can be replaced for toObject method
+    return member && member.toObject() // check if mappers can be replaced for toObject method
   }
 
   public async addMember (teamId: string, memberData: AddMemberModel): Promise<Team> {

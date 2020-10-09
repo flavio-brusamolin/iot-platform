@@ -4,7 +4,8 @@ export default {
   async connect (uri: string): Promise<void> {
     await mongoose.connect(uri, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useFindAndModify: false
     })
   }
 }
