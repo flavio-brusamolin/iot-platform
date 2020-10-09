@@ -1,3 +1,5 @@
 export * from './duplicate-field-error'
 export * from './unauthorized-error'
 export * from './server-error'
+export * from './permission-denied-error'
+export * from './resource-not-found-error'
