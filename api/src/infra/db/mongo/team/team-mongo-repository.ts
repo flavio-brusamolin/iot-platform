@@ -1,8 +1,9 @@
 import { isValidObjectId } from 'mongoose'
 import TeamMongoSchema from './team-mongo-schema'
 import TeamMongoMapper from './team-mongo-mapper'
+import UserMongoMapper from '../user/user-mongo-mapper'
 import { AddTeamModel, AddTeamRepository } from '../../../../data/protocols/db/team/add-team-repository'
-import { Member, Team } from '../../../../domain/models/team'
+import { FullTeam, Member, Team } from '../../../../domain/models/team'
 import { LoadTeamsRepository } from '../../../../data/protocols/db/team/load-teams-repository'
 import { LoadTeamByIdRepository } from '../../../../data/protocols/db/team/load-team-by-id-repository'
 import { LoadMemberByIdRepository } from '../../../../data/protocols/db/team/load-member-by-id-repository'
@@ -20,13 +21,28 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
     return teamRecords.map(TeamMongoMapper.toEntity)
   }
 
-  public async loadById (id: string): Promise<Team> {
+  public async loadById (id: string): Promise<FullTeam> {
     if (!isValidObjectId(id)) {
       return null
     }
 
-    const teamRecord = await TeamMongoSchema.findById(id)
-    return teamRecord && TeamMongoMapper.toEntity(teamRecord)
+    const teamRecord = await TeamMongoSchema
+      .findById(id)
+      .populate({ path: 'members.userId', select: '-password' })
+
+    if (!teamRecord) {
+      return null
+    }
+
+    const members = teamRecord.members.map(({ userId, role }) => ({
+      ...UserMongoMapper.toEntity(userId),
+      role
+    }))
+
+    return {
+      ...TeamMongoMapper.toEntity(teamRecord),
+      members
+    }
   }
 
   public async loadMemberById (teamId: string, memberId: string): Promise<Member> {

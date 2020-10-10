@@ -14,11 +14,11 @@ interface AddMemberContract {
 
 export class AddMemberController implements Controller {
   public constructor (
-      private readonly validator: Validator,
-      private readonly loadTeamById: LoadTeamById,
-      private readonly checkMemberPermission: CheckMemberPermission,
-      private readonly loadUserByEmail: LoadUserByEmail,
-      private readonly addMember: AddMember
+    private readonly validator: Validator,
+    private readonly loadTeamById: LoadTeamById,
+    private readonly checkMemberPermission: CheckMemberPermission,
+    private readonly loadUserByEmail: LoadUserByEmail,
+    private readonly addMember: AddMember
   ) {}
 
   public async handle (httpRequest: HttpRequest<AddMemberContract>): Promise<HttpResponse> {
