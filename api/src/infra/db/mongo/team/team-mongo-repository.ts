@@ -1,3 +1,4 @@
+import { isValidObjectId } from 'mongoose'
 import TeamMongoSchema from './team-mongo-schema'
 import TeamMongoMapper from './team-mongo-mapper'
 import { AddTeamModel, AddTeamRepository } from '../../../../data/protocols/db/team/add-team-repository'
@@ -20,26 +21,34 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
   }
 
   public async loadById (id: string): Promise<Team> {
+    if (!isValidObjectId(id)) {
+      return null
+    }
+
     const teamRecord = await TeamMongoSchema.findById(id)
     return teamRecord && TeamMongoMapper.toEntity(teamRecord)
   }
 
   public async loadMemberById (teamId: string, memberId: string): Promise<Member> {
-    const member = await TeamMongoSchema.findOne({
-      _id: teamId,
-      'members.userId': memberId
-    })
+    const teamRecord = await TeamMongoSchema
+      .findOne({ _id: teamId, 'members.userId': memberId })
+      .select({ members: { $elemMatch: { userId: memberId } } })
 
-    return member && member.toObject() // check if mappers can be replaced for toObject method
+    if (!teamRecord) {
+      return null
+    }
+
+    const { members } = TeamMongoMapper.toEntity(teamRecord)
+    return members[0]
   }
 
   public async addMember (teamId: string, memberData: AddMemberModel): Promise<Team> {
-    const team = await TeamMongoSchema.findByIdAndUpdate(
+    const teamRecord = await TeamMongoSchema.findByIdAndUpdate(
       teamId,
       { $push: { members: memberData } },
       { new: true }
     )
 
-    return TeamMongoMapper.toEntity(team)
+    return TeamMongoMapper.toEntity(teamRecord)
   }
 }
