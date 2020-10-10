@@ -31,15 +31,11 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
 
   public async loadMemberById (teamId: string, memberId: string): Promise<Member> {
     const teamRecord = await TeamMongoSchema
-      .findOne({ _id: teamId, 'members.userId': memberId })
+      .findById(teamId)
       .select({ members: { $elemMatch: { userId: memberId } } })
 
-    if (!teamRecord) {
-      return null
-    }
-
     const { members } = TeamMongoMapper.toEntity(teamRecord)
-    return members[0]
+    return members[0] ?? null
   }
 
   public async addMember (teamId: string, memberData: AddMemberModel): Promise<Team> {
