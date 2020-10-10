@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose'
+import { Role } from '../../../../domain/enums/role'
+import { MongoTeam } from './team-mongo-model'
 
 const MemberSchema = new Schema({
   userId: {
@@ -8,7 +10,8 @@ const MemberSchema = new Schema({
   },
   role: {
     type: String,
-    required: true
+    required: true,
+    enum: Object.values(Role)
   }
 }, { _id: false })
 
@@ -16,4 +19,4 @@ const TeamMongoSchema = new Schema({
   members: [MemberSchema]
 })
 
-export default model('teams', TeamMongoSchema)
+export default model<MongoTeam>('teams', TeamMongoSchema)

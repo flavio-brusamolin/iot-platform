@@ -5,7 +5,7 @@ import { LoadUserByEmail } from '../../../domain/use-cases/user/load-user-by-ema
 import { AddMember } from '../../../domain/use-cases/team/add-member'
 import { badRequest, conflict, created, forbidden, notFound } from '../../helpers/http-helper'
 import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocols'
-import { ResourceNotFoundError } from '../../errors'
+import { DuplicateTeamMemberError, ResourceNotFoundError } from '../../errors'
 
 interface AddMemberContract {
     email: string
@@ -51,7 +51,7 @@ export class AddMemberController implements Controller {
       role
     })
     if (!updatedTeam) {
-      return conflict(new Error('o usuario ja faz parte do time'))
+      return conflict(new DuplicateTeamMemberError(email))
     }
 
     return created(updatedTeam)

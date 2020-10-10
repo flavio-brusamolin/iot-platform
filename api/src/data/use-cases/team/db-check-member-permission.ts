@@ -8,7 +8,7 @@ export class DbCheckMemberPermission implements CheckMemberPermission {
   public async check (teamId: string, memberId: string, allowedRoles: Role[]): Promise<boolean> {
     const { members } = await this.loadTeamByIdRepository.loadById(teamId)
 
-    const member = members.find(({ userId, role }) => userId.toString() === memberId && allowedRoles.includes(role))
+    const member = members.find(({ userId, role }) => userId === memberId && allowedRoles.includes(role))
     return !!member
   }
 }
