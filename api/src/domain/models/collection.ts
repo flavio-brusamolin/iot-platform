@@ -1,5 +1,5 @@
 export interface Collection {
   id: string
-  name: string
   accessGroupId: string
+  name: string
 }

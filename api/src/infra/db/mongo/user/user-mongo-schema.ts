@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { MongoUser } from './user-mongo-model'
 
 const UserMongoSchema = new Schema({
   name: {
@@ -15,4 +16,4 @@ const UserMongoSchema = new Schema({
   }
 })
 
-export default model('users', UserMongoSchema)
+export default model<MongoUser>('users', UserMongoSchema)

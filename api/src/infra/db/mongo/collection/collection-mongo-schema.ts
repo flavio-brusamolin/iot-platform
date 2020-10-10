@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { MongoCollection } from './collection-mongo-model'
 
 const CollectionMongoSchema = new Schema({
   accessGroupId: {
@@ -12,4 +13,4 @@ const CollectionMongoSchema = new Schema({
   }
 })
 
-export default model('collections', CollectionMongoSchema)
+export default model<MongoCollection>('collections', CollectionMongoSchema)

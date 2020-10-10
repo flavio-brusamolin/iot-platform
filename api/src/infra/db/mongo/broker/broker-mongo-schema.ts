@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { MongoBroker } from './broker-mongo-model'
 
 const BrokerMongoSchema = new Schema({
   userId: {
@@ -30,4 +31,4 @@ const BrokerMongoSchema = new Schema({
   }
 })
 
-export default model('brokers', BrokerMongoSchema)
+export default model<MongoBroker>('brokers', BrokerMongoSchema)
