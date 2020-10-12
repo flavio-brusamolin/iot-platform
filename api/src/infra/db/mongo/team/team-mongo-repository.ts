@@ -9,8 +9,10 @@ import { LoadTeamByIdRepository } from '../../../../data/protocols/db/team/load-
 import { LoadMemberByIdRepository } from '../../../../data/protocols/db/team/load-member-by-id-repository'
 import { AddMemberRepository } from '../../../../data/protocols/db/team/add-member-repository'
 import { AddMemberModel } from '../../../../domain/use-cases/team/add-member'
+import { DeleteMemberRepository } from '../../../../data/protocols/db/team/delete-member-repository'
 
-export class TeamMongoRepository implements AddTeamRepository, LoadTeamsRepository, LoadTeamByIdRepository, LoadMemberByIdRepository, AddMemberRepository {
+export class TeamMongoRepository implements AddTeamRepository, LoadTeamsRepository, LoadTeamByIdRepository, LoadMemberByIdRepository, AddMemberRepository, DeleteMemberRepository {
+  checkIfIsTeamOwner: (teamId: string, memberId: string) => Promise<boolean>
   public async add (teamData: AddTeamModel): Promise<Team> {
     const teamRecord = await TeamMongoSchema.create(teamData)
     return TeamMongoMapper.toEntity(teamRecord)
@@ -46,11 +48,16 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
   }
 
   public async loadMemberById (teamId: string, memberId: string): Promise<Member> {
+    if (!isValidObjectId(memberId)) {
+      return null
+    }
+
     const teamRecord = await TeamMongoSchema
       .findById(teamId)
       .select({ members: { $elemMatch: { userId: memberId } } })
 
     const { members } = TeamMongoMapper.toEntity(teamRecord)
+
     return members[0] ?? null
   }
 
@@ -60,6 +67,15 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
       { $push: { members: memberData } },
       { new: true }
     )
+
+    return TeamMongoMapper.toEntity(teamRecord)
+  }
+
+  public async deleteMember (teamId: string, memberId: string): Promise<Team> {
+    const teamRecord = await TeamMongoSchema.findByIdAndUpdate(
+      teamId,
+      { $pull: { members: { userId: memberId } } },
+      { new: true })
 
     return TeamMongoMapper.toEntity(teamRecord)
   }
