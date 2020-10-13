@@ -5,8 +5,8 @@ import { LoadMemberByIdRepository } from '../../protocols/db/team/load-member-by
 
 export class DbAddMember implements AddMember {
   public constructor (
-      private readonly loadMemberByIdRepository: LoadMemberByIdRepository,
-      private readonly addMemberRepository: AddMemberRepository
+    private readonly loadMemberByIdRepository: LoadMemberByIdRepository,
+    private readonly addMemberRepository: AddMemberRepository
   ) {}
 
   public async add (teamId: string, memberData: AddMemberModel): Promise<Team> {

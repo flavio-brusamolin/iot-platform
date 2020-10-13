@@ -9,10 +9,10 @@ import { Controller, HttpRequest, HttpResponse } from '../../protocols'
 
 export class DeleteMemberController implements Controller {
   public constructor (
-        private readonly loadTeamById: LoadTeamById,
-        private readonly checkMemberPermission: CheckMemberPermission,
-        private readonly checkIfIsTeamOwner: CheckIfIsTeamOwner,
-        private readonly deleteMember: DeleteMember
+    private readonly loadTeamById: LoadTeamById,
+    private readonly checkMemberPermission: CheckMemberPermission,
+    private readonly checkIfIsTeamOwner: CheckIfIsTeamOwner,
+    private readonly deleteMember: DeleteMember
   ) {}
 
   public async handle (httpRequest: HttpRequest<any>): Promise<HttpResponse> {
