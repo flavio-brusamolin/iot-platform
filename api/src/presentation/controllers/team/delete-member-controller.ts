@@ -17,9 +17,8 @@ export class DeleteMemberController implements Controller {
 
   public async handle (httpRequest: HttpRequest<any>): Promise<HttpResponse> {
     try {
-      const userId = httpRequest.userId
-      const { memberId } = httpRequest.params
-      const { teamId } = httpRequest.params
+      const { userId } = httpRequest
+      const { teamId, memberId } = httpRequest.params
 
       const team = await this.loadTeamById.load(teamId)
       if (!team) {

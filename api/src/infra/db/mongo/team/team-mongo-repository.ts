@@ -12,7 +12,6 @@ import { AddMemberModel } from '../../../../domain/use-cases/team/add-member'
 import { DeleteMemberRepository } from '../../../../data/protocols/db/team/delete-member-repository'
 
 export class TeamMongoRepository implements AddTeamRepository, LoadTeamsRepository, LoadTeamByIdRepository, LoadMemberByIdRepository, AddMemberRepository, DeleteMemberRepository {
-  checkIfIsTeamOwner: (teamId: string, memberId: string) => Promise<boolean>
   public async add (teamData: AddTeamModel): Promise<Team> {
     const teamRecord = await TeamMongoSchema.create(teamData)
     return TeamMongoMapper.toEntity(teamRecord)
@@ -75,7 +74,8 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
     const teamRecord = await TeamMongoSchema.findByIdAndUpdate(
       teamId,
       { $pull: { members: { userId: memberId } } },
-      { new: true })
+      { new: true }
+    )
 
     return TeamMongoMapper.toEntity(teamRecord)
   }
