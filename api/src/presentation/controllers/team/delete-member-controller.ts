@@ -1,5 +1,4 @@
 import { Role } from '../../../domain/enums/role'
-import { CheckIfIsTeamOwner } from '../../../domain/use-cases/team/check-if-is-team-owner'
 import { CheckMemberPermission } from '../../../domain/use-cases/team/check-member-permission'
 import { DeleteMember } from '../../../domain/use-cases/team/delete-member'
 import { LoadTeamById } from '../../../domain/use-cases/team/load-team-by-id'
@@ -11,7 +10,6 @@ export class DeleteMemberController implements Controller {
   public constructor (
     private readonly loadTeamById: LoadTeamById,
     private readonly checkMemberPermission: CheckMemberPermission,
-    private readonly checkIfIsTeamOwner: CheckIfIsTeamOwner,
     private readonly deleteMember: DeleteMember
   ) {}
 
@@ -27,11 +25,6 @@ export class DeleteMemberController implements Controller {
 
       const hasPermission = await this.checkMemberPermission.check(teamId, userId, [Role.ADVANCED])
       if (!hasPermission) {
-        return forbidden()
-      }
-
-      const isTeamOwner = await this.checkIfIsTeamOwner.check(teamId, memberId)
-      if (isTeamOwner) {
         return forbidden()
       }
 
