@@ -3,13 +3,14 @@ import TeamMongoSchema from './team-mongo-schema'
 import TeamMongoMapper from './team-mongo-mapper'
 import UserMongoMapper from '../user/user-mongo-mapper'
 import { AddTeamModel, AddTeamRepository } from '../../../../data/protocols/db/team/add-team-repository'
-import { FullTeam, Member, Team } from '../../../../domain/models/team'
+import { Member, Team } from '../../../../domain/models/team'
 import { LoadTeamsRepository } from '../../../../data/protocols/db/team/load-teams-repository'
 import { LoadTeamByIdRepository } from '../../../../data/protocols/db/team/load-team-by-id-repository'
 import { LoadMemberByIdRepository } from '../../../../data/protocols/db/team/load-member-by-id-repository'
 import { AddMemberRepository } from '../../../../data/protocols/db/team/add-member-repository'
 import { AddMemberModel } from '../../../../domain/use-cases/team/add-member'
 import { DeleteMemberRepository } from '../../../../data/protocols/db/team/delete-member-repository'
+import { CompleteTeamData } from '../../../../domain/use-cases/team/load-team-by-id'
 
 export class TeamMongoRepository implements AddTeamRepository, LoadTeamsRepository, LoadTeamByIdRepository, LoadMemberByIdRepository, AddMemberRepository, DeleteMemberRepository {
   public async add (teamData: AddTeamModel): Promise<Team> {
@@ -22,7 +23,7 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
     return teamRecords.map(TeamMongoMapper.toEntity)
   }
 
-  public async loadById (id: string): Promise<FullTeam> {
+  public async loadById (id: string): Promise<CompleteTeamData> {
     if (!isValidObjectId(id)) {
       return null
     }

@@ -18,7 +18,7 @@ export class LoadTeamController implements Controller {
 
       const team = await this.loadTeamById.load(teamId)
       if (!team) {
-        return notFound(new ResourceNotFoundError('id'))
+        return notFound(new ResourceNotFoundError('team id'))
       }
 
       const hasPermission = await this.checkMemberPermission.check(teamId, userId, [Role.BASIC, Role.ADVANCED])

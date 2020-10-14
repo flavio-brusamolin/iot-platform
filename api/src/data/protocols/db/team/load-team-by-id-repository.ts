@@ -1,6 +1,5 @@
-// import { Team } from '../../../../domain/models/team'
-import { FullTeam } from '../../../../domain/models/team'
+import { CompleteTeamData } from '../../../../domain/use-cases/team/load-team-by-id'
 
 export interface LoadTeamByIdRepository {
-  loadById: (id: string) => Promise<FullTeam>
+  loadById: (id: string) => Promise<CompleteTeamData>
 }
