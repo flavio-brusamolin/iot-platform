@@ -49,7 +49,7 @@ export class CreateDeviceController implements Controller {
         return forbidden()
       }
 
-      const broker = await this.loadBrokerById.load(mqttInfo.brokerId)
+      const broker = await this.loadBrokerById.load(mqttInfo.brokerId, userId)
       if (!broker) {
         return notFound(new ResourceNotFoundError('broker id'))
       }

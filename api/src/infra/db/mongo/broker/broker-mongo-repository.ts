@@ -18,12 +18,12 @@ export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRe
     return brokerRecords.map(BrokerMongoMapper.toEntity)
   }
 
-  public async loadById (id: string): Promise<Broker> {
-    if (!isValidObjectId(id)) {
+  public async loadById (brokerId: string): Promise<Broker> {
+    if (!isValidObjectId(brokerId)) {
       return null
     }
 
-    const brokerRecord = await BrokerMongoSchema.findById(id)
+    const brokerRecord = await BrokerMongoSchema.findById(brokerId)
     return brokerRecord && BrokerMongoMapper.toEntity(brokerRecord)
   }
 }

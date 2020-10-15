@@ -5,7 +5,13 @@ import { LoadBrokerByIdRepository } from '../../protocols/db/broker/load-broker-
 export class DbLoadBrokerById implements LoadBrokerById {
   public constructor (private readonly loadBrokerByIdRepository: LoadBrokerByIdRepository) {}
 
-  public async load (id: string): Promise<Broker> {
-    return await this.loadBrokerByIdRepository.loadById(id)
+  public async load (brokerId: string, userId: string): Promise<Broker> {
+    const broker = await this.loadBrokerByIdRepository.loadById(brokerId)
+
+    if (!broker || (broker.userId !== userId)) {
+      return null
+    }
+
+    return broker
   }
 }
