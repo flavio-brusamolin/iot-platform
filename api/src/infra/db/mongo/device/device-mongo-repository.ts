@@ -14,10 +14,7 @@ export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRe
   }
 
   public async load (collectionId: string): Promise<Device[]> {
-    const deviceRecords = await DeviceMongoSchema.find({
-      collectionId: collectionId
-    })
-
+    const deviceRecords = await DeviceMongoSchema.find({ collectionId })
     return deviceRecords.map(DeviceMongoMapper.toEntity)
   }
 

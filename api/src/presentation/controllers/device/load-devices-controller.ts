@@ -23,9 +23,7 @@ export class LoadDevicesController implements Controller {
         return notFound(new ResourceNotFoundError('collection id'))
       }
 
-      const { accessGroupId } = collection
-
-      const hasPermission = await this.checkMemberPermission.check(accessGroupId, userId, [Role.BASIC, Role.ADVANCED])
+      const hasPermission = await this.checkMemberPermission.check(collection.accessGroupId, userId, [Role.BASIC, Role.ADVANCED])
       if (!hasPermission) {
         return forbidden()
       }
