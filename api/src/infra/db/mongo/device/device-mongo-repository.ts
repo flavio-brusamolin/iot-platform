@@ -1,3 +1,4 @@
+import { isValidObjectId } from 'mongoose'
 import DeviceMongoSchema from './device-mongo-schema'
 import DeviceMongoMapper from './device-mongo-mapper'
 import { Device } from '../../../../domain/models/device'
@@ -19,9 +20,12 @@ export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRe
   }
 
   public async loadById (deviceId: string): Promise<Device> {
-    const deviceRecord = await DeviceMongoSchema.findById(deviceId)
+    if (!isValidObjectId(deviceId)) {
+      return null
+    }
 
-    return DeviceMongoMapper.toEntity(deviceRecord)
+    const deviceRecord = await DeviceMongoSchema.findById(deviceId)
+    return deviceRecord && DeviceMongoMapper.toEntity(deviceRecord)
   }
 
   public async update (deviceId: string, newDevice: Device): Promise<Device> {
