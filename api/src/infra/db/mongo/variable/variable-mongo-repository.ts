@@ -4,8 +4,9 @@ import { KeyConstraint, LoadVariableByKeyConstraintRepository } from '../../../.
 import { Variable } from '../../../../domain/models/variable'
 import { AddVariableRepository } from '../../../../data/protocols/db/variable/add-variable-repository'
 import { AddVariableModel } from '../../../../domain/use-cases/variable/add-variable'
+import { LoadVariablesRepository } from '../../../../data/protocols/db/variable/load-variables-repository'
 
-export class VariableMongoRepository implements LoadVariableByKeyConstraintRepository, AddVariableRepository {
+export class VariableMongoRepository implements LoadVariableByKeyConstraintRepository, AddVariableRepository, LoadVariablesRepository {
   public async loadByKeyConstraint (keyConstraint: KeyConstraint): Promise<Variable> {
     const variableRecord = await VariableMongoSchema.findOne(keyConstraint)
     return variableRecord && VariableMongoMapper.toEntity(variableRecord)
@@ -14,5 +15,10 @@ export class VariableMongoRepository implements LoadVariableByKeyConstraintRepos
   public async add (variableData: AddVariableModel): Promise<Variable> {
     const variableRecord = await VariableMongoSchema.create(variableData)
     return VariableMongoMapper.toEntity(variableRecord)
+  }
+
+  public async load (deviceId: string): Promise<Variable[]> {
+    const variablesRecord = await VariableMongoSchema.find({ deviceId })
+    return variablesRecord.map(VariableMongoMapper.toEntity)
   }
 }
