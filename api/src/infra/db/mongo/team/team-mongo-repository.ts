@@ -36,8 +36,8 @@ export class TeamMongoRepository implements AddTeamRepository, LoadTeamsReposito
       return null
     }
 
-    const members = teamRecord.members.map(({ userId, role }) => ({
-      ...UserMongoMapper.toEntity(userId),
+    const members = teamRecord.members.map(({ userId: userData, role }) => ({
+      ...UserMongoMapper.toEntity(userData),
       role
     }))
 
