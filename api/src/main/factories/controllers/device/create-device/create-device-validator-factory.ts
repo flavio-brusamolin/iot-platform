@@ -5,7 +5,7 @@ import { Protocol } from '../../../../../domain/enums/protocol'
 export const makeCreateDeviceValidator = (): JoiAdapter => {
   const schema = joi.object({
     name: joi.string().required().min(3).max(30),
-    protocol: joi.string().valid(...Object.values(Protocol)),
+    protocol: joi.string().required().valid(...Object.values(Protocol)),
     mqttInfo: joi.object({
       topic: joi.string().required().trim(),
       brokerId: joi.string().required().trim()
