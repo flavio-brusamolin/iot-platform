@@ -18,7 +18,10 @@ export class VariableMongoRepository implements LoadVariableByKeyConstraintRepos
   }
 
   public async load (deviceId: string): Promise<Variable[]> {
-    const variablesRecord = await VariableMongoSchema.find({ deviceId })
-    return variablesRecord.map(VariableMongoMapper.toEntity)
+    const variableRecords = await VariableMongoSchema
+      .find({ deviceId })
+      .select('-data')
+
+    return variableRecords.map(VariableMongoMapper.toEntity)
   }
 }
