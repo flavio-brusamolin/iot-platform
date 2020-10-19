@@ -23,9 +23,7 @@ export class LoadVariablesController implements Controller {
         return notFound(new ResourceNotFoundError('device id'))
       }
 
-      const { accessGroupId } = device
-
-      const hasPermission = await this.checkMemberPermission.check(accessGroupId, userId, [Role.BASIC, Role.ADVANCED])
+      const hasPermission = await this.checkMemberPermission.check(device.accessGroupId, userId, [Role.BASIC, Role.ADVANCED])
       if (!hasPermission) {
         return forbidden()
       }
