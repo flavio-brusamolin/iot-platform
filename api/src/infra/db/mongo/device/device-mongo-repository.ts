@@ -7,6 +7,7 @@ import { AddDeviceRepository } from '../../../../data/protocols/db/device/add-de
 import { LoadDevicesRepository } from '../../../../data/protocols/db/device/load-devices-repository'
 import { UpdateDeviceRepository } from '../../../../data/protocols/db/device/update-device-repository'
 import { LoadDeviceByIdRepository } from '../../../../data/protocols/db/device/load-device-by-id-repository'
+import { UpdateDeviceModel } from '../../../../domain/use-cases/device/update-device'
 
 export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRepository, LoadDeviceByIdRepository, UpdateDeviceRepository {
   public async add (deviceData: AddDeviceModel): Promise<Device> {
@@ -28,9 +29,10 @@ export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRe
     return deviceRecord && DeviceMongoMapper.toEntity(deviceRecord)
   }
 
-  public async update (deviceId: string, newDevice: Device): Promise<Device> {
-    const deviceRecord = await DeviceMongoSchema.findByIdAndUpdate(deviceId,
-      newDevice,
+  public async update (deviceId: string, deviceData: UpdateDeviceModel): Promise<Device> {
+    const deviceRecord = await DeviceMongoSchema.findByIdAndUpdate(
+      deviceId,
+      deviceData,
       { new: true }
     )
 
