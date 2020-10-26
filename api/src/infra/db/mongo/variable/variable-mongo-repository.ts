@@ -5,8 +5,9 @@ import { Variable } from '../../../../domain/models/variable'
 import { AddVariableRepository } from '../../../../data/protocols/db/variable/add-variable-repository'
 import { AddVariableModel } from '../../../../domain/use-cases/variable/add-variable'
 import { LoadVariablesRepository } from '../../../../data/protocols/db/variable/load-variables-repository'
+import { LoadVariableByIdRepository } from '../../../../data/protocols/db/variable/load-variable-by-id-repository'
 
-export class VariableMongoRepository implements LoadVariableByKeyConstraintRepository, AddVariableRepository, LoadVariablesRepository {
+export class VariableMongoRepository implements LoadVariableByKeyConstraintRepository, AddVariableRepository, LoadVariablesRepository, LoadVariableByIdRepository {
   public async loadByKeyConstraint (keyConstraint: KeyConstraint): Promise<Variable> {
     const variableRecord = await VariableMongoSchema.findOne(keyConstraint)
     return variableRecord && VariableMongoMapper.toEntity(variableRecord)
@@ -23,5 +24,13 @@ export class VariableMongoRepository implements LoadVariableByKeyConstraintRepos
       .select('-data')
 
     return variableRecords.map(VariableMongoMapper.toEntity)
+  }
+
+  public async loadById (variableId: string, ignorableField: string): Promise<Variable> {
+    const variableRecord = await VariableMongoSchema
+      .findById(variableId)
+      .select(ignorableField)
+
+    return VariableMongoMapper.toEntity(variableRecord)
   }
 }
