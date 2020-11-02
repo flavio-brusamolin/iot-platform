@@ -6,6 +6,7 @@ import { AddVariableRepository } from '../../../../data/protocols/db/variable/ad
 import { AddVariableModel } from '../../../../domain/use-cases/variable/add-variable'
 import { LoadVariablesRepository } from '../../../../data/protocols/db/variable/load-variables-repository'
 import { LoadVariableByIdRepository } from '../../../../data/protocols/db/variable/load-variable-by-id-repository'
+import { isValidObjectId } from 'mongoose'
 
 export class VariableMongoRepository implements LoadVariableByKeyConstraintRepository, AddVariableRepository, LoadVariablesRepository, LoadVariableByIdRepository {
   public async loadByKeyConstraint (keyConstraint: KeyConstraint): Promise<Variable> {
@@ -27,6 +28,10 @@ export class VariableMongoRepository implements LoadVariableByKeyConstraintRepos
   }
 
   public async loadById (variableId: string, ignorableField: string): Promise<Variable> {
+    if (!isValidObjectId(variableId)) {
+      return null
+    }
+
     const variableRecord = await VariableMongoSchema
       .findById(variableId)
       .select(ignorableField)
