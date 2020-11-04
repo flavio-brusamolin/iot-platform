@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { BrokerStatus } from '../../../../domain/enums/broker-status'
 import { MongoBroker } from './broker-mongo-model'
 
 const BrokerMongoSchema = new Schema({
@@ -13,7 +14,8 @@ const BrokerMongoSchema = new Schema({
   },
   status: {
     type: String,
-    required: true
+    required: true,
+    enum: Object.values(BrokerStatus)
   },
   credentials: {
     username: {

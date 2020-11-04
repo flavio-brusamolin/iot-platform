@@ -1,14 +1,13 @@
 import { isValidObjectId } from 'mongoose'
 import BrokerMongoSchema from './broker-mongo-schema'
 import BrokerMongoMapper from './broker-mongo-mapper'
-import { AddBrokerRepository } from '../../../../data/protocols/db/broker/add-broker-repository'
+import { AddBrokerRepository, AddBrokerRepositoryModel } from '../../../../data/protocols/db/broker/add-broker-repository'
 import { Broker } from '../../../../domain/models/broker'
-import { AddBrokerModel } from '../../../../domain/use-cases/broker/add-broker'
 import { LoadBrokersRepository } from '../../../../data/protocols/db/broker/load-brokers-repository'
 import { LoadBrokerByIdRepository } from '../../../../data/protocols/db/broker/load-broker-by-id-repository'
 
 export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRepository, LoadBrokerByIdRepository {
-  public async add (brokerData: AddBrokerModel): Promise<Broker> {
+  public async add (brokerData: AddBrokerRepositoryModel): Promise<Broker> {
     const brokerRecord = await BrokerMongoSchema.create(brokerData)
     return BrokerMongoMapper.toEntity(brokerRecord)
   }

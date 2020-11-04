@@ -3,7 +3,6 @@ import { Broker } from '../../models/broker'
 export interface AddBrokerModel {
   userId: string
   name: string
-  status: string
   credentials: {
     username: string
     password: string
