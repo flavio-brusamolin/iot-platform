@@ -11,6 +11,10 @@ const BrokerMongoSchema = new Schema({
     type: String,
     required: true
   },
+  status: {
+    type: String,
+    required: true
+  },
   credentials: {
     username: {
       type: String,
