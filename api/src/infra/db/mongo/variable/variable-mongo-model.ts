@@ -2,7 +2,7 @@ import { Document } from 'mongoose'
 
 interface MongoData {
   timestamp: Date
-  value: string
+  value: number
 }
 
 export interface MongoVariable extends Document {

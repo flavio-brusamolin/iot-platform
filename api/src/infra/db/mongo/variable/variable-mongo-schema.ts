@@ -7,7 +7,7 @@ const DataSchema = new Schema({
     required: true
   },
   value: {
-    type: String,
+    type: Number,
     required: true
   }
 }, { _id: false })

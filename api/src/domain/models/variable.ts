@@ -1,6 +1,6 @@
 interface Data {
   timestamp: Date
-  value: string
+  value: number
 }
 
 export interface Variable {
