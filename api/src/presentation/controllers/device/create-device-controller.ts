@@ -3,6 +3,7 @@ import { Role } from '../../../domain/enums/role'
 import { LoadBrokerById } from '../../../domain/use-cases/broker/load-broker-by-id'
 import { LoadCollectionById } from '../../../domain/use-cases/collection/load-collection-by-id'
 import { AddDevice } from '../../../domain/use-cases/device/add-device'
+import { ValidateProtocolRules } from '../../../domain/use-cases/device/validate-protocol-rules'
 import { CheckMemberPermission } from '../../../domain/use-cases/team/check-member-permission'
 import { ResourceNotFoundError } from '../../errors'
 import { badRequest, created, forbidden, notFound, serverError } from '../../helpers/http-helper'
@@ -23,6 +24,7 @@ export class CreateDeviceController implements Controller {
     private readonly loadCollectionById: LoadCollectionById,
     private readonly checkMemberPermission: CheckMemberPermission,
     private readonly loadBrokerById: LoadBrokerById,
+    private readonly validateProtocolRules: ValidateProtocolRules,
     private readonly addDevice: AddDevice
   ) {}
 
@@ -52,6 +54,11 @@ export class CreateDeviceController implements Controller {
       const broker = await this.loadBrokerById.load(mqttInfo.brokerId, userId)
       if (!broker) {
         return notFound(new ResourceNotFoundError('broker id'))
+      }
+
+      const allRulesConform = await this.validateProtocolRules.validate(mqttInfo, broker)
+      if (!allRulesConform) {
+        return forbidden()
       }
 
       const device = await this.addDevice.add({
