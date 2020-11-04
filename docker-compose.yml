@@ -28,6 +28,7 @@ services:
     restart: always
     environment:
       - MONGO_URL=mongodb://database:27017/iot-platform
+      - RABBIT_URL=amqp://admin:admin@message-queue:5672
     volumes:
       - .:/usr/src/app
       - /usr/src/app/api/node_modules
