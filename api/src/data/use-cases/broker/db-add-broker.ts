@@ -17,7 +17,7 @@ export class DbAddBroker implements AddBroker {
       status: BrokerStatus.PROCESSING
     })
 
-    await this.publishBrokerConnectionQueue.publishBrokerConnection(broker, Action.CONNECT)
+    this.publishBrokerConnectionQueue.publishBrokerConnection(broker, Action.CONNECT)
 
     return broker
   }
