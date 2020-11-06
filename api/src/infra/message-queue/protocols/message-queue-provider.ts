@@ -1,4 +1,4 @@
-interface MessageQueueConfig {
+export interface MessageQueueConfig {
   uri: string
   queues: string[]
 }

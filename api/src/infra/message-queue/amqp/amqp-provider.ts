@@ -1,16 +1,11 @@
 import { connect, Connection, Channel } from 'amqplib'
-import { MessageQueueProvider } from '../protocols/message-queue-provider'
-
-interface AmqpConfig {
-  uri: string
-  queues: string[]
-}
+import { MessageQueueConfig, MessageQueueProvider } from '../protocols/message-queue-provider'
 
 export default class AmqpProvider implements MessageQueueProvider {
   private static connection: Connection
   private static channel: Channel
 
-  public async start ({ uri, queues }: AmqpConfig): Promise<void> {
+  public async start ({ uri, queues }: MessageQueueConfig): Promise<void> {
     await this.establishConnection(uri)
     await this.createChannel()
     await this.createQueues(queues)
