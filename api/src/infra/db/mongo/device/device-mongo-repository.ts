@@ -8,9 +8,9 @@ import { LoadDevicesRepository } from '../../../../data/protocols/db/device/load
 import { UpdateDeviceRepository } from '../../../../data/protocols/db/device/update-device-repository'
 import { LoadDeviceByIdRepository } from '../../../../data/protocols/db/device/load-device-by-id-repository'
 import { UpdateDeviceModel } from '../../../../domain/use-cases/device/update-device'
-import { ValidateProtocolRulesRepository } from '../../../../data/protocols/db/device/validate-protocol-rules-repository'
+import { LoadDeviceByMqttInfoRepository, MqttInfo } from '../../../../data/protocols/db/device/load-device-by-mqtt-info-repository'
 
-export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRepository, LoadDeviceByIdRepository, UpdateDeviceRepository, ValidateProtocolRulesRepository {
+export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRepository, LoadDeviceByIdRepository, UpdateDeviceRepository, LoadDeviceByMqttInfoRepository {
   public async add (deviceData: AddDeviceModel): Promise<Device> {
     const deviceRecord = await DeviceMongoSchema.create(deviceData)
     return DeviceMongoMapper.toEntity(deviceRecord)
@@ -40,8 +40,12 @@ export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRe
     return DeviceMongoMapper.toEntity(deviceRecord)
   }
 
-  public async validate (mqttInfo: any): Promise<Device[]> {
-    const deviceRecords = await DeviceMongoSchema.find({ 'mqttInfo.brokerId': mqttInfo.brokerId })
-    return deviceRecords.map(DeviceMongoMapper.toEntity)
+  public async loadByMqttInfo ({ topic, brokerId }: MqttInfo): Promise<Device> {
+    const deviceRecord = await DeviceMongoSchema.findOne({
+      'mqttInfo.topic': topic,
+      'mqttInfo.brokerId': brokerId
+    })
+
+    return deviceRecord && DeviceMongoMapper.toEntity(deviceRecord)
   }
 }

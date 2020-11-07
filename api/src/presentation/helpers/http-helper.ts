@@ -36,6 +36,11 @@ export const conflict = (error: Error): HttpResponse => ({
   body: error
 })
 
+export const unprocessableEntity = (error: Error): HttpResponse => ({
+  statusCode: 422,
+  body: error
+})
+
 export const serverError = (): HttpResponse => ({
   statusCode: 500,
   body: new ServerError()

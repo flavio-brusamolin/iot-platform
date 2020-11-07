@@ -3,10 +3,10 @@ import { Role } from '../../../domain/enums/role'
 import { LoadBrokerById } from '../../../domain/use-cases/broker/load-broker-by-id'
 import { LoadCollectionById } from '../../../domain/use-cases/collection/load-collection-by-id'
 import { AddDevice } from '../../../domain/use-cases/device/add-device'
-import { ValidateProtocolRules } from '../../../domain/use-cases/device/validate-protocol-rules'
+import { BusinessRulesValidator } from '../../../domain/use-cases/validation/business-rules-validator'
 import { CheckMemberPermission } from '../../../domain/use-cases/team/check-member-permission'
 import { ResourceNotFoundError } from '../../errors'
-import { badRequest, created, forbidden, notFound, serverError } from '../../helpers/http-helper'
+import { badRequest, created, forbidden, notFound, serverError, unprocessableEntity } from '../../helpers/http-helper'
 import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocols'
 
 interface CreateDeviceContract {
@@ -24,7 +24,7 @@ export class CreateDeviceController implements Controller {
     private readonly loadCollectionById: LoadCollectionById,
     private readonly checkMemberPermission: CheckMemberPermission,
     private readonly loadBrokerById: LoadBrokerById,
-    private readonly validateProtocolRules: ValidateProtocolRules,
+    private readonly businessRulesValidator: BusinessRulesValidator,
     private readonly addDevice: AddDevice
   ) {}
 
@@ -56,9 +56,13 @@ export class CreateDeviceController implements Controller {
         return notFound(new ResourceNotFoundError('broker id'))
       }
 
-      const allRulesConform = await this.validateProtocolRules.validate(mqttInfo, broker)
-      if (!allRulesConform) {
-        return forbidden()
+      const businessError = await this.businessRulesValidator.validate({
+        name,
+        protocol,
+        mqttInfo
+      })
+      if (businessError) {
+        return unprocessableEntity(businessError)
       }
 
       const device = await this.addDevice.add({

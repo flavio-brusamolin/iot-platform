@@ -4,7 +4,7 @@ import { makeDbLoadCollectionById } from '../../../use-cases/collection/db-load-
 import { makeDbCheckMemberPermission } from '../../../use-cases/team/db-check-member-permission-factory'
 import { makeDbLoadBrokerById } from '../../../use-cases/broker/db-load-broker-by-id-factory'
 import { makeDbAddDevice } from '../../../use-cases/device/db-add-device-factory'
-import { makeDbValidateProtocolRules } from '../../../use-cases/device/db-validate-protocol-rules-factory'
+import { makeDeviceBusinessRulesValidator } from '../../../use-cases/device/device-business-rules-validator-factory'
 
 export const makeCreateDeviceController = (): CreateDeviceController => {
   return new CreateDeviceController(
@@ -12,7 +12,7 @@ export const makeCreateDeviceController = (): CreateDeviceController => {
     makeDbLoadCollectionById(),
     makeDbCheckMemberPermission(),
     makeDbLoadBrokerById(),
-    makeDbValidateProtocolRules(),
+    makeDeviceBusinessRulesValidator(),
     makeDbAddDevice()
   )
 }
