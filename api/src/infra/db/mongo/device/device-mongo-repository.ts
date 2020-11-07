@@ -9,8 +9,9 @@ import { UpdateDeviceRepository } from '../../../../data/protocols/db/device/upd
 import { LoadDeviceByIdRepository } from '../../../../data/protocols/db/device/load-device-by-id-repository'
 import { UpdateDeviceModel } from '../../../../domain/use-cases/device/update-device'
 import { LoadDeviceByMqttInfoRepository, MqttInfo } from '../../../../data/protocols/db/device/load-device-by-mqtt-info-repository'
+import { LoadDevicesByBrokerIdRepository } from '../../../../data/protocols/db/device/load-devices-by-broker-id-repository'
 
-export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRepository, LoadDeviceByIdRepository, UpdateDeviceRepository, LoadDeviceByMqttInfoRepository {
+export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRepository, LoadDeviceByIdRepository, UpdateDeviceRepository, LoadDeviceByMqttInfoRepository, LoadDevicesByBrokerIdRepository {
   public async add (deviceData: AddDeviceModel): Promise<Device> {
     const deviceRecord = await DeviceMongoSchema.create(deviceData)
     return DeviceMongoMapper.toEntity(deviceRecord)
@@ -47,5 +48,10 @@ export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRe
     })
 
     return deviceRecord && DeviceMongoMapper.toEntity(deviceRecord)
+  }
+
+  public async loadByBrokerId (brokerId: string): Promise<Device[]> {
+    const deviceRecords = await DeviceMongoSchema.find({ 'mqttInfo.brokerId': brokerId })
+    return deviceRecords.map(DeviceMongoMapper.toEntity)
   }
 }

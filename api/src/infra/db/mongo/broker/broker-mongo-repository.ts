@@ -5,8 +5,10 @@ import { AddBrokerRepository, AddBrokerRepositoryModel } from '../../../../data/
 import { Broker } from '../../../../domain/models/broker'
 import { LoadBrokersRepository } from '../../../../data/protocols/db/broker/load-brokers-repository'
 import { LoadBrokerByIdRepository } from '../../../../data/protocols/db/broker/load-broker-by-id-repository'
+import { UpdateBrokerStatusRepository } from '../../../../data/protocols/db/broker/update-broker-status-repository'
+import { BrokerStatus } from '../../../../domain/enums/broker-status'
 
-export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRepository, LoadBrokerByIdRepository {
+export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRepository, LoadBrokerByIdRepository, UpdateBrokerStatusRepository {
   public async add (brokerData: AddBrokerRepositoryModel): Promise<Broker> {
     const brokerRecord = await BrokerMongoSchema.create(brokerData)
     return BrokerMongoMapper.toEntity(brokerRecord)
@@ -24,5 +26,15 @@ export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRe
 
     const brokerRecord = await BrokerMongoSchema.findById(brokerId)
     return brokerRecord && BrokerMongoMapper.toEntity(brokerRecord)
+  }
+
+  public async updateStatus (brokerId: string, status: BrokerStatus): Promise<Broker> {
+    const broker = await BrokerMongoSchema.findByIdAndUpdate(
+      brokerId,
+      { status },
+      { new: true }
+    )
+
+    return BrokerMongoMapper.toEntity(broker)
   }
 }
