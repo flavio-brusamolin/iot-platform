@@ -7,8 +7,8 @@ export const makeUpdateDeviceValidator = (): JoiAdapter => {
     name: joi.string().min(3).max(30),
     protocol: joi.string().valid(...Object.values(Protocol)),
     mqttInfo: joi.object({
-      topic: joi.string().required().trim(),
-      brokerId: joi.string().required().trim()
+      topic: joi.string().trim(),
+      brokerId: joi.string().trim()
     }).when('protocol', {
       is: Protocol.MQTT,
       then: joi.required()

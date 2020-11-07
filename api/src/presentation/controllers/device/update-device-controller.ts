@@ -48,7 +48,7 @@ export class UpdateDeviceController implements Controller {
 
       const { mqttInfo } = deviceData
 
-      if (mqttInfo) {
+      if (mqttInfo?.brokerId) {
         const broker = await this.loadBrokerById.load(mqttInfo.brokerId, userId)
 
         if (!broker) {
