@@ -7,6 +7,7 @@ import { ResourceNotFoundError } from '../../errors'
 import { badRequest, forbidden, notFound, ok, serverError } from '../../helpers/http-helper'
 import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocols'
 import { UpdateDevice } from '../../../domain/use-cases/device/update-device'
+// import { BusinessRulesValidator } from '../../../domain/use-cases/validation/business-rules-validator'
 
 interface UpdateDeviceContract {
   name?: string
@@ -23,6 +24,7 @@ export class UpdateDeviceController implements Controller {
     private readonly loadDeviceById: LoadDeviceById,
     private readonly checkMemberPermission: CheckMemberPermission,
     private readonly loadBrokerById: LoadBrokerById,
+    // private readonly businessRulesValidator: BusinessRulesValidator,
     private readonly updateDevice: UpdateDevice
   ) {}
 
@@ -48,12 +50,17 @@ export class UpdateDeviceController implements Controller {
 
       const { mqttInfo } = deviceData
 
-      if (mqttInfo?.brokerId) {
+      if (mqttInfo) {
         const broker = await this.loadBrokerById.load(mqttInfo.brokerId, userId)
 
         if (!broker) {
           return notFound(new ResourceNotFoundError('broker id'))
         }
+
+        // const businessError = await this.businessRulesValidator.validate(deviceData)
+        // if (businessError) {
+        //   return unprocessableEntity(businessError)
+        // }
       }
 
       const updatedDevice = await this.updateDevice.update(deviceId, deviceData)

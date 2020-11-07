@@ -30,18 +30,10 @@ export class DeviceMongoRepository implements AddDeviceRepository, LoadDevicesRe
     return deviceRecord && DeviceMongoMapper.toEntity(deviceRecord)
   }
 
-  public async update (deviceId: string, { mqttInfo, ...deviceData }: UpdateDeviceModel): Promise<Device> {
-    if (mqttInfo?.topic) {
-      deviceData['mqttInfo.topic'] = mqttInfo.topic
-    }
-
-    if (mqttInfo?.brokerId) {
-      deviceData['mqttInfo.brokerId'] = mqttInfo.brokerId
-    }
-
+  public async update (deviceId: string, deviceData: UpdateDeviceModel): Promise<Device> {
     const deviceRecord = await DeviceMongoSchema.findByIdAndUpdate(
       deviceId,
-      { $set: deviceData },
+      deviceData,
       { new: true }
     )
 
