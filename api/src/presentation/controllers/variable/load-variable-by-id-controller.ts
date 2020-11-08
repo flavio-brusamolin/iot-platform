@@ -15,9 +15,8 @@ export class LoadVariableByIdController implements Controller {
     try {
       const { userId } = httpRequest
       const { variableId } = httpRequest.params
-      const { expand } = httpRequest.query
 
-      const variable = await this.loadVariableById.load(variableId, expand)
+      const variable = await this.loadVariableById.load(variableId)
       if (!variable) {
         return notFound(new ResourceNotFoundError('variable id'))
       }

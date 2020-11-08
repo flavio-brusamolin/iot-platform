@@ -27,15 +27,12 @@ export class VariableMongoRepository implements LoadVariableByKeyConstraintRepos
     return variableRecords.map(VariableMongoMapper.toEntity)
   }
 
-  public async loadById (variableId: string, ignorableField: string): Promise<Variable> {
+  public async loadById (variableId: string): Promise<Variable> {
     if (!isValidObjectId(variableId)) {
       return null
     }
 
-    const variableRecord = await VariableMongoSchema
-      .findById(variableId)
-      .select(ignorableField)
-
+    const variableRecord = await VariableMongoSchema.findById(variableId)
     return VariableMongoMapper.toEntity(variableRecord)
   }
 }
