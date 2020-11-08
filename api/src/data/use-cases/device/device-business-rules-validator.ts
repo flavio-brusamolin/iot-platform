@@ -10,14 +10,14 @@ export class DeviceBusinessRulesValidator implements BusinessRulesValidator {
     private readonly loadDeviceByMqttInfoRepository: LoadDeviceByMqttInfoRepository
   ) {}
 
-  public async validate ({ mqttInfo }: any): Promise<Error> {
+  public async validate ({ mqttInfo }: any, mustValidateBrokerId: boolean): Promise<Error> {
     const broker = await this.loadBrokerByIdRepository.loadById(mqttInfo.brokerId)
     if (broker.status === BrokerStatus.INACTIVE) {
       return new BrokerStatusNotAcceptedError()
     }
 
     const device = await this.loadDeviceByMqttInfoRepository.loadByMqttInfo(mqttInfo)
-    if (device) {
+    if (device && mustValidateBrokerId) {
       return new DuplicateFieldError('mqttInfo')
     }
   }

@@ -60,7 +60,7 @@ export class CreateDeviceController implements Controller {
         name,
         protocol,
         mqttInfo
-      })
+      }, true)
       if (businessError) {
         return unprocessableEntity(businessError)
       }

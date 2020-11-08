@@ -1,3 +1,3 @@
 export interface BusinessRulesValidator {
-  validate: (data: any) => Promise<Error>
+  validate: (data: any, mustValidateBrokerId: boolean) => Promise<Error>
 }

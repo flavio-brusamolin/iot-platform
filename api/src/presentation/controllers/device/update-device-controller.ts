@@ -4,10 +4,10 @@ import { LoadDeviceById } from '../../../domain/use-cases/device/load-device-by-
 import { CheckMemberPermission } from '../../../domain/use-cases/team/check-member-permission'
 import { LoadBrokerById } from '../../../domain/use-cases/broker/load-broker-by-id'
 import { ResourceNotFoundError } from '../../errors'
-import { badRequest, forbidden, notFound, ok, serverError } from '../../helpers/http-helper'
+import { badRequest, forbidden, notFound, ok, serverError, unprocessableEntity } from '../../helpers/http-helper'
 import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocols'
 import { UpdateDevice } from '../../../domain/use-cases/device/update-device'
-// import { BusinessRulesValidator } from '../../../domain/use-cases/validation/business-rules-validator'
+import { BusinessRulesValidator } from '../../../domain/use-cases/validation/business-rules-validator'
 
 interface UpdateDeviceContract {
   name?: string
@@ -24,7 +24,7 @@ export class UpdateDeviceController implements Controller {
     private readonly loadDeviceById: LoadDeviceById,
     private readonly checkMemberPermission: CheckMemberPermission,
     private readonly loadBrokerById: LoadBrokerById,
-    // private readonly businessRulesValidator: BusinessRulesValidator,
+    private readonly businessRulesValidator: BusinessRulesValidator,
     private readonly updateDevice: UpdateDevice
   ) {}
 
@@ -57,10 +57,10 @@ export class UpdateDeviceController implements Controller {
           return notFound(new ResourceNotFoundError('broker id'))
         }
 
-        // const businessError = await this.businessRulesValidator.validate(deviceData)
-        // if (businessError) {
-        //   return unprocessableEntity(businessError)
-        // }
+        const businessError = await this.businessRulesValidator.validate(deviceData, false)
+        if (businessError) {
+          return unprocessableEntity(businessError)
+        }
       }
 
       const updatedDevice = await this.updateDevice.update(deviceId, deviceData)

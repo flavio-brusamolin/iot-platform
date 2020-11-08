@@ -4,6 +4,7 @@ import { makeDbLoadDeviceById } from '../../../use-cases/device/db-load-device-b
 import { makeDbUpdateDevice } from '../../../use-cases/device/db-update-device-factory'
 import { makeDbLoadBrokerById } from '../../../use-cases/broker/db-load-broker-by-id-factory'
 import { makeUpdateDeviceValidator } from './update-device-validator-factory'
+import { makeDeviceBusinessRulesValidator } from '../../../use-cases/device/device-business-rules-validator-factory'
 
 export const makeUpdateDeviceController = (): UpdateDeviceController => {
   return new UpdateDeviceController(
@@ -11,6 +12,7 @@ export const makeUpdateDeviceController = (): UpdateDeviceController => {
     makeDbLoadDeviceById(),
     makeDbCheckMemberPermission(),
     makeDbLoadBrokerById(),
+    makeDeviceBusinessRulesValidator(),
     makeDbUpdateDevice()
   )
 }
