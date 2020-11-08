@@ -1,4 +1,5 @@
 import { connect, Connection, Channel } from 'amqplib'
+import { AsyncHandler } from '../../../presentation/protocols/async-handler'
 import { MessageQueueConfig, MessageQueueProvider } from '../protocols/message-queue-provider'
 
 export default class AmqpProvider implements MessageQueueProvider {
@@ -13,6 +14,16 @@ export default class AmqpProvider implements MessageQueueProvider {
 
   public publish (queue: string, payload: any): void {
     AmqpProvider.channel.sendToQueue(queue, this.transformPayload(payload), { persistent: true })
+  }
+
+  public subscribe (queue: string, asyncHandler: AsyncHandler): void {
+    AmqpProvider.channel.consume(queue, async message => {
+      await asyncHandler.handle({
+        content: JSON.parse(message.content.toString())
+      })
+
+      AmqpProvider.channel.ack(message)
+    })
   }
 
   private async establishConnection (uri: string): Promise<void> {
