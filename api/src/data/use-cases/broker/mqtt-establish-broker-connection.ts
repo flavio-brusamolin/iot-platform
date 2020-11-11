@@ -11,15 +11,12 @@ export class MqttEstablishBrokerConnection implements EstablishBrokerConnection 
   ) {}
 
   public async establishConnection (broker: Broker): Promise<void> {
-    let brokerStatus = BrokerStatus.ACTIVE
-
     try {
       await this.connectToMqttBroker.connect(broker)
+      await this.updateBrokerStatusRepository.updateStatus(broker.id, BrokerStatus.ACTIVE)
     } catch (error) {
-      console.error(error)
-      brokerStatus = BrokerStatus.INACTIVE
+      await this.updateBrokerStatusRepository.updateStatus(broker.id, BrokerStatus.INACTIVE)
+      throw error
     }
-
-    await this.updateBrokerStatusRepository.updateStatus(broker.id, brokerStatus)
   }
 }
