@@ -1,4 +1,4 @@
-import { connect, Connection, Channel } from 'amqplib'
+import { connect, Connection, Channel, Replies } from 'amqplib'
 import { AsyncHandler } from '../../../presentation/protocols/async-handler'
 import { MessageQueueConfig, MessageQueueProvider } from '../protocols/message-queue-provider'
 
@@ -12,12 +12,12 @@ export default class AmqpProvider implements MessageQueueProvider {
     await this.createQueues(queues)
   }
 
-  public publish (queue: string, payload: any): void {
-    AmqpProvider.channel.sendToQueue(queue, this.transformPayload(payload), { persistent: true })
+  public publish (queue: string, payload: any): boolean {
+    return AmqpProvider.channel.sendToQueue(queue, this.transformPayload(payload), { persistent: true })
   }
 
-  public subscribe (queue: string, asyncHandler: AsyncHandler): void {
-    AmqpProvider.channel.consume(queue, async message => {
+  public subscribe (queue: string, asyncHandler: AsyncHandler): Omit<Replies.Consume, 'consumerTag'> {
+    return AmqpProvider.channel.consume(queue, async message => {
       await asyncHandler.handle({
         content: JSON.parse(message.content.toString())
       })

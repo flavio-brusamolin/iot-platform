@@ -7,6 +7,6 @@ export interface MessageQueueConfig {
 
 export interface MessageQueueProvider {
   start: (messageQueueConfig: MessageQueueConfig) => Promise<void>
-  publish: (queue: string, payload: any) => void
-  subscribe: (queue: string, asyncHandler: AsyncHandler) => void
+  publish: (queue: string, payload: any) => any
+  subscribe: (queue: string, asyncHandler: AsyncHandler) => any
 }
