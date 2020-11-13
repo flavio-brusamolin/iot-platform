@@ -18,11 +18,15 @@ export default class AmqpProvider implements MessageQueueProvider {
 
   public subscribe (queue: string, asyncHandler: AsyncHandler): Omit<Replies.Consume, 'consumerTag'> {
     return AmqpProvider.channel.consume(queue, async message => {
-      await asyncHandler.handle({
+      const ack = await asyncHandler.handle({
         content: JSON.parse(message.content.toString())
       })
 
-      AmqpProvider.channel.ack(message)
+      if (ack) {
+        AmqpProvider.channel.ack(message)
+      } else {
+        AmqpProvider.channel.reject(message, true)
+      }
     })
   }
 

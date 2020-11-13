@@ -3,5 +3,5 @@ export interface Message<T> {
 }
 
 export interface AsyncHandler {
-  handle: (message: Message<any>) => Promise<void>
+  handle: (message: Message<any>) => Promise<boolean>
 }

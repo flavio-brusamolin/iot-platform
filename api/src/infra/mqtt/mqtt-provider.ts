@@ -1,4 +1,5 @@
 import { connectAsync, AsyncMqttClient, IMqttClient } from 'async-mqtt'
+import { HandleReceivedData } from '../../domain/use-cases/mqtt/handle-received-data'
 
 interface BrokerInfo {
   clientId: string
@@ -6,6 +7,12 @@ interface BrokerInfo {
   password: string
   address: string
   port: number
+}
+
+interface SubscriptionData {
+  deviceId: string
+  clientId: string
+  topic: string
 }
 
 export default class MqttProvider {
@@ -17,11 +24,9 @@ export default class MqttProvider {
     if (!client) {
       const newClient = await connectAsync(address, options)
       MqttProvider.clients.push(newClient)
-    }
 
-    // For tests
-    console.log('Connect')
-    this.printClients()
+      console.log(`Connection established. => BrokerId: ${options.clientId}`)
+    }
   }
 
   public async disconnect (clientId: string): Promise<void> {
@@ -30,11 +35,27 @@ export default class MqttProvider {
     if (client) {
       await client.end()
       MqttProvider.clients = MqttProvider.clients.filter(element => element !== client)
-    }
 
-    // For tests
-    console.log('Disconnect')
-    this.printClients()
+      console.log(`Connection removed. => BrokerId: ${clientId}`)
+    }
+  }
+
+  public async subscribe ({ deviceId, clientId, topic }: SubscriptionData, handleReceivedData: HandleReceivedData): Promise<void> {
+    const client = this.findClient(clientId)
+
+    if (client) {
+      await client.subscribe(topic)
+
+      console.log(`Subscription made. => Topic: ${topic} | BrokerId: ${clientId}`)
+
+      client.on('message', async (receivedTopic, message) => {
+        const data = message.toString()
+
+        if (receivedTopic === topic && this.isJSON(data)) {
+          await handleReceivedData.handle(deviceId, JSON.parse(data))
+        }
+      })
+    }
   }
 
   private findClient (clientId: string): AsyncMqttClient {
@@ -51,10 +72,12 @@ export default class MqttProvider {
     return asyncClient._client
   }
 
-  // For tests
-  private printClients (): void {
-    for (const client of MqttProvider.clients) {
-      console.log(this.unwrapClient(client).options.clientId)
+  private isJSON (data: string): boolean {
+    try {
+      JSON.parse(data)
+    } catch (error) {
+      return false
     }
+    return true
   }
 }

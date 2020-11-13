@@ -1,6 +1,6 @@
 import { BrokerStatus } from '../../../domain/enums/broker-status'
 import { Broker } from '../../../domain/models/broker'
-import { EstablishBrokerConnection } from '../../../domain/use-cases/broker/establish-broker-connection'
+import { EstablishBrokerConnection } from '../../../domain/use-cases/mqtt/establish-broker-connection'
 import { UpdateBrokerStatusRepository } from '../../protocols/db/broker/update-broker-status-repository'
 import { ConnectToMqttBroker } from '../../protocols/mqtt/connect-to-mqtt-broker'
 
