@@ -1,4 +1,4 @@
-interface Data {
+export interface Data {
   timestamp: Date
   value: number
 }
