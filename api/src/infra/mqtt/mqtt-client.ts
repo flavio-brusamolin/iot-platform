@@ -1,12 +1,13 @@
 import { ConnectToMqttBroker } from '../../data/protocols/mqtt/connect-to-mqtt-broker'
 import { DisconnectFromMqttBroker } from '../../data/protocols/mqtt/disconnect-from-mqtt-broker'
 import { SubscribeMqttTopic } from '../../data/protocols/mqtt/subscribe-mqtt-topic'
+import { UnsubscribeMqttTopic } from '../../data/protocols/mqtt/unsubscribe-mqtt-topic'
 import { Broker } from '../../domain/models/broker'
 import { Device } from '../../domain/models/device'
 import { HandleReceivedData } from '../../domain/use-cases/mqtt/handle-received-data'
 import MqttProvider from './mqtt-provider'
 
-export class MqttClient implements ConnectToMqttBroker, DisconnectFromMqttBroker, SubscribeMqttTopic {
+export class MqttClient implements ConnectToMqttBroker, DisconnectFromMqttBroker, SubscribeMqttTopic, UnsubscribeMqttTopic {
   public constructor (private readonly mqttProvider: MqttProvider) {}
 
   public async connect ({ id, credentials }: Broker): Promise<void> {
@@ -28,5 +29,12 @@ export class MqttClient implements ConnectToMqttBroker, DisconnectFromMqttBroker
     }
 
     await this.mqttProvider.subscribe(subscriptionData, handleReceivedData)
+  }
+
+  public async unsubscribe ({ mqttInfo: { brokerId, topic } }: Device): Promise<void> {
+    await this.mqttProvider.unsubscribe({
+      clientId: brokerId,
+      topic
+    })
   }
 }

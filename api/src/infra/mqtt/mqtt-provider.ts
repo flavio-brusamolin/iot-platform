@@ -58,6 +58,16 @@ export default class MqttProvider {
     }
   }
 
+  public async unsubscribe ({ clientId, topic }: Omit<SubscriptionData, 'deviceId'>): Promise<void> {
+    const client = this.findClient(clientId)
+
+    if (client) {
+      await client.unsubscribe(topic)
+
+      console.log(`Subscription removed. => Topic: ${topic} | BrokerId: ${clientId}`)
+    }
+  }
+
   private findClient (clientId: string): AsyncMqttClient {
     return MqttProvider.clients.find(client => {
       const { options } = this.unwrapClient(client)
