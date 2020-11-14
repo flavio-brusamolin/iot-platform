@@ -3,5 +3,5 @@ export default {
   port: process.env.PORT || 8080,
   mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/iot-platform',
   rabbitUrl: process.env.RABBIT_URL || 'amqp://admin:admin@localhost:5672',
-  queues: ['broker-connection', 'topic-subscription']
+  queues: ['system-boot', 'broker-connection', 'topic-subscription']
 }

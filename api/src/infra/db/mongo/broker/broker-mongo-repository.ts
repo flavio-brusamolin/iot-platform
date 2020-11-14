@@ -7,8 +7,9 @@ import { LoadBrokersRepository } from '../../../../data/protocols/db/broker/load
 import { LoadBrokerByIdRepository } from '../../../../data/protocols/db/broker/load-broker-by-id-repository'
 import { UpdateBrokerStatusRepository } from '../../../../data/protocols/db/broker/update-broker-status-repository'
 import { BrokerStatus } from '../../../../domain/enums/broker-status'
+import { LoadBrokersByStatusRepository } from '../../../../data/protocols/db/broker/load-brokers-by-status-repository'
 
-export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRepository, LoadBrokerByIdRepository, UpdateBrokerStatusRepository {
+export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRepository, LoadBrokerByIdRepository, UpdateBrokerStatusRepository, LoadBrokersByStatusRepository {
   public async add (brokerData: AddBrokerRepositoryModel): Promise<Broker> {
     const brokerRecord = await BrokerMongoSchema.create(brokerData)
     return BrokerMongoMapper.toEntity(brokerRecord)
@@ -36,5 +37,10 @@ export class BrokerMongoRepository implements AddBrokerRepository, LoadBrokersRe
     )
 
     return BrokerMongoMapper.toEntity(broker)
+  }
+
+  public async loadByStatus (status: BrokerStatus): Promise<Broker[]> {
+    const brokerRecords = await BrokerMongoSchema.find({ status })
+    return brokerRecords.map(BrokerMongoMapper.toEntity)
   }
 }

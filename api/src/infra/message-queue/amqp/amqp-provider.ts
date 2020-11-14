@@ -12,7 +12,7 @@ export default class AmqpProvider implements MessageQueueProvider {
     await this.createQueues(queues)
   }
 
-  public publish (queue: string, payload: any): boolean {
+  public publish (queue: string, payload: any = {}): boolean {
     return AmqpProvider.channel.sendToQueue(queue, this.transformPayload(payload), { persistent: true })
   }
 

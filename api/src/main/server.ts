@@ -4,7 +4,7 @@ import MongoHelper from '../infra/db/mongo/helpers/mongo-helper'
 import AmqpProvider from '../infra/message-queue/amqp/amqp-provider'
 import setupRoutes from './config/routes'
 import setupMiddlewares from './config/middlewares'
-import subscribeQueues from './config/message-queue'
+import setupQueues from './config/message-queue'
 
 class Server {
   private async initDatabase (): Promise<void> {
@@ -18,7 +18,7 @@ class Server {
       queues: env.queues
     })
 
-    subscribeQueues(amqpProvider)
+    setupQueues(amqpProvider)
   }
 
   private initApplication (): void {
