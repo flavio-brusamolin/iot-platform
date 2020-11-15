@@ -22,24 +22,24 @@ export class DbUpdateDevice implements UpdateDevice {
   ) {}
 
   public async update (deviceId: string, deviceData: UpdateDeviceModel): Promise<Device> {
-    const oldDevice = await this.loadDeviceByIdRepository.loadById(deviceId)
-    const newDevice = await this.updateDeviceRepository.update(deviceId, deviceData)
+    const previousDevice = await this.loadDeviceByIdRepository.loadById(deviceId)
+    const updatedDevice = await this.updateDeviceRepository.update(deviceId, deviceData)
 
-    if (deviceData.mqttInfo) {
-      this.publishTopicSubscriptionQueue.publishTopicSubscription(oldDevice, Action.UNSUBSCRIBE)
-      this.publishTopicSubscriptionQueue.publishTopicSubscription(newDevice, Action.SUBSCRIBE)
+    if (deviceData.mqttInfo && JSON.stringify(deviceData.mqttInfo) !== JSON.stringify(previousDevice.mqttInfo)) {
+      this.publishTopicSubscriptionQueue.publishTopicSubscription(previousDevice, Action.UNSUBSCRIBE)
+      this.publishTopicSubscriptionQueue.publishTopicSubscription(updatedDevice, Action.SUBSCRIBE)
 
-      if (oldDevice.mqttInfo.brokerId !== newDevice.mqttInfo.brokerId) {
-        const oldBroker = await this.loadBrokerByIdRepository.loadById(oldDevice.mqttInfo.brokerId)
-        const referencedDevices = await this.loadDevicesByBrokerIdRepository.loadByBrokerId(oldBroker.id)
+      if (previousDevice.mqttInfo.brokerId !== updatedDevice.mqttInfo.brokerId) {
+        const previousBroker = await this.loadBrokerByIdRepository.loadById(previousDevice.mqttInfo.brokerId)
+        const linkedDevices = await this.loadDevicesByBrokerIdRepository.loadByBrokerId(previousBroker.id)
 
-        if (oldBroker.status === BrokerStatus.ACTIVE && referencedDevices.length > 0) {
-          await this.updateBrokerStatusRepository.updateStatus(oldBroker.id, BrokerStatus.PROCESSING)
-          this.publishBrokerConnectionQueue.publishBrokerConnection(oldBroker, Action.DISCONNECT)
+        if (previousBroker.status === BrokerStatus.ACTIVE && linkedDevices.length === 0) {
+          await this.updateBrokerStatusRepository.updateStatus(previousBroker.id, BrokerStatus.PROCESSING)
+          this.publishBrokerConnectionQueue.publishBrokerConnection(previousBroker, Action.DISCONNECT)
         }
       }
     }
 
-    return newDevice
+    return updatedDevice
   }
 }
