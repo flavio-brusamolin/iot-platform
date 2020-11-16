@@ -1,0 +1,17 @@
+{
+  "name": "IoT Platform Web",
+  "dockerComposeFile": [
+    "../../docker-compose.yml"
+  ],
+  "service": "web",
+  "workspaceFolder": "/usr/src/app/web",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "extensions": [
+    "dbaeumer.vscode-eslint"
+  ]
+}

@@ -39,5 +39,18 @@ services:
       - database
       - message-queue
 
+  web:
+    container_name: iot-platform-web
+    build: web
+    image: iot-platform-web
+    restart: always
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/web/node_modules
+    ports: 
+      - 4200:4200
+    depends_on:
+      - api
+
 volumes:
   mongo:
