@@ -22,6 +22,14 @@ services:
       - 15672:15672
       - 5672:5672
 
+  waitforrabbit:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    depends_on:
+      - message-queue 
+    command: rabbitmq:5672
+
   api:
     container_name: iot-platform-api
     build: api
@@ -37,6 +45,7 @@ services:
       - 8080:8080
     depends_on:
       - database
+      - waitforrabbit
       - message-queue
 
   web:
