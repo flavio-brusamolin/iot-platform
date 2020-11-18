@@ -1,5 +1,5 @@
 export interface Broker {
-    userId: any
+    userId: string
     name: string
     status: string
     credentials: {

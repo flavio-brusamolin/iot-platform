@@ -1,5 +1,5 @@
 interface Member {
-    userId: any
+    userId: string
     role: string
 }
 

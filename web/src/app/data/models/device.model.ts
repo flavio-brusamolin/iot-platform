@@ -1,10 +1,10 @@
 export interface device {
-    collectionId: any
-    accessGroupId: any
+    collectionId: string
+    accessGroupId: string
     name: string
     protocol: string
     mqttInfo?: {
       topic: string
-      brokerId: any
+      brokerId: string
     }
   }

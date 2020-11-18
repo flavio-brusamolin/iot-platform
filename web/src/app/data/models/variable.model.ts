@@ -4,8 +4,8 @@ interface Data {
 }
 
 export interface Variable {
-  deviceId: any
-  accessGroupId: any
+  deviceId: string
+  accessGroupId: string
   name: string
   key: string
   data?: Data[]

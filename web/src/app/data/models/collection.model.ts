@@ -1,4 +1,4 @@
 export interface Collection {
-    accessGroupId: any
+    accessGroupId: string
     name: string
 }
