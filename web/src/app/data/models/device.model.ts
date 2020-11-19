@@ -1,10 +1,13 @@
+import { Protocol } from '../enums'
+
 export interface device {
-    collectionId: string
-    accessGroupId: string
-    name: string
-    protocol: string
-    mqttInfo?: {
-      topic: string
-      brokerId: string
-    }
+  id: string
+  collectionId: string
+  accessGroupId: string
+  name: string
+  protocol: Protocol
+  mqttInfo?: {
+    topic: string
+    brokerId: string
   }
+}

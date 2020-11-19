@@ -6,7 +6,8 @@ import { tap } from 'rxjs/operators'
 import { JwtHelperService } from '@auth0/angular-jwt'
 
 import { environment } from 'src/environments/environment'
-import { SignUpData, SignInData, Token, User } from 'src/app/data/models'
+import { SignUpData, SignInData, Token } from 'src/app/data/dtos'
+import { User } from 'src/app/data/models'
 
 @Injectable()
 export class AuthService {
@@ -15,53 +16,53 @@ export class AuthService {
 
   private isLoggedIn$ = new BehaviorSubject<boolean>(this.validateToken())
 
-  constructor (private http: HttpClient) { }
+  constructor (private http: HttpClient) {}
 
-  isLoggedIn () : Observable<boolean> {
+  public isLoggedIn (): Observable<boolean> {
     return this.isLoggedIn$.asObservable()
   }
 
-  signIn (credentials: SignInData): Observable<Token> {
+  public signIn (credentials: SignInData): Observable<Token> {
     return this.http
       .post<Token>(`${this.url}/signin`, credentials)
-      .pipe(tap(({ accessToken }) => {
-        this.setToken(accessToken)
+      .pipe(tap(({ token }) => {
+        this.setToken(token)
         this.isLoggedIn$.next(true)
       }))
   }
 
-  signUp (userData: SignUpData): Observable<Token> {
+  public signUp (userData: SignUpData): Observable<Token> {
     return this.http
       .post<Token>(`${this.url}/signup`, userData)
-      .pipe(tap(({ accessToken }) => {
-        this.setToken(accessToken)
+      .pipe(tap(({ token }) => {
+        this.setToken(token)
         this.isLoggedIn$.next(true)
       }))
   }
 
-  signOut (): void {
+  public signOut (): void {
     this.destroyToken()
     this.isLoggedIn$.next(false)
   }
 
-  loadLoggedUser (): Observable<User> {
+  public loadLoggedUser (): Observable<User> {
     return this.http.get<User>(`${this.url}/me`)
   }
 
-  getToken (): any {
-    return localStorage.getItem('accessToken')
+  public getToken (): any {
+    return localStorage.getItem('token')
   }
 
   private validateToken (): boolean {
-    const accessToken = this.getToken()
-    return !this.jwt.isTokenExpired(accessToken)
+    const token = this.getToken()
+    return !this.jwt.isTokenExpired(token)
   }
 
-  private setToken (accessToken: string): void {
-    localStorage.setItem('accessToken', accessToken)
+  private setToken (token: string): void {
+    localStorage.setItem('token', token)
   }
 
   private destroyToken (): void {
-    localStorage.removeItem('accessToken')
+    localStorage.removeItem('token')
   }
 }

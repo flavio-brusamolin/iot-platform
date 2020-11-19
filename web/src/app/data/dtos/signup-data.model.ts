@@ -1,5 +1,4 @@
-export interface User {
-  id: string
+export interface SignUpData {
   name: string
   email: string
   password: string
