@@ -1,0 +1,62 @@
+#container {
+  padding: 4rem 3.5rem;
+  background-color: var(--color-dark-background);
+  border-radius: 1rem;
+}
+
+#container .title {
+  margin-bottom: 3.8rem;
+}
+
+#container .title h1 {
+  font-size: 2.6rem;
+}
+
+#container .title small {
+  color: var(--color-dark-text);
+}
+
+#container form {
+  display: flex;
+  flex-direction: column;
+}
+
+#container form app-input + app-input {
+  margin-top: 2rem;
+}
+
+#container form .message {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.8rem;
+}
+
+#container form .message small {
+  color: var(--color-dark-text);
+}
+
+#container form .message a {
+  margin-left: 0.5rem;
+  font-size: 1.32rem;
+}
+
+#container form button {
+  margin-top: 1.5rem;
+  height: 3.8rem;
+  border-radius: 0.5rem;
+  outline: 0;
+  border: none;
+  background-color: var(--color-primary);
+  font-size: 1.45rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#container form button:hover {
+  background-color: var(--color-dark-primary);
+}
+
+#container form button:disabled {
+  pointer-events: none;
+}

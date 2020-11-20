@@ -1,0 +1,25 @@
+<div id="container">
+
+  <div class="title">
+    <h1>Create account</h1>
+    <small>Sign up to proceed</small>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="signUp(form.value)" autocomplete="off">
+
+    <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+    <app-input label="E-mail" name="email" type="text" formControlName="email"></app-input>
+    <app-input label="Password" name="password" type="password" formControlName="password"></app-input>
+
+    <div class="message">
+      <small>Already have an account?</small>
+      <a>Sign In</a>
+    </div>
+
+    <button type="submit" [disabled]="!form.valid">
+      Sign Up
+    </button>
+    
+  </form>
+
+</div>
