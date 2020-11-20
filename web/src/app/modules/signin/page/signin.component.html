@@ -5,7 +5,7 @@
     <small>Sign In to proceed</small>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="signIn(form.value)">
+  <form [formGroup]="form" (ngSubmit)="signIn(form.value)" autocomplete="off">
 
     <app-input label="E-mail" name="email" type="text" formControlName="email"></app-input>
     <app-input label="Password" name="password" type="password" formControlName="password"></app-input>
@@ -18,7 +18,7 @@
     <button type="submit" [disabled]="!form.valid">
       Sign In
     </button>
-
+    
   </form>
 
 </div>
