@@ -6,10 +6,12 @@
   --color-background: #26292e;
   --color-dark-background: #1e2025;
   --color-dark: #0d0e10;
-  --color-primary: #fd43d9;
-  --color-secondary: #00a8ff;
+  --color-primary: #00a8ff;
+  --color-dark-primary: #0191da;
+  --color-secondary: #fd43d9;
   --color-text-base: #f5f6f8;
   --color-dark-text: #949599;
+  --color-area-border: #ffffff0a;
 }
 
 * {

@@ -16,7 +16,7 @@ export class AuthService {
 
   private isLoggedIn$ = new BehaviorSubject<boolean>(this.validateToken())
 
-  constructor (private http: HttpClient) {}
+  constructor (private http: HttpClient) { }
 
   public isLoggedIn (): Observable<boolean> {
     return this.isLoggedIn$.asObservable()

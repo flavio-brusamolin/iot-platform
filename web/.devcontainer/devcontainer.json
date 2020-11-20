@@ -12,6 +12,7 @@
     }
   },
   "extensions": [
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "angular.ng-template"
   ]
 }
