@@ -38,6 +38,13 @@
 #container form .message a {
   margin-left: 0.5rem;
   font-size: 1.32rem;
+  text-decoration: none;
+  color: var(--color-text-base);
+  transition: color 0.2s;
+}
+
+#container form .message a:hover {
+  color: var(--color-text-base-darkness);
 }
 
 #container form button {

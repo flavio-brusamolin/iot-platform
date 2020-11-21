@@ -13,7 +13,7 @@
 
     <div class="message">
       <small>Already have an account?</small>
-      <a>Sign In</a>
+      <a [routerLink]="['/signin']">Sign In</a>
     </div>
 
     <button type="submit" [disabled]="!form.valid">
