@@ -1,0 +1,11 @@
+#page-template {
+  width: 100vw;
+  height: 100vh;
+}
+
+#page-template main {
+  padding-top: 13rem;
+  width: 90vw;
+  max-width: 120rem;
+  margin: 0 auto;
+}

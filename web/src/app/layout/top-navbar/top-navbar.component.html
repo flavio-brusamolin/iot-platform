@@ -1,0 +1,25 @@
+<nav class="top-navbar">
+  <div class="nav-container">
+    <div class="navbar-left">
+      <span>IoT Platform</span>
+
+      <ul class="navbar-nav">
+        <li>
+          <a>Home</a>
+        </li>
+
+        <li>
+          <a>Settings</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="navbar-right" ngbDropdown>
+      <a id="name" ngbDropdownToggle>{{ name$ | async }}</a>
+
+      <div class="menu" ngbDropdownMenu aria-labelledby="name">
+        <a (click)="signOut()" ngbDropdownItem>Sign Out</a>
+      </div>
+    </div>
+  </div>
+</nav>

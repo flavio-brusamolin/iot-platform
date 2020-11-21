@@ -1,0 +1,69 @@
+.top-navbar {
+  position: fixed;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  background-color: var(--color-dark-background);
+}
+
+.top-navbar .nav-container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-navbar .nav-container  a {
+  color: var(--color-text-base);
+  font-size: 1.5rem;
+  letter-spacing: 0.03rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.top-navbar .nav-container a:hover {
+  color: var(--color-text-base-darkness);
+}
+
+.top-navbar .nav-container .navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.top-navbar .nav-container .navbar-left span {
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+}
+
+.top-navbar .nav-container .navbar-left .navbar-nav {
+  flex-direction: row;
+  margin-left: 5rem;
+}
+
+.top-navbar .nav-container .navbar-left .navbar-nav li + li {
+  margin-left: 2rem;
+}
+
+.top-navbar .nav-container .navbar-right .menu {
+  background-color: var(--color-background);
+  box-shadow: 0px 0px 12px -4px rgba(0,0,0,0.6);
+  text-align: center;
+  padding: 0;
+}
+
+.top-navbar .nav-container .navbar-right .menu a {
+  font-size: 1.4rem;
+  padding: 1rem;
+}
+
+.top-navbar .nav-container .navbar-right .menu a + a {
+  border-top: 1px solid var(--color-area-border);
+}
+
+.top-navbar .nav-container .navbar-right .menu a:hover {
+  color: var(--color-text-base);
+  background-color: var(--color-dark-background);
+}

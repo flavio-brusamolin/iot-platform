@@ -1,0 +1,29 @@
+#collection-list .divider {
+  background-color: var(--color-dark-text);
+}
+
+#collection-list main {
+  margin-top: 3rem;
+}
+
+#collection-list main .card-wrapper {
+  border-left: 1.2rem solid var(--color-secondary);
+  border-radius: 1rem;
+}
+
+#collection-list main .card-wrapper .collection-card {
+  background-color: var(--color-dark-background);
+  max-width: 25rem;
+  padding: 4rem;
+  text-align: center;
+  border-radius: 0rem 1rem 1rem 0rem;
+  font-weight: 600;
+  font-size: 1.6rem;
+  letter-spacing: 0.05rem;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+#collection-list main .card-wrapper .collection-card:hover {
+  background-color: var(--color-dark);
+}
