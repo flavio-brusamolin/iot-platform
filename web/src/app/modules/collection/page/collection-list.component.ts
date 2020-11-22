@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { CollectionService } from 'src/app/data/services/collection.service'
 
 @Component({
   selector: 'app-collection-list',
@@ -6,7 +7,21 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./collection-list.component.css']
 })
 export class CollectionListComponent implements OnInit {
-  public constructor () { }
+  public collections: any
 
-  public ngOnInit (): void { }
+  public constructor (
+    private readonly collectionService: CollectionService
+  ) {
+    this.collections = []
+  }
+
+  public ngOnInit (): void {
+    this.loadCollections()
+  }
+
+  private loadCollections () {
+    this.collectionService.loadPlans().subscribe(collection => {
+      this.collections = collection
+    })
+  }
 }

@@ -7,13 +7,14 @@
 }
 
 #collection-list main .card-wrapper {
-  border-left: 1.2rem solid var(--color-secondary);
-  border-radius: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 #collection-list main .card-wrapper .collection-card {
   background-color: var(--color-dark-background);
-  max-width: 25rem;
+  max-width: 30rem;
   padding: 4rem;
   text-align: center;
   border-radius: 0rem 1rem 1rem 0rem;
@@ -22,6 +23,23 @@
   letter-spacing: 0.05rem;
   cursor: pointer;
   transition: background-color 0.5s;
+  flex-basis: calc(25% - 2 * 1rem);
+  border-left: 1.2rem solid var(--color-secondary);
+  border-radius: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+#collection-list main .card-wrapper .collection-card:nth-child(4n-6){
+  border-left: 1.2rem solid green;
+}
+
+#collection-list main .card-wrapper .collection-card:nth-child(4n-5) {
+  border-left: 1.2rem solid yellow;
+}
+
+#collection-list main .card-wrapper .collection-card:nth-child(4n-4) {
+  border-left: 1.2rem solid blue;
 }
 
 #collection-list main .card-wrapper .collection-card:hover {
