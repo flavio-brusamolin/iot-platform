@@ -11,9 +11,9 @@ import { Collection } from '../models'
 export class CollectionService {
   private url = environment.api
 
-  constructor (private http: HttpClient) { }
+  public constructor (private readonly http: HttpClient) { }
 
-  loadPlans (): Observable<Collection[]> {
+  public loadCollections (): Observable<Collection[]> {
     return this.http.get<Collection[]>(`${this.url}/collections`)
   }
 }

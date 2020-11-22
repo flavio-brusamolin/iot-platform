@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core'
+
+import { Observable } from 'rxjs'
+
+import { Collection } from 'src/app/data/models'
 import { CollectionService } from 'src/app/data/services/collection.service'
 
 @Component({
@@ -7,21 +11,15 @@ import { CollectionService } from 'src/app/data/services/collection.service'
   styleUrls: ['./collection-list.component.css']
 })
 export class CollectionListComponent implements OnInit {
-  public collections: any
+  public collections$!: Observable<Collection[]>
 
-  public constructor (
-    private readonly collectionService: CollectionService
-  ) {
-    this.collections = []
-  }
+  public constructor (private readonly collectionService: CollectionService) { }
 
   public ngOnInit (): void {
     this.loadCollections()
   }
 
-  private loadCollections () {
-    this.collectionService.loadPlans().subscribe(collection => {
-      this.collections = collection
-    })
+  private loadCollections (): void {
+    this.collections$ = this.collectionService.loadCollections()
   }
 }

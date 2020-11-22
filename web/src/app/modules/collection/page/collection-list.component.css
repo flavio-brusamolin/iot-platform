@@ -1,47 +1,66 @@
+#collection-list h1 {
+  letter-spacing: 0.05rem;
+}
+
 #collection-list .divider {
   background-color: var(--color-dark-text);
 }
 
 #collection-list main {
   margin-top: 3rem;
-}
-
-#collection-list main .card-wrapper {
   display: flex;
   flex-wrap: wrap;
-  align-items: stretch;
 }
 
-#collection-list main .card-wrapper .collection-card {
+#collection-list main .collection-card {
   background-color: var(--color-dark-background);
-  max-width: 30rem;
-  padding: 4rem;
-  text-align: center;
-  border-radius: 0rem 1rem 1rem 0rem;
-  font-weight: 600;
-  font-size: 1.6rem;
-  letter-spacing: 0.05rem;
-  cursor: pointer;
-  transition: background-color 0.5s;
-  flex-basis: calc(25% - 2 * 1rem);
-  border-left: 1.2rem solid var(--color-secondary);
   border-radius: 1rem;
-  margin-left: 1rem;
-  margin-bottom: 2rem;
+  border-left: 1rem solid var(--color-dark-primary);
+
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+
+  flex-basis: calc((100% / 4) - (2 * 1rem));
+  min-width: 25rem;
+  margin: 0 1rem 2rem 1rem;
+  padding: 4rem;
+  cursor: pointer;
+
+  transition: background-color 0.5s;
 }
 
-#collection-list main .card-wrapper .collection-card:nth-child(4n-6){
-  border-left: 1.2rem solid green;
-}
-
-#collection-list main .card-wrapper .collection-card:nth-child(4n-5) {
-  border-left: 1.2rem solid yellow;
-}
-
-#collection-list main .card-wrapper .collection-card:nth-child(4n-4) {
-  border-left: 1.2rem solid blue;
-}
-
-#collection-list main .card-wrapper .collection-card:hover {
+#collection-list main .collection-card:hover {
   background-color: var(--color-dark);
+}
+
+/* #collection-list main .collection-card:nth-child(4n-6){
+  border-left: 1rem solid green;
+}
+
+#collection-list main .collection-card:nth-child(4n-5) {
+  border-left: 1rem solid yellow;
+}
+
+#collection-list main .collection-card:nth-child(4n-4) {
+  border-left: 1rem solid blue;
+} */
+
+@media (max-width: 1152px) {
+  #collection-list main .collection-card {
+    flex-basis: calc((100% / 3) - (2 * 1rem));
+  }
+}
+
+@media (max-width: 864px) {
+  #collection-list main .collection-card {
+    flex-basis: calc((100% / 2) - (2 * 1rem));
+  }
+}
+
+@media (max-width: 576px) {
+  #collection-list main .collection-card {
+    flex-basis: calc(100% - (2 * 1rem));
+  }
 }

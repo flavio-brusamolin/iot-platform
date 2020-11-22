@@ -4,10 +4,10 @@
   <hr class="divider">
 
   <main>
-    <div class="card-wrapper">
-      <div class="collection-card" *ngFor="let collection of collections; let i = index" data-color=i>
-        {{collection.name}}
+    <ng-container *ngFor="let collection of (collections$ | async); let i = index" data-color=i>
+      <div class="collection-card">
+        {{ collection.name }}
       </div>
-    </div>
+    </ng-container>
   </main>
 </div>

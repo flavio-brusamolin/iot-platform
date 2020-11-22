@@ -8,7 +8,6 @@ import { CollectionService } from './services/collection.service'
   imports: [],
   providers: [
     CollectionService
-
   ]
 })
 export class DataModule { }
