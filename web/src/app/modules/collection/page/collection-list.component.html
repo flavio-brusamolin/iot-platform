@@ -4,7 +4,7 @@
   <hr class="divider">
 
   <main>
-    <ng-container *ngFor="let collection of (collections$ | async); let i = index" data-color=i>
+    <ng-container *ngFor="let collection of (collections$ | async); let i = index">
       <div class="collection-card">
         {{ collection.name }}
       </div>
