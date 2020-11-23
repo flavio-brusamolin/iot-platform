@@ -1,0 +1,17 @@
+.collection-card {
+  background-color: var(--color-dark-background);
+  border-radius: 1rem;
+  border-left: 1rem solid var(--color-primary);
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  min-width: 25rem;
+  padding: 4rem;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.collection-card:hover {
+  background-color: var(--color-dark);
+}

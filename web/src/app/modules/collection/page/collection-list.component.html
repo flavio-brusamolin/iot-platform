@@ -12,9 +12,7 @@
 
   <main>
     <ng-container *ngFor="let collection of (collections$ | async)">
-      <div class="collection-card">
-        {{ collection.name }}
-      </div>
+      <app-collection-card [collection]="collection"></app-collection-card>
     </ng-container>
   </main>
 </div>

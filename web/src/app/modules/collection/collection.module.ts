@@ -5,10 +5,12 @@ import { DataModule } from 'src/app/data/data.module'
 
 import { CollectionRoutingModule } from './collection-routing.module'
 import { CollectionListComponent } from './page/collection-list.component'
+import { CollectionCardComponent } from './components/collection-card/collection-card.component'
 
 @NgModule({
   declarations: [
-    CollectionListComponent
+    CollectionListComponent,
+    CollectionCardComponent
   ],
   imports: [
     CollectionRoutingModule,
