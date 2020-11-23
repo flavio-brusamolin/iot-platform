@@ -5,10 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 import { InputComponent } from './input/input.component'
+import { ContainerComponent } from './container/container.component'
 
 @NgModule({
   declarations: [
-    InputComponent
+    InputComponent,
+    ContainerComponent
   ],
   imports: [
     CommonModule
@@ -19,7 +21,8 @@ import { InputComponent } from './input/input.component'
 
     FontAwesomeModule,
 
-    InputComponent
+    InputComponent,
+    ContainerComponent
   ]
 })
 export class SharedModule { }

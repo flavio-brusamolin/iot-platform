@@ -1,18 +1,14 @@
-<div id="collection-list">
-  <header>
-    <h1>Collections</h1>
+<app-container name="Collections">
 
-    <button (click)="createCollection({ name: 'Test' })">
-      <fa-icon [icon]=icons.plus></fa-icon>
-      New collection
-    </button>
-  </header>
+  <button header (click)="createCollection({ name: 'Test' })">
+    <fa-icon [icon]=icons.plus></fa-icon>
+    New collection
+  </button>
 
-  <hr>
-
-  <main>
+  <main content>
     <ng-container *ngFor="let collection of (collections$ | async)">
       <app-collection-card [collection]="collection"></app-collection-card>
     </ng-container>
   </main>
-</div>
+
+</app-container>

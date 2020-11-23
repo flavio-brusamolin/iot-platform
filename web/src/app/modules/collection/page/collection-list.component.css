@@ -1,15 +1,4 @@
-#collection-list header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-#collection-list header h1 {
-  letter-spacing: 0.05rem;
-  margin-bottom: 0;
-}
-
-#collection-list header button {
+app-container button {
   background-color: var(--color-primary);
   border-radius: 0.5rem;
   outline: 0;
@@ -19,39 +8,34 @@
   transition: background-color 0.2s;
 }
 
-#collection-list header button:hover {
+app-container button:hover {
   background-color: var(--color-dark-primary);
 }
 
-#collection-list hr {
-  background-color: var(--color-dark-text);
-}
-
-#collection-list main {
-  margin-top: 3rem;
+app-container main {
   display: flex;
   flex-wrap: wrap;
 }
 
-#collection-list main app-collection-card {
+app-container main app-collection-card {
   flex-basis: calc((100% / 4) - (2 * 1rem));
   margin: 0 1rem 2rem 1rem;
 }
 
 @media (max-width: 1152px) {
-  #collection-list main app-collection-card {
+  app-container main app-collection-card {
     flex-basis: calc((100% / 3) - (2 * 1rem));
   }
 }
 
 @media (max-width: 864px) {
-  #collection-list main app-collection-card {
+  app-container main app-collection-card {
     flex-basis: calc((100% / 2) - (2 * 1rem));
   }
 }
 
 @media (max-width: 576px) {
-  #collection-list main app-collection-card {
+  app-container main app-collection-card {
     flex-basis: calc(100% - (2 * 1rem));
   }
 }

@@ -1,0 +1,12 @@
+<div id="container">
+  <header>
+    <h1>{{ name }}</h1>
+    <ng-content select="[header]"></ng-content>
+  </header>
+
+  <hr>
+
+  <main>
+    <ng-content select="[content]"></ng-content>
+  </main>
+</div>

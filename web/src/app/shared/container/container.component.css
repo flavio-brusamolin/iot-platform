@@ -1,0 +1,24 @@
+#container header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+#container header h1 {
+  letter-spacing: 0.05rem;
+  margin-bottom: 0;
+}
+
+#container hr {
+  background-color: var(--color-dark-text);
+}
+
+#container main {
+  margin-top: 3rem;
+}
+
+@media (max-width: 576px) {
+  #container header {
+    align-items: center;
+  }
+}
