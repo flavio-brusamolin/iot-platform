@@ -1,15 +1,30 @@
-#collection-list h1 {
-  letter-spacing: 0.05rem;
-}
-
-#collection-list .divider {
-  background-color: var(--color-dark-text);
-}
-
-#collection-nav-bar {
+#collection-list header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
+}
+
+#collection-list header h1 {
+  letter-spacing: 0.05rem;
+  margin-bottom: 0;
+}
+
+#collection-list header button {
+  background-color: var(--color-primary);
+  border-radius: 0.5rem;
+  outline: 0;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.45rem;
+  transition: background-color 0.2s;
+}
+
+#collection-list header button:hover {
+  background-color: var(--color-dark-primary);
+}
+
+#collection-list hr {
+  background-color: var(--color-dark-text);
 }
 
 #collection-list main {
@@ -21,7 +36,7 @@
 #collection-list main .collection-card {
   background-color: var(--color-dark-background);
   border-radius: 1rem;
-  border-left: 1rem solid var(--color-dark-primary);
+  border-left: 1rem solid var(--color-primary);
 
   text-align: center;
   font-size: 1.6rem;

@@ -3,7 +3,7 @@
   width: 100%;
   height: 6rem;
   display: flex;
-  background-color: var(--color-dark-background);
+  background-color: var(--color-dark);
 }
 
 .top-navbar .nav-container {

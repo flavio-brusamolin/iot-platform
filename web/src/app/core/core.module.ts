@@ -28,7 +28,6 @@ import { TokenInterceptor } from './interceptors/token.interceptor'
   ],
   providers: [
     AuthService,
-
     AuthGuard,
 
     {

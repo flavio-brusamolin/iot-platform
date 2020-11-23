@@ -1,15 +1,17 @@
 <div id="collection-list">
-  <div id="collection-nav-bar">
+  <header>
     <h1>Collections</h1>
-    <button (click)="createCollection()" style="background-color: black;">
-      Collection
+
+    <button (click)="createCollection({ name: 'Test' })">
+      <fa-icon [icon]=icons.plus></fa-icon>
+      New collection
     </button>
-  </div>
-  
-  <hr class="divider">
+  </header>
+
+  <hr>
 
   <main>
-    <ng-container *ngFor="let collection of (collections$ | async); let i = index">
+    <ng-container *ngFor="let collection of (collections$ | async)">
       <div class="collection-card">
         {{ collection.name }}
       </div>
