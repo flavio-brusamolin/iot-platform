@@ -6,6 +6,7 @@ import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
 import { Collection } from '../models'
+import { CollectionCreationData } from '../dtos'
 
 @Injectable()
 export class CollectionService {
@@ -17,7 +18,7 @@ export class CollectionService {
     return this.http.get<Collection[]>(`${this.url}/collections`)
   }
 
-  public createCollection (collection: Collection): Observable<Collection> {
-    return this.http.post<Collection>(`${this.url}/collections`, collection)
+  public createCollection (collectionData: CollectionCreationData): Observable<Collection> {
+    return this.http.post<Collection>(`${this.url}/collections`, collectionData)
   }
 }
