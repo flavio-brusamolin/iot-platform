@@ -6,6 +6,12 @@
   background-color: var(--color-dark-text);
 }
 
+#collection-nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 #collection-list main {
   margin-top: 3rem;
   display: flex;

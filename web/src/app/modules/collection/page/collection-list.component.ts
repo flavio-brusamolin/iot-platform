@@ -22,4 +22,12 @@ export class CollectionListComponent implements OnInit {
   private loadCollections (): void {
     this.collections$ = this.collectionService.loadCollections()
   }
+
+  public createCollection (): any {
+    const collection: any = {
+      name: 'Leo'
+    }
+    this.collectionService.createCollection(collection).subscribe()
+    this.loadCollections()
+  }
 }

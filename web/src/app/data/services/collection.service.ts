@@ -16,4 +16,8 @@ export class CollectionService {
   public loadCollections (): Observable<Collection[]> {
     return this.http.get<Collection[]>(`${this.url}/collections`)
   }
+
+  public createCollection (collection: Collection): Observable<Collection> {
+    return this.http.post<Collection>(`${this.url}/collections`, collection)
+  }
 }
