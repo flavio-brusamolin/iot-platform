@@ -38,4 +38,9 @@ app-container main app-collection-card {
   app-container main app-collection-card {
     flex-basis: calc(100% - (2 * 1rem));
   }
+
+  app-container button {
+    padding: 0.7rem 1.1rem;
+    font-size: 1.42rem;
+  }
 }
