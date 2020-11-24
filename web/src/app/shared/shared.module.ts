@@ -8,15 +8,19 @@ import { NgxSpinnerModule } from 'ngx-spinner'
 import { InputComponent } from './input/input.component'
 import { ContainerComponent } from './container/container.component'
 import { LoadingComponent } from './loading/loading.component'
+import { ErrorComponent } from './error/error.component'
 
 @NgModule({
   declarations: [
     InputComponent,
     ContainerComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorComponent
   ],
   imports: [
     CommonModule,
+
+    FontAwesomeModule,
     NgxSpinnerModule
   ],
   exports: [
@@ -28,7 +32,8 @@ import { LoadingComponent } from './loading/loading.component'
 
     InputComponent,
     ContainerComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorComponent
   ]
 })
 export class SharedModule { }

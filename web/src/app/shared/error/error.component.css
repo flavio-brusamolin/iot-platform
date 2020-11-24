@@ -1,0 +1,34 @@
+#error-container {
+  margin-top: 10rem;
+  text-align: center;
+}
+
+#error-container h2 {
+  margin-top: 1.4rem;
+  margin-bottom: 1rem;
+  font-size: 3.4rem;
+  font-weight: 600;
+}
+
+#error-container p {
+  font-size: 1.55rem;
+  margin-bottom: 2rem;
+}
+
+#error-container button {
+  background-color: transparent;
+  border-radius: 3rem;
+  outline: 0;
+  padding: 0.55rem 2.4rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  border: 0.3rem solid var(--color-secondary);
+  color: var(--color-secondary);
+  transition: background-color 0.2s;
+}
+
+#error-container button:hover {
+  background-color: var(--color-secondary);
+  color: var(--text-base);
+}

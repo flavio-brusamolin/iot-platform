@@ -12,9 +12,7 @@
   </main>
 
   <ng-template #loadingOrError>
-    <ng-container *ngIf="error$ | async; else loading">
-      <p>Temporary Error</p>
-    </ng-container>
+    <app-error *ngIf="error$ | async; else loading"></app-error>
 
     <ng-template #loading>
       <app-loading></app-loading>
