@@ -5,10 +5,10 @@ import { HttpErrorResponse } from '@angular/common/http'
 
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
-import { ToastrService } from 'ngx-toastr'
 
 import { AuthService } from 'src/app/core/services/auth.service'
 import { SignUpData } from 'src/app/data/dtos'
+import { NotificationService } from 'src/app/core/services/notification.service'
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +23,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public constructor (
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
-    private readonly toastr: ToastrService,
+    private readonly notificationService: NotificationService,
     private readonly authService: AuthService
   ) { }
 
@@ -49,12 +49,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
-          this.toastr.success('Welcome to IoT Platform', 'Hello!')
+          this.notificationService.success('Hello!', 'Welcome to IoT Platform')
           this.router.navigate(['/'])
         },
         ({ error: httpError }: HttpErrorResponse) => {
           console.error(httpError)
-          this.toastr.error(httpError.error, 'Error!')
+          this.notificationService.error('Error!', httpError.error)
         }
       )
   }

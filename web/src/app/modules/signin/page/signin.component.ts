@@ -5,10 +5,10 @@ import { Router } from '@angular/router'
 
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
-import { ToastrService } from 'ngx-toastr'
 
 import { AuthService } from 'src/app/core/services/auth.service'
 import { SignInData } from 'src/app/data/dtos'
+import { NotificationService } from 'src/app/core/services/notification.service'
 
 @Component({
   selector: 'app-signin',
@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   public constructor (
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
-    private readonly toastr: ToastrService,
+    private readonly notificationService: NotificationService,
     private readonly authService: AuthService
   ) { }
 
@@ -48,12 +48,12 @@ export class SignInComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
-          this.toastr.success('Successful sign in', 'Welcome back!')
+          this.notificationService.success('Welcome back!', 'Successful sign in')
           this.router.navigate(['/'])
         },
         ({ error: httpError }: HttpErrorResponse) => {
           console.error(httpError)
-          this.toastr.error(httpError.error, 'Error!')
+          this.notificationService.error('Error!', httpError.error)
         }
       )
   }

@@ -7,6 +7,7 @@ import { ToastrModule } from 'ngx-toastr'
 
 import { throwIfAlreadyLoaded } from './guards/module-import.guard'
 import { AuthService } from './services/auth.service'
+import { NotificationService } from './services/notification.service'
 import { AuthGuard } from './guards/auth.guard'
 import { TokenInterceptor } from './interceptors/token.interceptor'
 
@@ -28,6 +29,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor'
   ],
   providers: [
     AuthService,
+    NotificationService,
+
     AuthGuard,
 
     {
