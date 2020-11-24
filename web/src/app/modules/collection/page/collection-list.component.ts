@@ -4,7 +4,6 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { NgxSpinnerService } from 'ngx-spinner'
 
 import { Collection } from 'src/app/data/models'
 import { CollectionService } from 'src/app/data/services/collection.service'
@@ -28,22 +27,16 @@ export class CollectionListComponent implements OnInit, OnDestroy {
 
   public constructor (
     private readonly collectionService: CollectionService,
-    private readonly notificationService: NotificationService,
-    private readonly spinner: NgxSpinnerService
+    private readonly notificationService: NotificationService
   ) { }
 
   public ngOnInit (): void {
-    this.startSpinner()
     this.loadCollections()
   }
 
   public ngOnDestroy (): void {
     this.unsub$.next()
     this.unsub$.complete()
-  }
-
-  private startSpinner (): void {
-    this.spinner.show()
   }
 
   private loadCollections (): void {

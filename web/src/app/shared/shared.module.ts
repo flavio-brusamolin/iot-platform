@@ -7,14 +7,17 @@ import { NgxSpinnerModule } from 'ngx-spinner'
 
 import { InputComponent } from './input/input.component'
 import { ContainerComponent } from './container/container.component'
+import { LoadingComponent } from './loading/loading.component'
 
 @NgModule({
   declarations: [
     InputComponent,
-    ContainerComponent
+    ContainerComponent,
+    LoadingComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgxSpinnerModule
   ],
   exports: [
     CommonModule,
@@ -24,7 +27,8 @@ import { ContainerComponent } from './container/container.component'
     NgxSpinnerModule,
 
     InputComponent,
-    ContainerComponent
+    ContainerComponent,
+    LoadingComponent
   ]
 })
 export class SharedModule { }
