@@ -5,10 +5,22 @@
     New collection
   </button>
 
-  <main content>
-    <ng-container *ngFor="let collection of (collections$ | async)">
+  <main content *ngIf="(collections$ | async) as collections; else loadingOrError">
+    <ng-container *ngFor="let collection of collections">
       <app-collection-card [collection]="collection"></app-collection-card>
     </ng-container>
   </main>
+
+  <ng-template #loadingOrError>
+    <ng-container *ngIf="error$ | async; else loading">
+      <p>Temporary Error</p>
+    </ng-container>
+
+    <ng-template #loading>
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.4)" type="ball-clip-rotate" size="default" color="var(--color-secondary)">
+      </ngx-spinner>
+    </ng-template>
+  </ng-template>
+
 
 </app-container>
