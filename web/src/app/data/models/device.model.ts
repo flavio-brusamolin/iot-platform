@@ -1,6 +1,6 @@
 import { Protocol } from '../enums'
 
-export interface device {
+export interface Device {
   id: string
   collectionId: string
   accessGroupId: string
