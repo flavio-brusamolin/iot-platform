@@ -21,4 +21,8 @@ export class BrokerService {
   public createBroker (brokerData: BrokerCreationData): Observable<Broker> {
     return this.http.post<Broker>(`${this.url}/brokers`, brokerData)
   }
+
+  public reprocessBroker (brokerId: string): Observable<Broker> {
+    return this.http.post<Broker>(`${this.url}/brokers/${brokerId}/reprocessing`, null)
+  }
 }
