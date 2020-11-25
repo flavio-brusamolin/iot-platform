@@ -6,9 +6,15 @@
   </button>
 
   <main content *ngIf="(collections$ | async) as collections; else loadingOrError">
-    <ng-container *ngFor="let collection of collections">
-      <app-collection-card [collection]="collection"></app-collection-card>
+    <ng-container *ngIf="collections?.length; else empty">
+      <app-collection-card *ngFor="let collection of collections" [collection]="collection"></app-collection-card>
     </ng-container>
+
+    <ng-template #empty>
+      <div class="empty">
+        <app-empty></app-empty>
+      </div>
+    </ng-template>
   </main>
 
   <ng-template #loadingOrError>

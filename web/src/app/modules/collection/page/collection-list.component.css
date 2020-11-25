@@ -17,6 +17,10 @@ app-container main {
   flex-wrap: wrap;
 }
 
+app-container main .empty {
+  width: 100%;
+}
+
 app-container main app-collection-card {
   flex-basis: calc((100% / 4) - (2 * 1rem));
   margin: 0 1rem 2rem 1rem;

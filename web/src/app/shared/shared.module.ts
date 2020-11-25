@@ -9,13 +9,15 @@ import { InputComponent } from './input/input.component'
 import { ContainerComponent } from './container/container.component'
 import { LoadingComponent } from './loading/loading.component'
 import { ErrorComponent } from './error/error.component'
+import { EmptyComponent } from './empty/empty.component'
 
 @NgModule({
   declarations: [
     InputComponent,
     ContainerComponent,
     LoadingComponent,
-    ErrorComponent
+    ErrorComponent,
+    EmptyComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { ErrorComponent } from './error/error.component'
     InputComponent,
     ContainerComponent,
     LoadingComponent,
-    ErrorComponent
+    ErrorComponent,
+    EmptyComponent
   ]
 })
 export class SharedModule { }
