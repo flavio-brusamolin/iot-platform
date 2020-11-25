@@ -1,3 +1,7 @@
+.active {
+  color: var(--color-primary) !important;
+}
+
 .top-navbar {
   position: fixed;
   width: 100%;
