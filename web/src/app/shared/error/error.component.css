@@ -23,12 +23,12 @@
   font-size: 1.4rem;
   font-weight: 600;
   transition: background-color 0.2s;
-  border: 0.3rem solid var(--color-secondary);
-  color: var(--color-secondary);
+  border: 0.3rem solid var(--color-primary);
+  color: var(--color-primary);
   transition: background-color 0.2s;
 }
 
 #error-container button:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary);
   color: var(--text-base);
 }

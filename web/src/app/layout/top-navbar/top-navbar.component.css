@@ -1,5 +1,6 @@
 .active {
-  color: var(--color-primary) !important;
+  color: var(--color-secondary) !important;
+  font-weight: 600 !important;
 }
 
 .top-navbar {
