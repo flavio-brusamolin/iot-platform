@@ -1,0 +1,51 @@
+app-container button {
+    background-color: var(--color-primary);
+    border-radius: 0.5rem;
+    outline: 0;
+    border: none;
+    padding: 0.8rem 1.4rem;
+    font-size: 1.45rem;
+    transition: background-color 0.2s;
+  }
+  
+  app-container button:hover {
+    background-color: var(--color-dark-primary);
+  }
+  
+  app-container main {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  app-container main .empty {
+    width: 100%;
+  }
+  
+  app-container main app-broker-card {
+    flex-basis: calc((100% / 4) - (2 * 1rem));
+    margin: 0 1rem 2rem 1rem;
+  }
+  
+  @media (max-width: 1152px) {
+    app-container main app-broker-card {
+      flex-basis: calc((100% / 3) - (2 * 1rem));
+    }
+  }
+  
+  @media (max-width: 864px) {
+    app-container main app-broker-card {
+      flex-basis: calc((100% / 2) - (2 * 1rem));
+    }
+  }
+  
+  @media (max-width: 576px) {
+    app-container main app-broker-card {
+      flex-basis: calc(100% - (2 * 1rem));
+    }
+  
+    app-container button {
+      padding: 0.7rem 1.1rem;
+      font-size: 1.42rem;
+    }
+  }
+  
