@@ -19,6 +19,7 @@
 }
 
 .broker-card header .info-icon {
+  font-size: 1.8rem;
   color: var(--color-secondary);
 }
 
