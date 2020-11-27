@@ -25,6 +25,10 @@ const routes: Routes = [
       {
         path: 'team',
         loadChildren: () => import('./modules/team/team.module').then(m => m.TeamModule)
+      },
+      {
+        path: 'devices',
+        loadChildren: () => import('./modules/device/device.module').then(m => m.DeviceModule)
       }
     ]
   },
