@@ -19,8 +19,12 @@ const routes: Routes = [
         loadChildren: () => import('./modules/collection/collection.module').then(m => m.CollectionModule)
       },
       {
-        path: 'settings/mqtt/brokers',
+        path: 'brokers',
         loadChildren: () => import('./modules/broker/broker.module').then(m => m.BrokerModule)
+      },
+      {
+        path: 'team',
+        loadChildren: () => import('./modules/team/team.module').then(m => m.TeamModule)
       }
     ]
   },
