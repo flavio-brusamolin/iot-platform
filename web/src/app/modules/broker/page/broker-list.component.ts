@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
@@ -11,8 +12,7 @@ export class BrokerListComponent implements OnInit {
     plus: faPlus
   }
 
-  constructor () { }
+  public constructor () { }
 
-  ngOnInit (): void {
-  }
+  public ngOnInit (): void { }
 }

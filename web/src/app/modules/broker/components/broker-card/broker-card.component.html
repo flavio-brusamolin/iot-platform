@@ -1,16 +1,13 @@
 <div class="broker-card">
-  <div class="broker-card-header">
-    <div class="broker-card-header-status">
-      <fa-icon [icon]="icons.circle"></fa-icon>
-      <h4>Active</h4>
-    </div>
-    <fa-icon id="broker-options" [icon]="icons.options"></fa-icon>
-  </div>
-  <div class="broker-card-content">
-    <h1>Broker 1</h1>
-    <fa-icon [icon]="icons.info"></fa-icon>
-  </div>
+  <header>
+    <fa-icon [icon]="icons.info" [class]="['info-icon']"></fa-icon>
+    <fa-icon [icon]="icons.options"></fa-icon>
+  </header>
 
-
+  <main>
+    <!-- <fa-icon [icon]="icons.active" [class]="['status-icon']"></fa-icon> -->
+    <!-- <fa-icon [icon]="icons.inactive" [class]="['status-icon']"></fa-icon> -->
+    <fa-icon [icon]="icons.processing" [spin]="true" [class]="['status-icon']"></fa-icon>
+    My Broker
+  </main>
 </div>
-  

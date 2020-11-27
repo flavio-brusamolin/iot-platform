@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { faCircle, faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+
+import { faSyncAlt, faEllipsisV, faInfo } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 
 @Component({
   selector: 'app-broker-card',
@@ -8,13 +10,14 @@ import { faCircle, faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg
 })
 export class BrokerCardComponent implements OnInit {
   public readonly icons = {
-    circle: faCircle,
+    active: faCheckCircle,
+    inactive: faTimesCircle,
+    processing: faSyncAlt,
     options: faEllipsisV,
-    info: faInfoCircle
+    info: faInfo
   }
 
-  constructor () { }
+  public constructor () { }
 
-  ngOnInit (): void {
-  }
+  public ngOnInit (): void { }
 }

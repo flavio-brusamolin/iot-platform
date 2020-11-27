@@ -1,57 +1,36 @@
 .broker-card {
-    background-color: var(--color-dark-background);
-    border-radius: 1rem;
-    border-left: 1rem solid var(--color-dark);
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: 600;
-    letter-spacing: 0.05rem;
-    min-width: 25rem;
-    cursor: pointer;
-    transition: background-color 0.5s, border-left-color 0.5s;
+  background-color: var(--color-dark-background);
+  border-radius: 1rem;
+  border-left: 1rem solid var(--color-dark);
+  min-width: 25rem;
+  cursor: pointer;
+  transition: background-color 0.5s, border-left-color 0.5s;
+  padding: 1rem 1.5rem 4rem 1.5rem;
 }
 
-.broker-card h1 {
-  padding: 1rem;
+.broker-card:hover {
+  background-color: var(--color-dark);
+  border-left-color: var(--color-secondary);
 }
 
-.broker-card-header {
-  margin-left: 2rem;
+.broker-card header {
   display: flex;
-  flex-direction: row;
-  text-align: center;
   justify-content: space-between;
-  align-items: center;
 }
 
-#broker-options {
-  padding: 1rem;
+.broker-card header .info-icon {
+  color: var(--color-secondary);
+}
+
+.broker-card main {
   text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top: 0.8rem;
+  letter-spacing: 0.05rem;
 }
 
-.broker-card-header-status {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
+.broker-card main .status-icon {
+  font-size: 1.8rem;
+  margin-right: 0.3rem;
 }
-
-.broker-card-header-status fa-icon {
-  color: rgb(26, 206, 26);
-}
-
-.broker-card-header-status h4 {
-  justify-content: center;
-  margin-left: 1rem;
-  text-align: center;
-  align-items: center;
-  margin-bottom: 0 !important;
-}
-
-.broker-card-content {
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-  
