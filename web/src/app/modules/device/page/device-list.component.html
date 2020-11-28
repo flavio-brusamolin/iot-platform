@@ -1,16 +1,30 @@
 <app-container name="Devices">
 
-  <button header>
+  <button header (click)="createDevice('5fc1a13c385c6a0019b49566', { name: 'Test', protocol: 'mqtt', mqttInfo: { topic: 'topic', brokerId: '5fbdca0cde9ef10019f6ad76' } })">
     <fa-icon [icon]=icons.plus></fa-icon>
     New Device
   </button>
 
   <main content>
-    <app-device-card></app-device-card>
-    <app-device-card></app-device-card>
-    <app-device-card></app-device-card>
-    <app-device-card></app-device-card>
-    <app-device-card></app-device-card>
+    <main content *ngIf="(devices$ | async) as devices; else loadingOrError">
+      <ng-container *ngIf="devices?.length; else empty">
+        <app-device-card *ngFor="let device of devices" [device]="device"></app-device-card>
+      </ng-container>
+  
+      <ng-template #empty>
+        <div class="empty">
+          <app-empty></app-empty>
+        </div>
+      </ng-template>
+    </main>
+  
+    <ng-template #loadingOrError>
+      <app-error *ngIf="error$ | async; else loading"></app-error>
+  
+      <ng-template #loading>
+        <app-loading></app-loading>
+      </ng-template>
+    </ng-template>
   </main>
 
 </app-container>

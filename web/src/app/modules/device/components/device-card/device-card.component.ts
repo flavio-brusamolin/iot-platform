@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 
 import { faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { Device } from 'src/app/data/models'
 
 @Component({
   selector: 'app-device-card',
@@ -12,6 +13,8 @@ export class DeviceCardComponent implements OnInit {
     options: faEllipsisV,
     info: faInfoCircle
   }
+
+  @Input() public device!: Device
 
   public constructor () { }
 
