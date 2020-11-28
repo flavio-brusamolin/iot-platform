@@ -27,7 +27,7 @@ const routes: Routes = [
         loadChildren: () => import('./modules/team/team.module').then(m => m.TeamModule)
       },
       {
-        path: 'devices',
+        path: 'collections/:collectionId',
         loadChildren: () => import('./modules/device/device.module').then(m => m.DeviceModule)
       }
     ]

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Observable, of, Subject } from 'rxjs'
@@ -19,17 +20,22 @@ export class DeviceListComponent implements OnInit {
     plus: faPlus
   }
 
+  public collectionId: any
   public devices$!: Observable<Device[] | null>
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
 
   public constructor (
+    private activatedRoute: ActivatedRoute,
     private readonly deviceService: DeviceService,
     private readonly notificationService: NotificationService
   ) { }
 
   public ngOnInit (): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.collectionId = params.get('collectionId')
+    })
     this.loadDevices()
   }
 
@@ -40,7 +46,7 @@ export class DeviceListComponent implements OnInit {
 
   private loadDevices (): void {
     this.devices$ = this.deviceService
-      .loadDevices('5fc1a13c385c6a0019b49566')
+      .loadDevices(this.collectionId)
       .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
         console.error(httpError)
 

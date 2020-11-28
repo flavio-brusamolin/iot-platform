@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
 import { Collection } from 'src/app/data/models'
 
@@ -10,7 +11,13 @@ import { Collection } from 'src/app/data/models'
 export class CollectionCardComponent implements OnInit {
   @Input() public collection!: Collection
 
-  public constructor () { }
+  public constructor (
+    private readonly router: Router
+  ) { }
 
   public ngOnInit (): void { }
+
+  public navigateToDevice (collectionId: string): void {
+    this.router.navigate(['/collections/', collectionId])
+  }
 }
