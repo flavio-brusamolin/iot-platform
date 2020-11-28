@@ -1,4 +1,4 @@
-.broker-card {
+.device-card {
   background-color: var(--color-dark-background);
   border-radius: 1rem;
   border-left: 1rem solid var(--color-dark);
@@ -8,22 +8,22 @@
   padding: 1rem 1.5rem 3rem 1.5rem;
 }
 
-.broker-card:hover {
+.device-card:hover {
   background-color: var(--color-dark);
   border-left-color: var(--color-secondary);
 }
 
-.broker-card header {
+.device-card header {
   display: flex;
   justify-content: space-between;
 }
 
-.broker-card header .info-icon {
+.device-card header .info-icon {
   font-size: 1.8rem;
   color: var(--color-secondary);
 }
 
-.broker-card main {
+.device-card main {
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
@@ -33,6 +33,6 @@
   flex-direction: column;
 }
 
-.broker-card main small {
+.device-card main small {
   color: var(--color-text-base-darkness);
 }
