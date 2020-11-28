@@ -1,13 +1,13 @@
 <app-container name="Members">
 
-  <button header (click)="createMember()">
+  <button header>
     <fa-icon [icon]=icons.plus></fa-icon>
     Add member
   </button>
 
-  <main content *ngIf="(team$ | async) as team; else loadingOrError">
-    <ng-container>
-      <app-member-card *ngFor="let member of team.members" [member]="member"></app-member-card>
+  <main content *ngIf="(members$ | async) as members; else loadingOrError">
+    <ng-container *ngIf="members?.length; else empty">
+      <app-member-card *ngFor="let member of members" [member]="member"></app-member-card>
     </ng-container>
 
     <ng-template #empty>

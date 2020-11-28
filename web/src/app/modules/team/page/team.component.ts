@@ -1,13 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface'
 import { Component, OnInit } from '@angular/core'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Observable, of, Subject } from 'rxjs'
-import { catchError, takeUntil } from 'rxjs/operators'
+import { catchError, map, takeUntil } from 'rxjs/operators'
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { MemberCreation } from 'src/app/data/dtos'
-import { Team } from 'src/app/data/models'
+import { Member } from 'src/app/data/models'
 import { TeamService } from 'src/app/data/services/team.service'
 
 @Component({
@@ -20,7 +19,7 @@ export class TeamComponent implements OnInit {
     plus: faPlus
   }
 
-  public team$!: Observable<Team | null>
+  public members$!: Observable<Member[] | null>
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
@@ -40,9 +39,9 @@ export class TeamComponent implements OnInit {
   }
 
   private loadTeam (): void {
-    this.team$ = this.teamService
-      .loadTeamById('5fc1a13c385c6a0019b49565')
-      .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
+    this.members$ = this.teamService.loadTeamById('5fbda32e6cb24d001aeae18d').pipe(
+      map(team => team.members),
+      catchError(({ error: httpError }: HttpErrorResponse) => {
         console.error(httpError)
 
         this.notificationService.error('Error!', httpError.error)
