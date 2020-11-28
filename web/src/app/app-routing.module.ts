@@ -29,6 +29,10 @@ const routes: Routes = [
       {
         path: 'collections/:collectionId',
         loadChildren: () => import('./modules/device/device.module').then(m => m.DeviceModule)
+      },
+      {
+        path: 'variables',
+        loadChildren: () => import('./modules/variable/variable.module').then(m => m.VariableModule)
       }
     ]
   },

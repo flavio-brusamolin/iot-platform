@@ -1,0 +1,24 @@
+.variable-card {
+  background-color: var(--color-dark-background);
+  border-radius: 1rem;
+  border-left: 1rem solid var(--color-dark);
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  min-width: 25rem;
+  padding: 3.2rem;
+  cursor: pointer;
+  transition: background-color 0.5s, border-left-color 0.5s;
+  display: flex;
+  flex-direction: column;
+}
+
+.variable-card:hover {
+  background-color: var(--color-dark);
+  border-left-color: var(--color-secondary);
+}
+
+.variable-card small {
+  color: var(--color-text-base-darkness);
+}
