@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { DeviceCreation } from 'src/app/data/dtos'
 import { Device } from 'src/app/data/models'
 import { DeviceService } from 'src/app/data/services/device.service'
+import { Protocol } from 'src/app/data/enums/protocol'
 
 @Component({
   selector: 'app-device-list',
@@ -25,6 +26,8 @@ export class DeviceListComponent implements OnInit {
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
+
+  public protocol = Protocol.MQTT
 
   public constructor (
     private activatedRoute: ActivatedRoute,
