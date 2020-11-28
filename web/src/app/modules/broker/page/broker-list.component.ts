@@ -25,7 +25,7 @@ export class BrokerListComponent implements OnInit {
   private unsub$ = new Subject<void>()
 
   public constructor (
-    public readonly brokerService: BrokerService,
+    private readonly brokerService: BrokerService,
     private readonly notificationService: NotificationService
   ) { }
 
