@@ -11,28 +11,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'collections',
+        redirectTo: 'home',
         pathMatch: 'full'
       },
       {
-        path: 'collections',
-        loadChildren: () => import('./modules/collection/collection.module').then(m => m.CollectionModule)
+        path: 'home',
+        loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
       },
       {
-        path: 'brokers',
-        loadChildren: () => import('./modules/broker/broker.module').then(m => m.BrokerModule)
-      },
-      {
-        path: 'team',
-        loadChildren: () => import('./modules/team/team.module').then(m => m.TeamModule)
-      },
-      {
-        path: 'collections/:collectionId',
-        loadChildren: () => import('./modules/device/device.module').then(m => m.DeviceModule)
-      },
-      {
-        path: 'variables',
-        loadChildren: () => import('./modules/variable/variable.module').then(m => m.VariableModule)
+        path: 'settings',
+        loadChildren: () => import('./modules/settings/settings.module').then(m => m.SettingsModule)
       }
     ]
   },

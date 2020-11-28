@@ -16,3 +16,7 @@
   background-color: var(--color-dark);
   border-left-color: var(--color-secondary);
 }
+
+.collection-card:focus {
+  outline: 0;
+}

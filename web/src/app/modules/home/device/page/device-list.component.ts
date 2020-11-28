@@ -21,7 +21,7 @@ export class DeviceListComponent implements OnInit {
     plus: faPlus
   }
 
-  public collectionId: any
+  public collectionId: string
   public devices$!: Observable<Device[] | null>
   public error$ = new Subject<boolean>();
 
@@ -30,15 +30,14 @@ export class DeviceListComponent implements OnInit {
   public protocol = Protocol.MQTT
 
   public constructor (
-    private activatedRoute: ActivatedRoute,
+    private readonly activatedRoute: ActivatedRoute,
     private readonly deviceService: DeviceService,
     private readonly notificationService: NotificationService
-  ) { }
+  ) {
+    this.collectionId = this.activatedRoute.snapshot.params.collectionId
+  }
 
   public ngOnInit (): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.collectionId = params.get('collectionId')
-    })
     this.loadDevices()
   }
 

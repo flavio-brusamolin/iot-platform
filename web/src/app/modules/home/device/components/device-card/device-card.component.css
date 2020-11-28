@@ -13,6 +13,10 @@
   border-left-color: var(--color-secondary);
 }
 
+.device-card:focus {
+  outline: 0;
+}
+
 .device-card header {
   display: flex;
   justify-content: space-between;
