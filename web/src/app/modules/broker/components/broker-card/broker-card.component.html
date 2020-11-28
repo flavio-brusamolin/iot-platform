@@ -5,9 +5,9 @@
   </header>
 
   <main>
-    <!-- <fa-icon [icon]="icons.active" [class]="['status-icon']"></fa-icon> -->
-    <!-- <fa-icon [icon]="icons.inactive" [class]="['status-icon']"></fa-icon> -->
-    <fa-icon [icon]="icons.processing" [spin]="true" [class]="['status-icon']"></fa-icon>
-    My Broker
+    <fa-icon *ngIf="broker.status === 'active'" [icon]="icons.active" [class]="['status-icon-active']"></fa-icon>
+    <fa-icon *ngIf="broker.status === 'inactive'" [icon]="icons.inactive" [class]="['status-icon-inactive']"></fa-icon>
+    <fa-icon *ngIf="broker.status === 'processing'" [icon]="icons.processing" [spin]="true" [class]="['status-icon-processing']"></fa-icon>
+    {{ broker.name }}
   </main>
 </div>

@@ -1,16 +1,28 @@
 <app-container name="Brokers">
 
-  <button header>
+  <button header (click)="createBroker({ name: 'Test Broker', credentials: { username: 'leo', password: '123', address: 'aqemcasa', port: 1122 } })">
     <fa-icon [icon]=icons.plus></fa-icon>
     New Broker
   </button>
 
-  <main content>
-    <app-broker-card></app-broker-card>
-    <app-broker-card></app-broker-card>
-    <app-broker-card></app-broker-card>
-    <app-broker-card></app-broker-card>
-    <app-broker-card></app-broker-card>
+  <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
+    <ng-container *ngIf="brokers?.length; else empty">
+      <app-broker-card *ngFor="let broker of brokers" [broker]="broker"></app-broker-card>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="empty">
+        <app-empty></app-empty>
+      </div>
+    </ng-template>
   </main>
+
+  <ng-template #loadingOrError>
+    <app-error *ngIf="error$ | async; else loading"></app-error>
+
+    <ng-template #loading>
+      <app-loading></app-loading>
+    </ng-template>
+  </ng-template>
 
 </app-container>

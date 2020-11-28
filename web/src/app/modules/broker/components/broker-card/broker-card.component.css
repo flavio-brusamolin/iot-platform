@@ -31,7 +31,20 @@
   letter-spacing: 0.05rem;
 }
 
-.broker-card main .status-icon {
+.broker-card main .status-icon-active {
   font-size: 1.8rem;
   margin-right: 0.3rem;
+  color: green;
+}
+
+.broker-card main .status-icon-inactive {
+  font-size: 1.8rem;
+  margin-right: 0.3rem;
+  color: red;
+}
+
+.broker-card main .status-icon-processing {
+  font-size: 1.8rem;
+  margin-right: 0.3rem;
+  color: gray;
 }
