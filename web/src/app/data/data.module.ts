@@ -4,6 +4,7 @@ import { BrokerService } from './services/broker.service'
 
 import { CollectionService } from './services/collection.service'
 import { DeviceService } from './services/device.service'
+import { TeamService } from './services/team.service'
 
 @NgModule({
   declarations: [],
@@ -11,7 +12,8 @@ import { DeviceService } from './services/device.service'
   providers: [
     BrokerService,
     CollectionService,
-    DeviceService
+    DeviceService,
+    TeamService
   ]
 })
 export class DataModule { }

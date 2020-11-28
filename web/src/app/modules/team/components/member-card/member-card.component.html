@@ -3,12 +3,12 @@
     <fa-icon [icon]="icons.user" [class]="['user-icon']"></fa-icon>
 
     <div class="details">
-      <h3>Flávio Brito</h3>
+      <h3>{{ member.name }}</h3>
       <h5>
-        <fa-icon [icon]="icons.mail" [class]="['info-icon']"></fa-icon>flavio@mail.com
+        <fa-icon [icon]="icons.mail" [class]="['info-icon']"></fa-icon>{{ member.email }}
       </h5>
       <h5>
-        <fa-icon [icon]="icons.permission" [class]="['info-icon']"></fa-icon>advanced
+        <fa-icon [icon]="icons.permission" [class]="['info-icon']"></fa-icon>{{ member.role.toUpperCase() }}
       </h5>
     </div>
   </div>

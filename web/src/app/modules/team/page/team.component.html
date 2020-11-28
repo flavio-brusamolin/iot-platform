@@ -1,17 +1,28 @@
 <app-container name="Members">
 
-  <button header>
+  <button header (click)="createMember()">
     <fa-icon [icon]=icons.plus></fa-icon>
     Add member
   </button>
 
-  <main content>
-    <app-member-card></app-member-card>
-    <app-member-card></app-member-card>
-    <app-member-card></app-member-card>
-    <app-member-card></app-member-card>
-    <app-member-card></app-member-card>
-    <app-member-card></app-member-card>
+  <main content *ngIf="(team$ | async) as team; else loadingOrError">
+    <ng-container>
+      <app-member-card *ngFor="let member of team.members" [member]="member"></app-member-card>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="empty">
+        <app-empty></app-empty>
+      </div>
+    </ng-template>
   </main>
+
+  <ng-template #loadingOrError>
+    <app-error *ngIf="error$ | async; else loading"></app-error>
+
+    <ng-template #loading>
+      <app-loading></app-loading>
+    </ng-template>
+  </ng-template>
 
 </app-container>
