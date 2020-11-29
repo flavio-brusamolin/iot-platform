@@ -35,3 +35,11 @@
   font-size: 1.8rem;
   margin-right: 0.3rem;
 }
+
+.broker-card main .status-active {
+  color: var(--color-secondary);
+}
+
+.broker-card main .status-inactive {
+  color: var(--color-primary);
+}

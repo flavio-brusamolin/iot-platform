@@ -2,7 +2,7 @@
 
   <button header (click)="createBroker({ name: 'Test Broker', credentials: { username: 'flaviobrusamolin@gec.inatel.br', password: 'any_pass', address: 'mqtt://maqiatto.com', port: 8883 } })">
     <fa-icon [icon]=icons.plus></fa-icon>
-    New Broker
+    New broker
   </button>
 
   <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">

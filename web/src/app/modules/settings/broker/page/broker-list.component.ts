@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
+
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { BrokerCreationData } from 'src/app/data/dtos'
 import { Broker } from 'src/app/data/models'
@@ -14,7 +15,7 @@ import { BrokerService } from 'src/app/data/services/broker.service'
   templateUrl: './broker-list.component.html',
   styleUrls: ['./broker-list.component.css']
 })
-export class BrokerListComponent implements OnInit {
+export class BrokerListComponent implements OnInit, OnDestroy {
   public readonly icons = {
     plus: faPlus
   }
@@ -54,6 +55,15 @@ export class BrokerListComponent implements OnInit {
   public createBroker (brokerData: BrokerCreationData): void {
     this.brokerService.createBroker(brokerData)
       .pipe(takeUntil(this.unsub$))
-      .subscribe(() => this.loadBrokers())
+      .subscribe(
+        () => {
+          this.notificationService.success('Very well!', 'Broker successfully registered')
+          this.loadBrokers()
+        },
+        ({ error: httpError }: HttpErrorResponse) => {
+          console.error(httpError)
+          this.notificationService.error('Error!', httpError.error)
+        }
+      )
   }
 }

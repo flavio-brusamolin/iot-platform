@@ -1,9 +1,9 @@
 <app-container name="Devices">
 
   <button header
-    (click)="createDevice('5fbda32e6cb24d001aeae18e', { name: 'Test', protocol: protocol, mqttInfo: { topic: 'topic1', brokerId: '5fc23991f51bd90024dd6792' } })">
+    (click)="createDevice({ name: 'Test', protocol: protocol, mqttInfo: { topic: 'topic11', brokerId: '5fc23991f51bd90024dd6792' } })">
     <fa-icon [icon]=icons.plus></fa-icon>
-    New Device
+    New device
   </button>
 
   <main content *ngIf="(devices$ | async) as devices; else loadingOrError">

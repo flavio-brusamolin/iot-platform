@@ -1,8 +1,8 @@
 <app-container name="Variables">
 
-  <button header (click)="createVariable({ name:'Sapateira', key: 'sapateira'})">
+  <button header (click)="createVariable({ name:'Sapateira', key: 'sapateira' })">
     <fa-icon [icon]=icons.plus></fa-icon>
-    New Variable
+    New variable
   </button>
 
   <main content *ngIf="(variables$ | async) as variables; else loadingOrError">

@@ -55,6 +55,15 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   public createCollection (collectionData: CollectionCreationData): void {
     this.collectionService.createCollection(collectionData)
       .pipe(takeUntil(this.unsub$))
-      .subscribe(() => this.loadCollections())
+      .subscribe(
+        () => {
+          this.notificationService.success('Very well!', 'Collection successfully created')
+          this.loadCollections()
+        },
+        ({ error: httpError }: HttpErrorResponse) => {
+          console.error(httpError)
+          this.notificationService.error('Error!', httpError.error)
+        }
+      )
   }
 }

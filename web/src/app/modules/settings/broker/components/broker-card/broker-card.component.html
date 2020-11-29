@@ -5,8 +5,8 @@
   </header>
 
   <main>
-    <fa-icon *ngIf="broker.status === 'active'" [icon]="icons.active" [class]="['status-icon']"></fa-icon>
-    <fa-icon *ngIf="broker.status === 'inactive'" [icon]="icons.inactive" [class]="['status-icon']"></fa-icon>
+    <fa-icon *ngIf="broker.status === 'active'" [icon]="icons.active" [class]="['status-icon', 'status-active']"></fa-icon>
+    <fa-icon *ngIf="broker.status === 'inactive'" [icon]="icons.inactive" [class]="['status-icon', 'status-inactive']"></fa-icon>
     <fa-icon *ngIf="broker.status === 'processing'" [icon]="icons.processing" [spin]="true" [class]="['status-icon']"></fa-icon>
     {{ broker.name }}
   </main>

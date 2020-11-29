@@ -1,12 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
+
 import { NotificationService } from 'src/app/core/services/notification.service'
-import { VariableCreationData } from 'src/app/data/dtos/variable-creation-data.model'
+import { VariableCreationData } from 'src/app/data/dtos'
 import { VariableService } from 'src/app/data/services/variable.service'
 import { Variable } from 'src/app/data/models'
 
@@ -15,16 +16,17 @@ import { Variable } from 'src/app/data/models'
   templateUrl: './variable-list.component.html',
   styleUrls: ['./variable-list.component.css']
 })
-export class VariableListComponent implements OnInit {
+export class VariableListComponent implements OnInit, OnDestroy {
   public readonly icons = {
     plus: faPlus
   }
 
   public variables$!: Observable<Variable[] | null>
-  private deviceId: string
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
+
+  private deviceId: string
 
   public constructor (
     private readonly activatedRoute: ActivatedRoute,
@@ -57,9 +59,17 @@ export class VariableListComponent implements OnInit {
   }
 
   public createVariable (variableData: VariableCreationData): void {
-    this.variableService
-      .createVariable(this.deviceId, variableData)
+    this.variableService.createVariable(this.deviceId, variableData)
       .pipe(takeUntil(this.unsub$))
-      .subscribe(() => this.loadVariables())
+      .subscribe(
+        () => {
+          this.notificationService.success('Very well!', 'Variable successfully created')
+          this.loadVariables()
+        },
+        ({ error: httpError }: HttpErrorResponse) => {
+          console.error(httpError)
+          this.notificationService.error('Error!', httpError.error)
+        }
+      )
   }
 }
