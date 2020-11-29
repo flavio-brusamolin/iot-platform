@@ -1,8 +1,6 @@
 import { Role } from '../enums'
 
 export interface Member {
-  name: string
-  email: string
   userId: string
   role: Role
 }
@@ -10,4 +8,16 @@ export interface Member {
 export interface Team {
   id: string
   members: Member[]
+}
+
+export interface CompleteMemberData {
+  id: string
+  name: string
+  email: string
+  role: Role
+}
+
+export interface CompleteTeamData {
+  id: string
+  members: CompleteMemberData[]
 }

@@ -1,6 +1,6 @@
 import { Role } from '../enums'
 
-export interface MemberCreation {
+export interface MemberCreationData {
   email: string,
   role: Role
 }

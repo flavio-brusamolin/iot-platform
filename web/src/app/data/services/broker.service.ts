@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
@@ -6,7 +5,7 @@ import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
 import { Broker } from '../models'
-import { BrokerCreationData } from '../dtos/broker-creation-data.model'
+import { BrokerCreationData } from '../dtos'
 
 @Injectable()
 export class BrokerService {

@@ -1,12 +1,11 @@
-
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
 import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
-import { VariableCreationData } from '../dtos/variable-creation-data.model'
-import { Variable } from 'src/app/data/models'
+import { VariableCreationData } from '../dtos'
+import { Variable } from '../models'
 
 @Injectable()
 export class VariableService {
@@ -18,11 +17,11 @@ export class VariableService {
     return this.http.get<Variable[]>(`${this.url}/devices/${deviceId}/variables`)
   }
 
-  public loadVariableById (deviceId: string, variableId: string): Observable<Variable> {
-    return this.http.get<Variable>(`${this.url}/devices/${deviceId}/variables/${variableId}`)
-  }
-
   public createVariable (deviceId: string, variableData: VariableCreationData): Observable<Variable> {
     return this.http.post<Variable>(`${this.url}/devices/${deviceId}/variables`, variableData)
+  }
+
+  public loadVariableById (variableId: string): Observable<Variable> {
+    return this.http.get<Variable>(`${this.url}/variables/${variableId}`)
   }
 }

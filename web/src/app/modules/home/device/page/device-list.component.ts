@@ -6,10 +6,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
 import { NotificationService } from 'src/app/core/services/notification.service'
-import { DeviceCreation } from 'src/app/data/dtos'
+import { DeviceCreationData } from 'src/app/data/dtos'
 import { Device } from 'src/app/data/models'
 import { DeviceService } from 'src/app/data/services/device.service'
-import { Protocol } from 'src/app/data/enums/protocol'
+import { Protocol } from 'src/app/data/enums'
 
 @Component({
   selector: 'app-device-list',
@@ -59,7 +59,7 @@ export class DeviceListComponent implements OnInit {
       }))
   }
 
-  public createDevice (collectionId: string, deviceData: DeviceCreation): void {
+  public createDevice (collectionId: string, deviceData: DeviceCreationData): void {
     this.deviceService.createDevice(collectionId, deviceData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(() => this.loadDevices())

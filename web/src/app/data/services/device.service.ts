@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
@@ -6,7 +5,7 @@ import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
 import { Device } from '../models'
-import { DeviceCreation, DeviceUpdation } from '../dtos'
+import { DeviceCreationData } from '../dtos'
 
 @Injectable()
 export class DeviceService {
@@ -18,11 +17,11 @@ export class DeviceService {
     return this.http.get<Device[]>(`${this.url}/collections/${collectionId}/devices`)
   }
 
-  public createDevice (collectionId: string, deviceData: DeviceCreation): Observable<Device> {
+  public createDevice (collectionId: string, deviceData: DeviceCreationData): Observable<Device> {
     return this.http.post<Device>(`${this.url}/collections/${collectionId}/devices`, deviceData)
   }
 
-  public updateDevice (deviceId: string, deviceData: DeviceUpdation): Observable<Device> {
+  public updateDevice (deviceId: string, deviceData: Partial<DeviceCreationData>): Observable<Device> {
     return this.http.patch<Device>(`${this.url}/devices/${deviceId}`, deviceData)
   }
 }

@@ -1,3 +1,3 @@
-export * from './broker-status'
-export * from './protocol'
-export * from './role'
+export * from './broker-status.enum'
+export * from './protocol.enum'
+export * from './role.enum'

@@ -1,12 +1,11 @@
-
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
 import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
-import { Team } from '../models'
-import { MemberCreation } from '../dtos'
+import { CompleteTeamData, Team } from '../models'
+import { MemberCreationData } from '../dtos'
 
 @Injectable()
 export class TeamService {
@@ -14,11 +13,11 @@ export class TeamService {
 
   public constructor (private readonly http: HttpClient) { }
 
-  public loadTeamById (teamId: string): Observable<Team> {
-    return this.http.get<Team>(`${this.url}/teams/${teamId}`)
+  public loadTeamById (teamId: string): Observable<CompleteTeamData> {
+    return this.http.get<CompleteTeamData>(`${this.url}/teams/${teamId}`)
   }
 
-  public addMember (teamId: string, memberData: MemberCreation): Observable<Team> {
+  public addMember (teamId: string, memberData: MemberCreationData): Observable<Team> {
     return this.http.post<Team>(`${this.url}/teams/${teamId}/members`, memberData)
   }
 

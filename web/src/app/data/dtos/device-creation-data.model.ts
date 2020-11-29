@@ -1,9 +1,9 @@
 import { Protocol } from '../enums'
 
-export interface DeviceCreation {
+export interface DeviceCreationData {
   name: string,
   protocol: Protocol,
-  mqttInfo: {
+  mqttInfo?: {
     topic: string,
     brokerId: string
   }

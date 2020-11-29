@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 
 import { faTrashAlt, faUser, faEnvelope, faShieldAlt } from '@fortawesome/free-solid-svg-icons'
-import { Member } from 'src/app/data/models'
+import { CompleteMemberData } from 'src/app/data/models'
 
 @Component({
   selector: 'app-member-card',
@@ -16,7 +16,7 @@ export class MemberCardComponent implements OnInit {
     permission: faShieldAlt
   }
 
-  @Input() public member!: Member
+  @Input() public member!: CompleteMemberData
 
   public constructor () { }
 

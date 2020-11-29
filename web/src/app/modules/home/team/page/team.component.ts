@@ -5,8 +5,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, map, takeUntil } from 'rxjs/operators'
 import { NotificationService } from 'src/app/core/services/notification.service'
-import { MemberCreation } from 'src/app/data/dtos'
-import { Member } from 'src/app/data/models'
+import { MemberCreationData } from 'src/app/data/dtos'
+import { CompleteMemberData } from 'src/app/data/models'
 import { TeamService } from 'src/app/data/services/team.service'
 
 @Component({
@@ -19,7 +19,7 @@ export class TeamComponent implements OnInit {
     plus: faPlus
   }
 
-  public members$!: Observable<Member[] | null>
+  public members$!: Observable<CompleteMemberData[] | null>
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
@@ -51,7 +51,7 @@ export class TeamComponent implements OnInit {
       }))
   }
 
-  public createMember (memberData: MemberCreation): void {
+  public createMember (memberData: MemberCreationData): void {
     this.teamService.addMember('5fc2ca49cf629f00194439ba', memberData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(() => this.loadTeam())
