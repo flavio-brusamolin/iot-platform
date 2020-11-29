@@ -10,6 +10,7 @@ import { AuthService } from './services/auth.service'
 import { NotificationService } from './services/notification.service'
 import { AuthGuard } from './guards/auth.guard'
 import { TokenInterceptor } from './interceptors/token.interceptor'
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor'
 
 @NgModule({
   declarations: [],
@@ -36,6 +37,11 @@ import { TokenInterceptor } from './interceptors/token.interceptor'
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true
     }
   ]
