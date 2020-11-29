@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
-import { Variable } from '@angular/compiler/src/render3/r3_ast'
 import { VariableCreationData } from '../dtos/variable-creation-data.model'
+import { Variable } from 'src/app/data/models'
 
 @Injectable()
 export class VariableService {

@@ -1,5 +1,4 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Variable } from '@angular/compiler/src/render3/r3_ast'
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
@@ -9,6 +8,7 @@ import { catchError, takeUntil } from 'rxjs/operators'
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { VariableCreationData } from 'src/app/data/dtos/variable-creation-data.model'
 import { VariableService } from 'src/app/data/services/variable.service'
+import { Variable } from 'src/app/data/models'
 
 @Component({
   selector: 'app-variable-list',

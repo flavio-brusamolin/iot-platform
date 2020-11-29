@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { Variable } from 'src/app/data/models/variable.model'
+import { Variable } from 'src/app/data/models'
 
 @Component({
   selector: 'app-variable-card',
