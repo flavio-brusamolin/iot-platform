@@ -8,8 +8,8 @@ import { Controller, HttpRequest, HttpResponse, Validator } from '../../protocol
 import { DuplicateTeamMemberError, ResourceNotFoundError } from '../../errors'
 
 interface AddMemberContract {
-    email: string
-    role: Role
+  email: string
+  role: Role
 }
 
 export class AddMemberController implements Controller {
