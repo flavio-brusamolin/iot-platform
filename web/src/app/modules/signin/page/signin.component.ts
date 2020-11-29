@@ -48,7 +48,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
-          this.notificationService.success('Welcome back!', 'Successful sign in')
+          this.notificationService.success('Hey!', 'Welcome back to IoT Platform')
           this.router.navigate(['/'])
         },
         ({ error: httpError }: HttpErrorResponse) => {
