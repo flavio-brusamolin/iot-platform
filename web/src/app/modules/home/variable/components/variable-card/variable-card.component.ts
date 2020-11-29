@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
+import { Variable } from 'src/app/data/models/variable.model'
 
 @Component({
   selector: 'app-variable-card',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./variable-card.component.css']
 })
 export class VariableCardComponent implements OnInit {
+  @Input() public variable!: Variable
+
   public constructor () { }
 
   public ngOnInit (): void { }

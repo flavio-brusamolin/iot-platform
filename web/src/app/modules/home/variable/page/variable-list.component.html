@@ -1,17 +1,28 @@
 <app-container name="Variables">
 
-  <button header>
+  <button header (click)="createVariable({ name:'Sapateira', key: 'sapateira'})">
     <fa-icon [icon]=icons.plus></fa-icon>
     New Variable
   </button>
 
-  <main content>
-    <app-variable-card></app-variable-card>
-    <app-variable-card></app-variable-card>
-    <app-variable-card></app-variable-card>
-    <app-variable-card></app-variable-card>
-    <app-variable-card></app-variable-card>
-    <app-variable-card></app-variable-card>
+  <main content *ngIf="(variables$ | async) as variables; else loadingOrError">
+    <ng-container *ngIf="variables?.length; else empty">
+      <app-variable-card *ngFor="let variable of variables" [variable]="variable"></app-variable-card>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="empty">
+        <app-empty></app-empty>
+      </div>
+    </ng-template>
   </main>
+
+  <ng-template #loadingOrError>
+    <app-error *ngIf="error$ | async; else loading"></app-error>
+
+    <ng-template #loading>
+      <app-loading></app-loading>
+    </ng-template>
+  </ng-template>
 
 </app-container>
