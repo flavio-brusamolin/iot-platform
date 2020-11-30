@@ -1,7 +1,8 @@
 import { Role } from '../../../domain/enums/role'
 import { LoadCollectionById } from '../../../domain/use-cases/collection/load-collection-by-id'
 import { CheckMemberPermission } from '../../../domain/use-cases/team/check-member-permission'
-import { forbidden, ok, serverError } from '../../helpers/http-helper'
+import { ResourceNotFoundError } from '../../errors'
+import { forbidden, notFound, ok, serverError } from '../../helpers/http-helper'
 import { Controller, HttpRequest, HttpResponse } from '../../protocols'
 
 export class LoadCollectionByIdController implements Controller {
@@ -16,6 +17,9 @@ export class LoadCollectionByIdController implements Controller {
       const { collectionId } = httpRequest.params
 
       const collection = await this.loadCollectionById.load(collectionId)
+      if (!collection) {
+        return notFound(new ResourceNotFoundError('collection id'))
+      }
 
       const hasPermission = await this.checkMemberPermission.check(collection.accessGroupId, userId, [Role.BASIC, Role.ADVANCED])
       if (!hasPermission) {
