@@ -1,6 +1,6 @@
 <app-container name="Members">
 
-  <button header>
+  <button header (click)="addMember( { email: 'leonardo@gmail.com', role: role})">
     <fa-icon [icon]=icons.plus></fa-icon>
     Add member
   </button>
