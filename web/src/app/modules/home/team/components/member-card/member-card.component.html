@@ -13,5 +13,26 @@
     </div>
   </div>
 
-  <fa-icon [icon]="icons.remove"></fa-icon>
+  <fa-icon [icon]="icons.remove" (click)="openConfirmModal(confirmationModal)"></fa-icon>
 </div>
+
+<ng-template #confirmationModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Aviso</h4>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="select-group">
+      </div>
+
+      <h1>Desejar realmente remover {{ member.name }} do time?</h1>
+    </form>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" (click)="modal.dismiss()">Fechar</button>
+    <button type="button" (click)="deleteMember(member.id)">Confirmar</button>
+  </div>
+</ng-template>
