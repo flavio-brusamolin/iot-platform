@@ -75,12 +75,20 @@ export class DeviceListComponent implements OnInit, OnDestroy {
       )
   }
 
-  public updateDevice (device: Device, updateData: Partial<DeviceCreationData>): void {
+  public updateDevice (device: Device, updateFormData: any): void {
+    const updateData: Partial<Device> = { // Check if exists a better way to create avoiding null values
+      name: updateFormData.deviceName,
+      mqttInfo: {
+        topic: updateFormData.deviceTopic,
+        brokerId: '5fc7aab3091d8c0019dadd9f'
+      }
+    }
     this.deviceService.updateDevice(device.id, updateData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
           this.notificationService.success('Very well!', 'Device successfully updated')
+          this.loadDevices()
         },
         ({ error: httpError }: HttpErrorResponse) => {
           console.error(httpError)

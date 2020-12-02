@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { FormBuilder, FormGroup } from '@angular/forms'
 
 import { faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Device } from 'src/app/data/models'
 
 @Component({
@@ -14,11 +16,35 @@ export class DeviceCardComponent implements OnInit {
     info: faInfoCircle
   }
 
+  public updateForm!: FormGroup
+
   @Input() public device!: Device
 
   @Output() updateDeviceEmitter = new EventEmitter()
 
-  public constructor () { }
+  public constructor (
+    private formBuilder: FormBuilder,
+    private modal: NgbModal
+  ) { }
 
-  public ngOnInit (): void { }
+  public ngOnInit (): void {
+    this.initializeForms()
+  }
+
+  private initializeForms (): void {
+    this.updateForm = this.formBuilder.group({
+      deviceName: [null],
+      deviceTopic: [null]
+    })
+  }
+
+  public openUpdationModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {},
+        () => {
+          this.updateForm.reset()
+        }
+      )
+  }
 }

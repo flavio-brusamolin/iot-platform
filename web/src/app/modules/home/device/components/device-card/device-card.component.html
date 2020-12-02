@@ -1,10 +1,10 @@
 <div class="device-card" [routerLink]="['/home/devices/', device.id]">
   <header>
     <fa-icon [icon]="icons.info" [class]="['info-icon']"></fa-icon>
-    <div class="options-icon" ngbDropdown>
+    <div class="options-icon" ngbDropdown (click)="$event.stopPropagation()">
       <fa-icon [icon]="icons.options" ngbDropdownToggle></fa-icon>
       <div class="menu-options" ngbDropdownMenu>
-        <i ngbDropdownItem (click)="updateDeviceEmitter.emit(device)"> Update Device</i>
+        <i ngbDropdownItem (click)="openUpdationModal(updationModal)"> Update Device</i>
       </div>
     </div>
   </header>
@@ -14,3 +14,26 @@
     <small>Protocol: {{ device.protocol.toUpperCase() }}</small>
   </main>
 </div>
+
+<ng-template #updationModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Update Device</h4>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="updateForm" (ngSubmit)="updateDeviceEmitter.emit(updateForm.value); modal.dismiss()">
+      <div class="select-group">
+      </div>
+      <app-input label="Name" name="deviceName" type="string" formControlName="deviceName"></app-input>
+      <app-input label="Topic" name="deviceTopic" type="string" formControlName="deviceTopic"></app-input>
+
+      <div class="modal-footer">
+        <button type="button" (click)="modal.dismiss()">Close</button>
+        <button type="submit" [disabled]="!updateForm.valid">Submit</button>
+      </div>
+    </form>
+
+  </div>
+
+
+</ng-template>
