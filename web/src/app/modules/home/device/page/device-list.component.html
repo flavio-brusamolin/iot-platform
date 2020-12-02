@@ -8,7 +8,7 @@
 
   <main content *ngIf="(devices$ | async) as devices; else loadingOrError">
     <ng-container *ngIf="devices?.length; else empty">
-      <app-device-card *ngFor="let device of devices" [device]="device" (updateDeviceEmitter)="updateDevice($event)"></app-device-card>
+      <app-device-card *ngFor="let device of devices" [device]="device" (updateDeviceEmitter)="updateDevice(device.id, $event)"></app-device-card>
     </ng-container>
 
     <ng-template #empty>
