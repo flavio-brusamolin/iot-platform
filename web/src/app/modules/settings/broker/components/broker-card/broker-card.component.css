@@ -43,3 +43,7 @@
 .broker-card main .status-inactive {
   color: var(--color-primary);
 }
+
+.dropdown-toggle::after {
+  display:none;
+}
