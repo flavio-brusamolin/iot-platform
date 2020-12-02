@@ -1,7 +1,12 @@
 <div class="device-card" [routerLink]="['/home/devices/', device.id]">
   <header>
     <fa-icon [icon]="icons.info" [class]="['info-icon']"></fa-icon>
-    <fa-icon [icon]="icons.options"></fa-icon>
+    <div class="options-icon" ngbDropdown>
+      <fa-icon [icon]="icons.options" ngbDropdownToggle></fa-icon>
+      <div class="menu-options" ngbDropdownMenu>
+        <i ngbDropdownItem (click)="updateDevice(device.id)"> Update Device</i>
+      </div>
+    </div>
   </header>
 
   <main>
