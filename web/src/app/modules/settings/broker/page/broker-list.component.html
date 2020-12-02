@@ -7,7 +7,7 @@
 
   <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
     <ng-container *ngIf="brokers?.length; else empty">
-      <app-broker-card *ngFor="let broker of brokers" [broker]="broker"></app-broker-card>
+      <app-broker-card *ngFor="let broker of brokers" [broker]="broker" (reprocessBrokerEmitter)="reprocessBroker($event)"></app-broker-card>
     </ng-container>
 
     <ng-template #empty>

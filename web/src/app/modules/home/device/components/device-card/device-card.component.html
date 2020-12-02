@@ -4,7 +4,7 @@
     <div class="options-icon" ngbDropdown>
       <fa-icon [icon]="icons.options" ngbDropdownToggle></fa-icon>
       <div class="menu-options" ngbDropdownMenu>
-        <i ngbDropdownItem (click)="updateDevice(device.id)"> Update Device</i>
+        <i ngbDropdownItem (click)="updateDeviceEmitter.emit(device)"> Update Device</i>
       </div>
     </div>
   </header>

@@ -99,4 +99,19 @@ export class TeamComponent implements OnInit, OnDestroy {
         }
       )
   }
+
+  public deleteMember (member: CompleteMemberData): void {
+    this.teamService.deleteMember(this.accessGroupId, member.id)
+      .pipe(takeUntil(this.unsub$))
+      .subscribe(
+        () => {
+          this.notificationService.success('Very well!', 'Member successfully deleted.!')
+          this.loadTeam(this.accessGroupId)
+        },
+        ({ error: httpError }: HttpErrorResponse) => {
+          console.error(httpError)
+          this.notificationService.error('Error!', httpError.error)
+        }
+      )
+  }
 }

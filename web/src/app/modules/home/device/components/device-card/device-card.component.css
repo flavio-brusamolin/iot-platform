@@ -40,3 +40,7 @@
 .device-card main small {
   color: var(--color-text-base-darkness);
 }
+
+.dropdown-toggle::after {
+  display:none;
+}

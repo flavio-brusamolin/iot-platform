@@ -33,6 +33,6 @@
 
   <div class="modal-footer">
     <button type="button" (click)="modal.dismiss()">Fechar</button>
-    <button type="button" (click)="deleteMember(member.id)">Confirmar</button>
+    <button type="button" (click)="deleteMemberEmitter.emit(member); modal.dismiss()">Confirmar</button>
   </div>
 </ng-template>

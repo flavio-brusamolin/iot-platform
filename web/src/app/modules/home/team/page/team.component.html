@@ -7,7 +7,7 @@
 
   <main content *ngIf="(members$ | async) as members; else loadingOrError">
     <ng-container *ngIf="members?.length; else empty">
-      <app-member-card *ngFor="let member of members" [member]="member"></app-member-card>
+      <app-member-card *ngFor="let member of members" [member]="member" (deleteMemberEmitter)="deleteMember($event)"></app-member-card>
     </ng-container>
 
     <ng-template #empty>

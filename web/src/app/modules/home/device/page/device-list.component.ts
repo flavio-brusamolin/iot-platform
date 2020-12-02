@@ -74,4 +74,18 @@ export class DeviceListComponent implements OnInit, OnDestroy {
         }
       )
   }
+
+  public updateDevice (device: Device, updateData: Partial<DeviceCreationData>): void {
+    this.deviceService.updateDevice(device.id, updateData)
+      .pipe(takeUntil(this.unsub$))
+      .subscribe(
+        () => {
+          this.notificationService.success('Very well!', 'Device successfully updated')
+        },
+        ({ error: httpError }: HttpErrorResponse) => {
+          console.error(httpError)
+          this.notificationService.error('Error!', httpError.error)
+        }
+      )
+  }
 }

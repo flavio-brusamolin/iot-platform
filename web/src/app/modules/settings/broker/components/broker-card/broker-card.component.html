@@ -4,7 +4,7 @@
     <div class="options-icon" ngbDropdown>
       <fa-icon [icon]="icons.options" ngbDropdownToggle></fa-icon>
       <div class="menu-options" ngbDropdownMenu>
-        <i ngbDropdownItem (click)="reprocessBroker(broker)"> Reprocess Broker</i>
+        <i ngbDropdownItem (click)="reprocessBrokerEmitter.emit(broker)"> Reprocess Broker</i>
       </div>
     </div>
   </header>

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 
@@ -39,6 +39,8 @@ export class MemberCardComponent implements OnInit {
 
   public form!: FormGroup
 
+  @Output() deleteMemberEmitter = new EventEmitter()
+
   @Input() public member!: CompleteMemberData
 
   public constructor (
@@ -53,7 +55,7 @@ export class MemberCardComponent implements OnInit {
   }
 
   public ngOnInit (): void {
-    this.loadCollection()
+    // this.loadCollection()
     this.initializeForms()
   }
 
@@ -62,21 +64,21 @@ export class MemberCardComponent implements OnInit {
     })
   }
 
-  private loadCollection (): void {
-    this.collectionService
-      .loadCollectionById(this.collectionId)
-      .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
-        console.error(httpError)
+  // private loadCollection (): void {
+  //   this.collectionService
+  //     .loadCollectionById(this.collectionId)
+  //     .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
+  //       console.error(httpError)
 
-        this.notificationService.error('Error!', httpError.error)
-        this.error$.next(true)
+  //       this.notificationService.error('Error!', httpError.error)
+  //       this.error$.next(true)
 
-        return of(null)
-      }))
-      .subscribe(collection => {
-        this.accessGroupId = collection?.accessGroupId
-      })
-  }
+  //       return of(null)
+  //     }))
+  //     .subscribe(collection => {
+  //       this.accessGroupId = collection?.accessGroupId
+  //     })
+  // }
 
   public openConfirmModal (content: any): void {
     this.modal.open(content, { centered: true })
@@ -88,18 +90,18 @@ export class MemberCardComponent implements OnInit {
       )
   }
 
-  public deleteMember (memberId: string): void {
-    this.modal.dismissAll()
-    this.teamService.deleteMember(this.accessGroupId, memberId)
-      .pipe(takeUntil(this.unsub$))
-      .subscribe(
-        () => {
-          this.notificationService.success('Very well!', 'Member successfully deleted. Refresh your page!')
-        },
-        ({ error: httpError }: HttpErrorResponse) => {
-          console.error(httpError)
-          this.notificationService.error('Error!', httpError.error)
-        }
-      )
-  }
+  // public deleteMember (memberId: string): void {
+  //   this.modal.dismissAll()
+  //   this.teamService.deleteMember(this.accessGroupId, memberId)
+  //     .pipe(takeUntil(this.unsub$))
+  //     .subscribe(
+  //       () => {
+  //         this.notificationService.success('Very well!', 'Member successfully deleted. Refresh your page!')
+  //       },
+  //       ({ error: httpError }: HttpErrorResponse) => {
+  //         console.error(httpError)
+  //         this.notificationService.error('Error!', httpError.error)
+  //       }
+  //     )
+  // }
 }

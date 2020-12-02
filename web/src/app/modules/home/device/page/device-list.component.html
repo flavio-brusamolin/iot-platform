@@ -1,14 +1,14 @@
 <app-container name="Devices">
 
   <button header
-    (click)="createDevice({ name: 'Test', protocol: protocol, mqttInfo: { topic: 'topic11', brokerId: '5fc23991f51bd90024dd6792' } })">
+    (click)="createDevice({ name: 'Test', protocol: protocol, mqttInfo: { topic: 'topic11', brokerId: '5fc7aab3091d8c0019dadd9f' } })">
     <fa-icon [icon]=icons.plus></fa-icon>
     New device
   </button>
 
   <main content *ngIf="(devices$ | async) as devices; else loadingOrError">
     <ng-container *ngIf="devices?.length; else empty">
-      <app-device-card *ngFor="let device of devices" [device]="device"></app-device-card>
+      <app-device-card *ngFor="let device of devices" [device]="device" (updateDeviceEmitter)="updateDevice($event)"></app-device-card>
     </ng-container>
 
     <ng-template #empty>
