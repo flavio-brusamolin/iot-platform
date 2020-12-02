@@ -75,8 +75,8 @@ export class DeviceListComponent implements OnInit, OnDestroy {
       )
   }
 
-  public updateDevice (deviceId: string, updateData: Partial<DeviceCreationData>): void {
-    this.deviceService.updateDevice(deviceId, updateData)
+  public updateDevice (device: Device, updateData: Partial<DeviceCreationData>): void {
+    this.deviceService.updateDevice(device.id, updateData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
