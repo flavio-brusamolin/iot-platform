@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 
-import { faSyncAlt, faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { faCheckCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import { faCheck, faTimes, faSyncAlt, faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+
 import { Broker } from 'src/app/data/models'
 
 @Component({
@@ -10,9 +10,9 @@ import { Broker } from 'src/app/data/models'
   styleUrls: ['./broker-card.component.css']
 })
 export class BrokerCardComponent implements OnInit {
-  public readonly icons = {
-    active: faCheckCircle,
-    inactive: faTimesCircle,
+  public readonly icons: any = {
+    active: faCheck,
+    inactive: faTimes,
     processing: faSyncAlt,
     options: faEllipsisV,
     info: faInfoCircle
@@ -22,8 +22,7 @@ export class BrokerCardComponent implements OnInit {
 
   @Input() public broker!: Broker
 
-  public constructor (
-  ) { }
+  public constructor () { }
 
   public ngOnInit (): void { }
 }

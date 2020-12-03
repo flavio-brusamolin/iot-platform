@@ -9,6 +9,7 @@
   height: 6rem;
   display: flex;
   background-color: var(--color-dark);
+  z-index: 9999;
 }
 
 .top-navbar .nav-container {

@@ -10,9 +10,15 @@
   </header>
 
   <main>
-    <fa-icon *ngIf="broker.status === 'active'" [icon]="icons.active" [class]="['status-icon', 'status-active']"></fa-icon>
-    <fa-icon *ngIf="broker.status === 'inactive'" [icon]="icons.inactive" [class]="['status-icon', 'status-inactive']"></fa-icon>
-    <fa-icon *ngIf="broker.status === 'processing'" [icon]="icons.processing" [spin]="true" [class]="['status-icon']"></fa-icon>
     {{ broker.name }}
+
+    <div class="status">
+      <small>
+        {{ broker.status }}
+      </small>
+
+      <fa-icon [icon]="icons[broker.status]" [class]="['status-icon']" [spin]="broker.status === 'processing'">
+      </fa-icon>
+    </div>
   </main>
 </div>

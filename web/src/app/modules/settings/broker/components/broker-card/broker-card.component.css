@@ -29,19 +29,22 @@
   font-weight: 600;
   margin-top: 0.6rem;
   letter-spacing: 0.05rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.broker-card main .status-icon {
-  font-size: 1.8rem;
-  margin-right: 0.3rem;
+.broker-card main .status {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: var(--color-text-base-darkness);
+  text-transform: capitalize;
 }
 
-.broker-card main .status-active {
-  color: var(--color-secondary);
-}
-
-.broker-card main .status-inactive {
-  color: var(--color-primary);
+.broker-card main .status .status-icon {
+  font-size: 1.4rem;
+  margin-left: 0.5rem;
+  margin-top: 0.01rem;
 }
 
 .dropdown-toggle::after {
