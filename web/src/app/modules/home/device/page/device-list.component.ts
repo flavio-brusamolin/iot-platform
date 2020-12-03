@@ -11,6 +11,7 @@ import { DeviceCreationData } from 'src/app/data/dtos'
 import { Device } from 'src/app/data/models'
 import { DeviceService } from 'src/app/data/services/device.service'
 import { Protocol } from 'src/app/data/enums'
+import { FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'app-device-list',
@@ -21,6 +22,8 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   public readonly icons = {
     plus: faPlus
   }
+
+  public createDeviceForm!: FormGroup
 
   public devices$!: Observable<Device[] | null>
   public error$ = new Subject<boolean>();

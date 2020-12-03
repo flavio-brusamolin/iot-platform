@@ -9,6 +9,8 @@ import { Collection } from 'src/app/data/models'
 import { CollectionService } from 'src/app/data/services/collection.service'
 import { CollectionCreationData } from 'src/app/data/dtos'
 import { NotificationService } from 'src/app/core/services/notification.service'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-collection-list',
@@ -20,18 +22,39 @@ export class CollectionListComponent implements OnInit, OnDestroy {
     plus: faPlus
   }
 
+  public createCollectionForm!: FormGroup
+
   public collections$!: Observable<Collection[] | null>
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
 
   public constructor (
+    private formBuilder: FormBuilder,
+    private modal: NgbModal,
     private readonly collectionService: CollectionService,
     private readonly notificationService: NotificationService
   ) { }
 
   public ngOnInit (): void {
     this.loadCollections()
+    this.initializeForms()
+  }
+
+  private initializeForms (): void {
+    this.createCollectionForm = this.formBuilder.group({
+      name: [null, Validators.required]
+    })
+  }
+
+  public openCreateCollectionModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {},
+        () => {
+          this.createCollectionForm.reset()
+        }
+      )
   }
 
   public ngOnDestroy (): void {

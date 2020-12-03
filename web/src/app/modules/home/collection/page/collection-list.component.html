@@ -1,6 +1,6 @@
 <app-container name="Collections">
 
-  <button header (click)="createCollection({ name: 'Test' })">
+  <button header (click)="openCreateCollectionModal(createCollectionModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New collection
   </button>
@@ -26,3 +26,23 @@
   </ng-template>
 
 </app-container>
+
+<ng-template #createCollectionModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Create Collection</h4>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="createCollectionForm" (ngSubmit)="createCollection(createCollectionForm.value); modal.dismiss()">
+      <div class="select-group">
+      </div>
+      <app-input label="Name" name="name" type="string" formControlName="name"></app-input>
+
+      <div class="modal-footer">
+        <button type="button" (click)="modal.dismiss()">Close</button>
+        <button type="submit" [disabled]="!createCollectionForm.valid">Create</button>
+      </div>
+    </form>
+
+  </div>
+</ng-template>
