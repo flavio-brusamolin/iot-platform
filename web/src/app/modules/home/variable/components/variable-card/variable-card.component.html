@@ -1,4 +1,4 @@
-<div class="variable-card">
+<div class="variable-card" [routerLink]="['/home/variables/', variable.id]">
   {{ variable.name }}
   <small>Key: {{ variable.key }}</small>
 </div>

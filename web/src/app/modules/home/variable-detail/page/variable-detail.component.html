@@ -1,0 +1,32 @@
+<app-container name="Analytics">
+
+  <main content *ngIf="(info$ | async) as info; else loadingOrError">
+    <ng-container *ngIf="info?.data?.length; else empty">
+      <div class="monitoring">
+        <app-info-card description="Current value" [value]="info?.currentValue" symbol="current"></app-info-card>
+        <app-info-card description="Highest value" [value]="info?.highestValue" symbol="max"></app-info-card>
+        <app-info-card description="Lowest value" [value]="info?.lowestValue" symbol="min"></app-info-card>
+        <app-info-card description="Average value" [value]="info?.averageValue" symbol="average"></app-info-card>
+      </div>
+
+      <div class="analysis">
+        <app-chart-card [data]="info?.data"></app-chart-card>
+      </div>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="empty">
+        <app-empty></app-empty>
+      </div>
+    </ng-template>
+  </main>
+
+  <ng-template #loadingOrError>
+    <app-error *ngIf="error$ | async; else loading"></app-error>
+
+    <ng-template #loading>
+      <app-loading></app-loading>
+    </ng-template>
+  </ng-template>
+
+</app-container>

@@ -21,7 +21,7 @@ export class VariableService {
     return this.http.post<Variable>(`${this.url}/devices/${deviceId}/variables`, variableData)
   }
 
-  public loadVariableById (variableId: string): Observable<Variable> {
-    return this.http.get<Variable>(`${this.url}/variables/${variableId}`)
+  public loadVariableById (variableId: string): Observable<Required<Variable>> {
+    return this.http.get<Required<Variable>>(`${this.url}/variables/${variableId}`)
   }
 }

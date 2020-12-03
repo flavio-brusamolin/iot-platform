@@ -1,0 +1,36 @@
+.info-card {
+  display: flex;
+  min-width: 25rem;
+}
+
+.info-card:focus {
+  outline: 0;
+}
+
+.info-card .icon-container {
+  border-radius: 1rem 0rem 0rem 1rem;
+  background-color: var(--color-secondary);
+  padding: 3.6rem 1.4rem;
+  font-size: 2.2rem;
+}
+
+.info-card main {
+  border-radius: 0rem 1rem 1rem 0rem;
+  background-color: var(--color-dark-background);
+  padding: 0 4rem;
+  font-size: 2.8rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: background-color 0.5s;
+}
+
+.info-card main:hover {
+  background-color: var(--color-dark);
+}
+
+.info-card main small {
+  font-size: 1.4rem;
+  color: var(--color-text-base-darkness);
+}

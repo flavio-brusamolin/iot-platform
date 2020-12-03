@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'devices/:deviceId',
     loadChildren: () => import('./device-detail/device-detail.module').then(m => m.DeviceDetailModule)
+  },
+  {
+    path: 'variables/:variableId',
+    loadChildren: () => import('./variable-detail/variable-detail.module').then(m => m.VariableDetailModule)
   }
 ]
 

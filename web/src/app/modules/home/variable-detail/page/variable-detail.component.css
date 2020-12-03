@@ -1,0 +1,29 @@
+app-container main .monitoring {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+app-container .monitoring app-info-card {
+  flex-basis: calc((100% / 4) - (3 * 1rem));
+  margin: 0 1.5rem 2rem 1.5rem;
+}
+
+app-container main .analysis {
+  margin: 1rem;
+}
+
+app-container main .empty {
+  width: 100%;
+}
+
+@media (max-width: 1194px) {
+  app-container .monitoring app-info-card {
+    flex-basis: calc((100% / 2) - (3 * 1rem));
+  }
+}
+
+@media (max-width: 597px) {
+  app-container .monitoring app-info-card {
+    flex-basis: calc(100% - (3 * 1rem));
+  }
+}

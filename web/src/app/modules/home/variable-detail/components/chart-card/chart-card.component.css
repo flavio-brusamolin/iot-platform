@@ -1,0 +1,21 @@
+.chart {
+  background-color: var(--color-dark-background);
+  height: 40rem;
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  transition: background-color 0.5s;
+}
+
+.chart:focus {
+  outline: 0;
+}
+
+.chart:hover {
+  background-color: var(--color-dark);
+}
+
+@media (max-width: 597px) {
+  .chart  {
+    padding: 2rem 1rem;
+  }
+}
