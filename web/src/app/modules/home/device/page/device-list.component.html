@@ -1,7 +1,7 @@
 <app-container name="Devices">
 
   <button header
-    (click)="createDevice({ name: 'Test', protocol: protocol, mqttInfo: { topic: 'topic11', brokerId: '5fc7aab3091d8c0019dadd9f' } })">
+    (click)="openCreateDeviceModal(createDeviceModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New device
   </button>
@@ -27,3 +27,41 @@
   </ng-template>
 
 </app-container>
+
+<ng-template #createDeviceModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Create Collection</h4>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="createDeviceForm" (ngSubmit)="createDevice(createDeviceForm.value); modal.dismiss()">
+      <div class="select-group">
+      </div>
+      <app-input label="Name" name="name" type="string" formControlName="name"></app-input>
+
+      <label style="margin-right: 1rem;">Protocol</label>
+      <select class="selectpicker" formControlName="protocol">
+        <option>mqtt</option>
+      </select>
+      
+      <app-input label="Topic" name="topic" type="string" formControlName="topic"></app-input>
+
+      <label style="margin-right: 1rem;">Broker</label>
+      <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
+        <ng-container *ngIf="brokers?.length; else empty">
+          <select class="selectpicker" formControlName="brokerId">
+            <option *ngFor="let broker of brokers" [value]="broker.id"> {{broker.name}} </option>
+          </select>
+        </ng-container>
+      </main>
+      
+      
+
+      <div class="modal-footer">
+        <button type="button" (click)="modal.dismiss()">Close</button>
+        <button type="submit" [disabled]="!createDeviceForm.valid">Create</button>
+      </div>
+    </form>
+
+  </div>
+</ng-template>

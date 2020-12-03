@@ -8,10 +8,12 @@ import { catchError, takeUntil } from 'rxjs/operators'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { DeviceCreationData } from 'src/app/data/dtos'
-import { Device } from 'src/app/data/models'
+import { Broker, Device } from 'src/app/data/models'
 import { DeviceService } from 'src/app/data/services/device.service'
 import { Protocol } from 'src/app/data/enums'
-import { FormGroup } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { BrokerService } from 'src/app/data/services/broker.service'
 
 @Component({
   selector: 'app-device-list',
@@ -26,6 +28,7 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   public createDeviceForm!: FormGroup
 
   public devices$!: Observable<Device[] | null>
+  public brokers$!: Observable<Broker[] | null>
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
@@ -34,8 +37,11 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   public protocol = Protocol.MQTT // temporary
 
   public constructor (
+    private formBuilder: FormBuilder,
+    private modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
     private readonly deviceService: DeviceService,
+    private brokerService: BrokerService,
     private readonly notificationService: NotificationService
   ) {
     this.collectionId = this.activatedRoute.snapshot.params.collectionId
@@ -43,6 +49,27 @@ export class DeviceListComponent implements OnInit, OnDestroy {
 
   public ngOnInit (): void {
     this.loadDevices()
+    this.initializeForms()
+    this.loadBrokers()
+  }
+
+  private initializeForms (): void {
+    this.createDeviceForm = this.formBuilder.group({
+      name: [null, Validators.required],
+      protocol: [null, Validators.required],
+      topic: [null, Validators.required],
+      brokerId: [null, Validators.required]
+    })
+  }
+
+  public openCreateDeviceModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {},
+        () => {
+          this.createDeviceForm.reset()
+        }
+      )
   }
 
   public ngOnDestroy (): void {
@@ -63,8 +90,29 @@ export class DeviceListComponent implements OnInit, OnDestroy {
       }))
   }
 
-  public createDevice (deviceData: DeviceCreationData): void {
-    this.deviceService.createDevice(this.collectionId, deviceData)
+  private loadBrokers (): void {
+    this.brokers$ = this.brokerService
+      .loadBrokers()
+      .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
+        console.error(httpError)
+
+        this.notificationService.error('Error!', httpError.error)
+        this.error$.next(true)
+
+        return of(null)
+      }))
+  }
+
+  public createDevice (deviceData: any): void {
+    const device: any = { // TEMPORARY
+      name: deviceData.name,
+      protocol: deviceData.protocol,
+      mqttInfo: {
+        topic: deviceData.topic,
+        brokerId: deviceData.brokerId
+      }
+    }
+    this.deviceService.createDevice(this.collectionId, device)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
