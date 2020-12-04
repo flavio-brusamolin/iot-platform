@@ -6,7 +6,7 @@ import * as dayjs from 'dayjs'
 import { Data } from 'src/app/data/models'
 
 interface Sample {
-  value: number,
+  value: string,
   date: string
 }
 
@@ -39,7 +39,7 @@ export class HistoryCardComponent implements OnInit, OnChanges {
     this.history = this.data?.reverse()
       .slice(0, HISTORY_SIZE)
       .map(({ value, timestamp }) => ({
-        value,
+        value: value.toFixed(2),
         date: dayjs(timestamp).format('MMM DD, HH:mm')
       }))
   }
