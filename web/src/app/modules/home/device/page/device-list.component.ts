@@ -7,7 +7,7 @@ import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
-import { DeviceCreationData } from 'src/app/data/dtos'
+// import { DeviceCreationData } from 'src/app/data/dtos'
 import { Broker, Device } from 'src/app/data/models'
 import { DeviceService } from 'src/app/data/services/device.service'
 import { Protocol } from 'src/app/data/enums'

@@ -48,4 +48,30 @@ app-container button {
       font-size: 1.42rem;
     }
   }
+
+  .modal-header {
+    background-color: black;
+  }
+  
+  .modal-body {
+    background-color: var(--color-dark-background);
+  }
+  
+  .modal-footer {
+    background-color: var(--color-dark-background);
+  }
+  
+  .modal-footer button {
+    outline: 0;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    background-color: transparent;
+    color: var(--color-dark-white);
+  }
+  
+  .modal-footer button:hover {
+    opacity: 0.9;
+  }
   
