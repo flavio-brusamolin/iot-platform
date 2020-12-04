@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, OnDestroy, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, map, takeUntil } from 'rxjs/operators'
 
@@ -23,6 +25,8 @@ export class TeamComponent implements OnInit, OnDestroy {
     plus: faPlus
   }
 
+  public addMemberForm!: FormGroup
+
   private collectionId: string
   private accessGroupId: any
 
@@ -35,6 +39,8 @@ export class TeamComponent implements OnInit, OnDestroy {
   private unsub$ = new Subject<void>()
 
   public constructor (
+    private formBuilder: FormBuilder,
+    private modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
     private readonly collectionService: CollectionService,
     private readonly teamService: TeamService,
@@ -45,6 +51,24 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   public ngOnInit (): void {
     this.loadCollection()
+    this.initializeForms()
+  }
+
+  private initializeForms (): void {
+    this.addMemberForm = this.formBuilder.group({
+      email: [null, Validators.required],
+      role: [null, Validators.required]
+    })
+  }
+
+  public openCreateDeviceModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {},
+        () => {
+          this.addMemberForm.reset()
+        }
+      )
   }
 
   public ngOnDestroy (): void {
