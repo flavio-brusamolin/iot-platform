@@ -7,7 +7,7 @@ import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
-// import { DeviceCreationData } from 'src/app/data/dtos'
+import { DeviceCreationData } from 'src/app/data/dtos'
 import { Broker, Device } from 'src/app/data/models'
 import { DeviceService } from 'src/app/data/services/device.service'
 import { Protocol } from 'src/app/data/enums'
@@ -57,8 +57,11 @@ export class DeviceListComponent implements OnInit, OnDestroy {
     this.createDeviceForm = this.formBuilder.group({
       name: [null, Validators.required],
       protocol: [null, Validators.required],
-      topic: [null, Validators.required],
-      brokerId: [null, Validators.required]
+      mqttInfo: this.formBuilder.group({
+        topic: [null, Validators.required],
+        brokerId: [null, Validators.required]
+      })
+
     })
   }
 
@@ -103,16 +106,8 @@ export class DeviceListComponent implements OnInit, OnDestroy {
       }))
   }
 
-  public createDevice (deviceData: any): void {
-    const device: any = { // TEMPORARY
-      name: deviceData.name,
-      protocol: deviceData.protocol,
-      mqttInfo: {
-        topic: deviceData.topic,
-        brokerId: deviceData.brokerId
-      }
-    }
-    this.deviceService.createDevice(this.collectionId, device)
+  public createDevice (deviceData: DeviceCreationData): void {
+    this.deviceService.createDevice(this.collectionId, deviceData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {

@@ -44,18 +44,18 @@
         <option>mqtt</option>
       </select>
       
-      <app-input label="Topic" name="topic" type="string" formControlName="topic"></app-input>
+      <div formGroupName="mqttInfo">
+        <app-input label="Topic" name="topic" type="string" formControlName="topic"></app-input>
 
-      <label style="margin-right: 1rem;">Broker</label>
-      <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
-        <ng-container *ngIf="brokers?.length; else empty">
-          <select class="selectpicker" formControlName="brokerId">
-            <option *ngFor="let broker of brokers" [value]="broker.id"> {{broker.name}} </option>
-          </select>
-        </ng-container>
-      </main>
-      
-      
+        <label style="margin-right: 1rem;">Broker</label>
+        <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
+          <ng-container *ngIf="brokers?.length; else empty">
+            <select class="selectpicker" formControlName="brokerId">
+              <option *ngFor="let broker of brokers" [value]="broker.id"> {{broker.name}} </option>
+            </select>
+          </ng-container>
+        </main>    
+      </div>
 
       <div class="modal-footer">
         <button type="button" (click)="modal.dismiss()">Close</button>
