@@ -1,0 +1,17 @@
+<div class="history">
+  <h3>
+    <fa-icon [icon]="icons.history"></fa-icon>
+    Recent history
+  </h3>
+
+  <main>
+    <div class="data" *ngFor="let sample of history">
+      <div class="value">
+        <fa-icon [icon]="icons.data"></fa-icon>
+        Value: {{ sample.value }}
+      </div>
+
+      <small>{{ sample.date }}</small>
+    </div>
+  </main>
+</div>

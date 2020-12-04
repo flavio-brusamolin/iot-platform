@@ -1,0 +1,46 @@
+.history {
+  padding: 3rem;
+  background-color: var(--color-dark-background);
+  height: 40rem;
+  border-radius: 1rem;
+  transition: background-color 0.5s;
+}
+
+.history:focus {
+  outline: 0;
+}
+
+.history:hover {
+  background-color: var(--color-dark);
+}
+
+.history main {
+  margin-top: 2.5rem;
+}
+
+.history main .data {
+  margin-bottom: 1.1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.45rem;
+  letter-spacing: 0.03rem;
+  text-align: center;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--color-area-border);
+}
+
+.history main .data:last-child {
+  border: none;
+}
+
+.history main .data .value fa-icon {
+  margin-right: 0.4rem;
+  color: var(--color-secondary);
+  font-size: 1.6rem;
+}
+
+.history main .data small {
+  color: var(--color-secondary);
+}

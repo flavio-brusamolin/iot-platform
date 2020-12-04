@@ -7,12 +7,14 @@ import { VariableDetailRoutingModule } from './variable-detail-routing.module'
 import { VariableDetailComponent } from './page/variable-detail.component'
 import { InfoCardComponent } from './components/info-card/info-card.component'
 import { ChartCardComponent } from './components/chart-card/chart-card.component'
+import { HistoryCardComponent } from './components/history-card/history-card.component'
 
 @NgModule({
   declarations: [
     VariableDetailComponent,
     InfoCardComponent,
-    ChartCardComponent
+    ChartCardComponent,
+    HistoryCardComponent
   ],
   imports: [
     VariableDetailRoutingModule,

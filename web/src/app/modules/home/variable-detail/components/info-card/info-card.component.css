@@ -1,6 +1,5 @@
 .info-card {
   display: flex;
-  min-width: 25rem;
 }
 
 .info-card:focus {

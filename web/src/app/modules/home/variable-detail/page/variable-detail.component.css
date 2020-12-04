@@ -5,11 +5,27 @@ app-container main .monitoring {
 
 app-container .monitoring app-info-card {
   flex-basis: calc((100% / 4) - (3 * 1rem));
+  min-width: 25rem;
   margin: 0 1.5rem 2rem 1.5rem;
 }
 
 app-container main .analysis {
-  margin: 1rem;
+  margin: 1rem 0rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+app-container main .analysis app-chart-card {
+  flex-basis: calc(100% / (4 / 3) - (3 * 1rem));
+  min-width: 25rem;
+  margin: 0 1.5rem 3rem 1.5rem;
+}
+
+app-container main .analysis app-history-card {
+  flex-basis: calc((100% / 4) - (3 * 1rem));
+  min-width: 25rem;
+  margin: 0 1.5rem;
 }
 
 app-container main .empty {
@@ -20,10 +36,26 @@ app-container main .empty {
   app-container .monitoring app-info-card {
     flex-basis: calc((100% / 2) - (3 * 1rem));
   }
+
+  app-container main .analysis app-chart-card {
+    flex-basis: calc((100% / 2) - (3 * 1rem));
+  }
+
+  app-container main .analysis app-history-card {
+    flex-basis: calc((100% / 2) - (3 * 1rem));
+  }
 }
 
 @media (max-width: 597px) {
   app-container .monitoring app-info-card {
+    flex-basis: calc(100% - (3 * 1rem));
+  }
+
+  app-container main .analysis app-chart-card {
+    flex-basis: calc(100% - (3 * 1rem));
+  }
+
+  app-container main .analysis app-history-card {
     flex-basis: calc(100% - (3 * 1rem));
   }
 }
