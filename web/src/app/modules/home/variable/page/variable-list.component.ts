@@ -10,6 +10,8 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { VariableCreationData } from 'src/app/data/dtos'
 import { VariableService } from 'src/app/data/services/variable.service'
 import { Variable } from 'src/app/data/models'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-variable-list',
@@ -21,6 +23,8 @@ export class VariableListComponent implements OnInit, OnDestroy {
     plus: faPlus
   }
 
+  public createVariableForm!: FormGroup
+
   public variables$!: Observable<Variable[] | null>
   public error$ = new Subject<boolean>();
 
@@ -29,6 +33,8 @@ export class VariableListComponent implements OnInit, OnDestroy {
   private deviceId: string
 
   public constructor (
+    private formBuilder: FormBuilder,
+    private modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
     private readonly variableService: VariableService,
     private notificationService: NotificationService
@@ -38,6 +44,24 @@ export class VariableListComponent implements OnInit, OnDestroy {
 
   public ngOnInit (): void {
     this.loadVariables()
+    this.initializeForms()
+  }
+
+  private initializeForms (): void {
+    this.createVariableForm = this.formBuilder.group({
+      name: [null, Validators.required],
+      key: [null, Validators.required]
+    })
+  }
+
+  public openCreateDeviceModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {},
+        () => {
+          this.createVariableForm.reset()
+        }
+      )
   }
 
   public ngOnDestroy (): void {

@@ -1,6 +1,6 @@
 <app-container name="Variables">
 
-  <button header (click)="createVariable({ name:'Sapateira', key: 'sapateira' })">
+  <button header (click)="openCreateDeviceModal(createVariableModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New variable
   </button>
@@ -26,3 +26,24 @@
   </ng-template>
 
 </app-container>
+
+<ng-template #createVariableModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Create Collection</h4>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="createVariableForm" (ngSubmit)="createVariable(createVariableForm.value); modal.dismiss()">
+      <div class="select-group">
+      </div>
+      <app-input label="Name" name="name" type="string" formControlName="name"></app-input>
+      <app-input label="Key" name="key" type="string" formControlName="key"></app-input>
+
+      <div class="modal-footer">
+        <button type="button" (click)="modal.dismiss()">Close</button>
+        <button type="submit" [disabled]="!createVariableForm.valid">Create</button>
+      </div>
+    </form>
+
+  </div>
+</ng-template>
