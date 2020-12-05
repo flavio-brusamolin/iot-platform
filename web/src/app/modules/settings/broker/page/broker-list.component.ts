@@ -30,42 +30,32 @@ export class BrokerListComponent implements OnInit, OnDestroy {
   private unsub$ = new Subject<void>()
 
   public constructor (
-    private formBuilder: FormBuilder,
-    private modal: NgbModal,
+    private readonly formBuilder: FormBuilder,
+    private readonly modal: NgbModal,
     private readonly brokerService: BrokerService,
     private readonly notificationService: NotificationService
   ) { }
 
   public ngOnInit (): void {
-    this.loadBrokers()
     this.initializeForms()
-  }
-
-  private initializeForms (): void {
-    this.createBrokerForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      credentials: this.formBuilder.group({
-        username: [null, Validators.required],
-        password: [null, Validators.required],
-        address: [null, Validators.required],
-        port: [null, Validators.required]
-      })
-    })
-  }
-
-  public openCreateDeviceModal (content: any): void {
-    this.modal.open(content, { centered: true })
-      .result.then(
-        () => {},
-        () => {
-          this.createBrokerForm.reset()
-        }
-      )
+    this.loadBrokers()
   }
 
   public ngOnDestroy (): void {
     this.unsub$.next()
     this.unsub$.complete()
+  }
+
+  private initializeForms (): void {
+    this.createBrokerForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      credentials: this.formBuilder.group({
+        username: ['', Validators.required],
+        password: ['', Validators.required],
+        address: ['', Validators.required],
+        port: ['', [Validators.required, Validators.min(0)]]
+      })
+    })
   }
 
   private loadBrokers (): void {
@@ -79,6 +69,14 @@ export class BrokerListComponent implements OnInit, OnDestroy {
 
         return of(null)
       }))
+  }
+
+  public openCreateBrokerModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => this.createBroker(this.createBrokerForm.value),
+        () => this.createBrokerForm.reset()
+      )
   }
 
   public createBroker (brokerData: BrokerCreationData): void {
@@ -97,7 +95,6 @@ export class BrokerListComponent implements OnInit, OnDestroy {
   }
 
   public reprocessBroker (broker: Broker): void {
-    console.log('funfou')
     this.brokerService.reprocessBroker(broker.id)
       .pipe(takeUntil(this.unsub$))
       .subscribe(

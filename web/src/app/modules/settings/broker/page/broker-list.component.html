@@ -1,13 +1,14 @@
 <app-container name="Brokers">
 
-  <button header (click)="openCreateDeviceModal(createBrokerModal)">
+  <button header (click)="openCreateBrokerModal(createBrokerModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New broker
   </button>
 
   <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
     <ng-container *ngIf="brokers?.length; else empty">
-      <app-broker-card *ngFor="let broker of brokers" [broker]="broker" (reprocessBrokerEmitter)="reprocessBroker($event)"></app-broker-card>
+      <app-broker-card *ngFor="let broker of brokers" [broker]="broker"
+        (reprocessBrokerEmitter)="reprocessBroker($event)"></app-broker-card>
     </ng-container>
 
     <ng-template #empty>
@@ -28,29 +29,19 @@
 </app-container>
 
 <ng-template #createBrokerModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Create Collection</h4>
-  </div>
+  <app-modal modalTitle="Create Broker" [canContinue]="createBrokerForm.valid" (closeEmitter)="modal.dismiss()"
+    (continueEmitter)="modal.close()">
 
-  <div class="modal-body">
-    <form [formGroup]="createBrokerForm" (ngSubmit)="createBroker(createBrokerForm.value); modal.dismiss()">
-      <div class="select-group">
-      </div>
-        <app-input label="Name" name="name" type="string" formControlName="name"></app-input>
-        <div formGroupName="credentials">
-        <app-input label="Username" name="username" type="string" formControlName="username"></app-input>
+    <form [formGroup]="createBrokerForm" (ngSubmit)="modal.close()" autocomplete="off">
+      <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+
+      <div formGroupName="credentials">
+        <app-input label="Username" name="username" type="text" formControlName="username"></app-input>
         <app-input label="Password" name="password" type="password" formControlName="password"></app-input>
-        <app-input label="Address" name="address" type="string" formControlName="address"></app-input>
-        <app-input label="Port" name="port" type="number" formControlName="port"></app-input>     
-      </div>
-
-
-      <div class="modal-footer">
-        <button type="button" (click)="modal.dismiss()">Close</button>
-        <button type="submit" [disabled]="!createBrokerForm.valid">Create</button>
+        <app-input label="Address" name="address" type="text" formControlName="address"></app-input>
+        <app-input label="Port" name="port" type="number" formControlName="port"></app-input>
       </div>
     </form>
 
-  </div>
+  </app-modal>
 </ng-template>
-

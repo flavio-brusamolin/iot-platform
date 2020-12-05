@@ -28,7 +28,6 @@
 </app-container>
 
 <ng-template #createCollectionModal let-modal>
-
   <app-modal modalTitle="Create Collection" [canContinue]="createCollectionForm.valid" (closeEmitter)="modal.dismiss()"
     (continueEmitter)="modal.close()">
 
@@ -37,5 +36,4 @@
     </form>
 
   </app-modal>
-
 </ng-template>
