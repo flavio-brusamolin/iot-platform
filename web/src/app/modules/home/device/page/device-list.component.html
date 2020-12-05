@@ -1,14 +1,14 @@
 <app-container name="Devices">
 
-  <button header
-    (click)="openCreateDeviceModal(createDeviceModal)">
+  <button header (click)="openCreateDeviceModal(createDeviceModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New device
   </button>
 
   <main content *ngIf="(devices$ | async) as devices; else loadingOrError">
     <ng-container *ngIf="devices?.length; else empty">
-      <app-device-card *ngFor="let device of devices" [device]="device" (updateDeviceEmitter)="updateDevice(device, $event)"></app-device-card>
+      <app-device-card *ngFor="let device of devices" [device]="device"
+        (updateDeviceEmitter)="updateDevice(device, $event)"></app-device-card>
     </ng-container>
 
     <ng-template #empty>
@@ -48,8 +48,8 @@
         <app-input label="Topic" name="topic" type="string" formControlName="topic"></app-input>
 
         <label style="margin-right: 1rem;">Broker</label>
-        <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
-          <ng-container *ngIf="brokers?.length; else empty">
+        <main content *ngIf="(brokers$ | async) as brokers;">
+          <ng-container *ngIf="brokers?.length;">
             <select class="selectpicker" formControlName="brokerId">
               <option *ngFor="let broker of brokers" [value]="broker.id"> {{broker.name}} </option>
             </select>
