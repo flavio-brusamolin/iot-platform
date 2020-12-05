@@ -28,21 +28,14 @@
 </app-container>
 
 <ng-template #createCollectionModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Create Collection</h4>
-  </div>
 
-  <div class="modal-body">
-    <form [formGroup]="createCollectionForm" (ngSubmit)="createCollection(createCollectionForm.value); modal.dismiss()">
-      <div class="select-group">
-      </div>
-      <app-input label="Name" name="name" type="string" formControlName="name"></app-input>
+  <app-modal modalTitle="Create Collection" [canContinue]="createCollectionForm.valid" (closeEmitter)="modal.dismiss()"
+    (continueEmitter)="modal.close()">
 
-      <div class="modal-footer">
-        <button type="button" (click)="modal.dismiss()">Close</button>
-        <button type="submit" [disabled]="!createCollectionForm.valid">Create</button>
-      </div>
+    <form [formGroup]="createCollectionForm" (ngSubmit)="modal.close()" autocomplete="off">
+      <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
     </form>
 
-  </div>
+  </app-modal>
+
 </ng-template>

@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { HttpErrorResponse } from '@angular/common/http'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { Collection } from 'src/app/data/models'
 import { CollectionService } from 'src/app/data/services/collection.service'
 import { CollectionCreationData } from 'src/app/data/dtos'
 import { NotificationService } from 'src/app/core/services/notification.service'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-collection-list',
@@ -30,36 +30,26 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   private unsub$ = new Subject<void>()
 
   public constructor (
-    private formBuilder: FormBuilder,
-    private modal: NgbModal,
+    private readonly formBuilder: FormBuilder,
+    private readonly modal: NgbModal,
     private readonly collectionService: CollectionService,
     private readonly notificationService: NotificationService
   ) { }
 
   public ngOnInit (): void {
-    this.loadCollections()
     this.initializeForms()
-  }
-
-  private initializeForms (): void {
-    this.createCollectionForm = this.formBuilder.group({
-      name: [null, Validators.required]
-    })
-  }
-
-  public openCreateCollectionModal (content: any): void {
-    this.modal.open(content, { centered: true })
-      .result.then(
-        () => {},
-        () => {
-          this.createCollectionForm.reset()
-        }
-      )
+    this.loadCollections()
   }
 
   public ngOnDestroy (): void {
     this.unsub$.next()
     this.unsub$.complete()
+  }
+
+  private initializeForms (): void {
+    this.createCollectionForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+    })
   }
 
   private loadCollections (): void {
@@ -73,6 +63,14 @@ export class CollectionListComponent implements OnInit, OnDestroy {
 
         return of(null)
       }))
+  }
+
+  public openCreateCollectionModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => this.createCollection(this.createCollectionForm.value),
+        () => this.createCollectionForm.reset()
+      )
   }
 
   public createCollection (collectionData: CollectionCreationData): void {

@@ -1,0 +1,35 @@
+.modal-footer button {
+  border-radius: 0.3rem;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  padding: 0.6rem 1.4rem;
+  font-size: 1.45rem;
+  min-width: 8rem;
+}
+
+.modal-footer button + button {
+  margin-left: 1rem;
+}
+
+.modal-footer .close-button {
+  background-color: var(--color-tertiary);
+  transition: background-color 0.2s;
+}
+
+.modal-footer .close-button:hover {
+  background-color: var(--color-dark-tertiary);
+}
+
+.modal-footer .continue-button {
+  background-color: var(--color-primary);
+  transition: background-color 0.2s;
+}
+
+.modal-footer .continue-button:hover {
+  background-color: var(--color-dark-primary);
+}
+
+.modal-footer .continue-button:disabled {
+  pointer-events: none;
+}

@@ -11,6 +11,7 @@ import { ContainerComponent } from './container/container.component'
 import { LoadingComponent } from './loading/loading.component'
 import { ErrorComponent } from './error/error.component'
 import { EmptyComponent } from './empty/empty.component'
+import { ModalComponent } from './modal/modal.component'
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { EmptyComponent } from './empty/empty.component'
     ContainerComponent,
     LoadingComponent,
     ErrorComponent,
-    EmptyComponent
+    EmptyComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { EmptyComponent } from './empty/empty.component'
     ContainerComponent,
     LoadingComponent,
     ErrorComponent,
-    EmptyComponent
+    EmptyComponent,
+    ModalComponent
   ]
 })
 export class SharedModule { }

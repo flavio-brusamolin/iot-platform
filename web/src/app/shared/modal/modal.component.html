@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ modalTitle }}</h4>
+</div>
+
+<div class="modal-body">
+  <ng-content></ng-content>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="close-button" (click)="closeEmitter.emit()">Close</button>
+  <button type="submit" class="continue-button" (click)="continueEmitter.emit()" [disabled]="!canContinue">Continue</button>
+</div>
