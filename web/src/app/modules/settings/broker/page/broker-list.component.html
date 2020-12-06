@@ -41,6 +41,8 @@
         <app-input label="Address" name="address" type="text" formControlName="address"></app-input>
         <app-input label="Port" name="port" type="number" formControlName="port"></app-input>
       </div>
+
+      <button type="submit" class="invisible" [disabled]="!createBrokerForm.valid"></button>
     </form>
 
   </app-modal>

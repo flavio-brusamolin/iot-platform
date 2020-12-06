@@ -68,12 +68,15 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   public openCreateCollectionModal (content: any): void {
     this.modal.open(content, { centered: true })
       .result.then(
-        () => this.createCollection(this.createCollectionForm.value),
+        () => {
+          this.createCollection(this.createCollectionForm.value)
+          this.createCollectionForm.reset()
+        },
         () => this.createCollectionForm.reset()
       )
   }
 
-  public createCollection (collectionData: CollectionCreationData): void {
+  private createCollection (collectionData: CollectionCreationData): void {
     this.collectionService.createCollection(collectionData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(

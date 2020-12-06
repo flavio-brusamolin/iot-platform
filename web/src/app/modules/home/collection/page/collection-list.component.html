@@ -33,6 +33,8 @@
 
     <form [formGroup]="createCollectionForm" (ngSubmit)="modal.close()" autocomplete="off">
       <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+
+      <button type="submit" class="invisible" [disabled]="!createCollectionForm.valid"></button>
     </form>
 
   </app-modal>

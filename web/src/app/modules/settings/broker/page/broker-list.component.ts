@@ -74,12 +74,15 @@ export class BrokerListComponent implements OnInit, OnDestroy {
   public openCreateBrokerModal (content: any): void {
     this.modal.open(content, { centered: true })
       .result.then(
-        () => this.createBroker(this.createBrokerForm.value),
+        () => {
+          this.createBroker(this.createBrokerForm.value)
+          this.createBrokerForm.reset()
+        },
         () => this.createBrokerForm.reset()
       )
   }
 
-  public createBroker (brokerData: BrokerCreationData): void {
+  private createBroker (brokerData: BrokerCreationData): void {
     this.brokerService.createBroker(brokerData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
