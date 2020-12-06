@@ -47,6 +47,10 @@ textarea {
   color: var(--color-text-base);
 }
 
+.invisible {
+  display: none;
+}
+
 /* Toastr custom style */
 #toast-container > div {
   box-shadow: none;

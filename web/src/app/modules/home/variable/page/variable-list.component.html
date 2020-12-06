@@ -1,6 +1,6 @@
 <app-container name="Variables">
 
-  <button header (click)="openCreateDeviceModal(createVariableModal)">
+  <button header (click)="openCreateVariableModal(createVariableModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New variable
   </button>
@@ -28,22 +28,15 @@
 </app-container>
 
 <ng-template #createVariableModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Create Collection</h4>
-  </div>
+  <app-modal modalTitle="Create Variable" [canContinue]="createVariableForm.valid" (closeEmitter)="modal.dismiss()"
+    (continueEmitter)="modal.close()">
 
-  <div class="modal-body">
-    <form [formGroup]="createVariableForm" (ngSubmit)="createVariable(createVariableForm.value); modal.dismiss()">
-      <div class="select-group">
-      </div>
-      <app-input label="Name" name="name" type="string" formControlName="name"></app-input>
-      <app-input label="Key" name="key" type="string" formControlName="key"></app-input>
+    <form [formGroup]="createVariableForm" (ngSubmit)="modal.close()" autocomplete="off">
+      <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+      <app-input label="Key" name="key" type="text" formControlName="key"></app-input>
 
-      <div class="modal-footer">
-        <button type="button" (click)="modal.dismiss()">Close</button>
-        <button type="submit" [disabled]="!createVariableForm.valid">Create</button>
-      </div>
+      <button type="submit" class="invisible" [disabled]="!createVariableForm.valid"></button>
     </form>
 
-  </div>
+  </app-modal>
 </ng-template>

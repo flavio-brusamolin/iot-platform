@@ -1,17 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Observable, of, Subject } from 'rxjs'
 import { catchError, takeUntil } from 'rxjs/operators'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { VariableCreationData } from 'src/app/data/dtos'
 import { VariableService } from 'src/app/data/services/variable.service'
 import { Variable } from 'src/app/data/models'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'app-variable-list',
@@ -23,6 +23,8 @@ export class VariableListComponent implements OnInit, OnDestroy {
     plus: faPlus
   }
 
+  private deviceId: string
+
   public createVariableForm!: FormGroup
 
   public variables$!: Observable<Variable[] | null>
@@ -30,43 +32,31 @@ export class VariableListComponent implements OnInit, OnDestroy {
 
   private unsub$ = new Subject<void>()
 
-  private deviceId: string
-
   public constructor (
-    private formBuilder: FormBuilder,
-    private modal: NgbModal,
+    private readonly formBuilder: FormBuilder,
+    private readonly modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
     private readonly variableService: VariableService,
-    private notificationService: NotificationService
+    private readonly notificationService: NotificationService
   ) {
     this.deviceId = this.activatedRoute.snapshot.params.deviceId
   }
 
   public ngOnInit (): void {
-    this.loadVariables()
     this.initializeForms()
-  }
-
-  private initializeForms (): void {
-    this.createVariableForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      key: [null, Validators.required]
-    })
-  }
-
-  public openCreateDeviceModal (content: any): void {
-    this.modal.open(content, { centered: true })
-      .result.then(
-        () => {},
-        () => {
-          this.createVariableForm.reset()
-        }
-      )
+    this.loadVariables()
   }
 
   public ngOnDestroy (): void {
     this.unsub$.next()
     this.unsub$.complete()
+  }
+
+  private initializeForms (): void {
+    this.createVariableForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      key: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]]
+    })
   }
 
   private loadVariables (): void {
@@ -82,7 +72,18 @@ export class VariableListComponent implements OnInit, OnDestroy {
       }))
   }
 
-  public createVariable (variableData: VariableCreationData): void {
+  public openCreateVariableModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {
+          this.createVariable(this.createVariableForm.value)
+          this.createVariableForm.reset()
+        },
+        () => this.createVariableForm.reset()
+      )
+  }
+
+  private createVariable (variableData: VariableCreationData): void {
     this.variableService.createVariable(this.deviceId, variableData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
