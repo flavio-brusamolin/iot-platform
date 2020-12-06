@@ -48,3 +48,13 @@ app-container main app-broker-card {
     font-size: 1.42rem;
   }
 }
+
+app-modal form .credentials {
+  display: flex;
+  flex-direction: column;
+}
+
+app-modal form .credentials app-input {
+  margin-top: 1.5rem;
+}
+

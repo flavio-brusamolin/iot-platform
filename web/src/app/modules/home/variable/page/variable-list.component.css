@@ -48,3 +48,12 @@ app-container main app-variable-card {
     font-size: 1.42rem;
   }
 }
+
+app-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+app-modal form app-input + app-input {
+  margin-top: 1.5rem;
+}

@@ -35,7 +35,7 @@
     <form [formGroup]="createBrokerForm" (ngSubmit)="modal.close()" autocomplete="off">
       <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
 
-      <div formGroupName="credentials">
+      <div formGroupName="credentials" class="credentials">
         <app-input label="Username" name="username" type="text" formControlName="username"></app-input>
         <app-input label="Password" name="password" type="password" formControlName="password"></app-input>
         <app-input label="Address" name="address" type="text" formControlName="address"></app-input>
