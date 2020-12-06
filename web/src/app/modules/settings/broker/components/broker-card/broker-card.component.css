@@ -3,7 +3,6 @@
   border-radius: 1rem;
   border-left: 1rem solid var(--color-dark);
   min-width: 25rem;
-  cursor: pointer;
   transition: background-color 0.5s, border-left-color 0.5s;
   padding: 1rem 1.5rem 2.9rem 1.5rem;
 }
@@ -49,4 +48,16 @@
 
 .dropdown-toggle::after {
   display:none;
+}
+
+.brokerInfoTemplate {
+  border-radius: 1rem;
+  background-color: var(--color-dark-background);
+  width: 100%;
+}
+
+.tooltip-inner {
+  border:none;
+  box-shadow:none;
+  outline:none;
 }

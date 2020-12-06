@@ -1,6 +1,6 @@
 <div class="broker-card">
   <header>
-    <fa-icon [icon]="icons.info" [class]="['info-icon']"></fa-icon>
+    <fa-icon [icon]="icons.info" [class]="['info-icon']" placement="bottom" [ngbTooltip]="brokerInfoTemplate"></fa-icon>
     <div class="options-icon" ngbDropdown>
       <fa-icon [icon]="icons.options" ngbDropdownToggle></fa-icon>
       <div class="menu-options" ngbDropdownMenu>
@@ -22,3 +22,13 @@
     </div>
   </main>
 </div>
+
+<ng-template #brokerInfoTemplate> 
+  <div class="brokerInfoTemplate">
+    <h3>Username: {{broker.credentials.username}}</h3>
+    <h3>Password: {{broker.credentials.password}}</h3>
+    <h3>Address: {{broker.credentials.address}}</h3>
+    <h3>Port: {{broker.credentials.port}}</h3>
+  </div>
+
+</ng-template>

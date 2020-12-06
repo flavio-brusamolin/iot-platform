@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 import { SharedModule } from 'src/app/shared/shared.module'
 import { DataModule } from 'src/app/data/data.module'
@@ -17,6 +17,7 @@ import { BrokerCardComponent } from './components/broker-card/broker-card.compon
     BrokerRoutingModule,
 
     NgbModule,
+    NgbTooltipModule,
     SharedModule,
     DataModule
   ]
