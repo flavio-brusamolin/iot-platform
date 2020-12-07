@@ -14,6 +14,7 @@ import { Protocol } from 'src/app/data/enums'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { BrokerService } from 'src/app/data/services/broker.service'
+import { CollectionService } from 'src/app/data/services/collection.service'
 
 @Component({
   selector: 'app-device-list',
@@ -34,12 +35,14 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   private unsub$ = new Subject<void>()
 
   private collectionId: string
+  public collectionName!: string | undefined
   public protocol = Protocol.MQTT // temporary
 
   public constructor (
     private formBuilder: FormBuilder,
     private modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
+    private readonly collectionService: CollectionService,
     private readonly deviceService: DeviceService,
     private brokerService: BrokerService,
     private readonly notificationService: NotificationService
@@ -48,9 +51,29 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit (): void {
+    this.loadCollectionById(this.collectionId)
     this.loadDevices()
     this.initializeForms()
     this.loadBrokers()
+  }
+
+  public ngOnDestroy (): void {
+    this.unsub$.next()
+    this.unsub$.complete()
+  }
+
+  public loadCollectionById (collectionId: string): void {
+    this.collectionService
+      .loadCollectionById(collectionId)
+      .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
+        console.error(httpError)
+
+        this.notificationService.error('Error!', httpError.error)
+        this.error$.next(true)
+
+        return of(null)
+      }))
+      .subscribe((collection) => this.collectionName = collection?.name)
   }
 
   private initializeForms (): void {
@@ -73,11 +96,6 @@ export class DeviceListComponent implements OnInit, OnDestroy {
           this.createDeviceForm.reset()
         }
       )
-  }
-
-  public ngOnDestroy (): void {
-    this.unsub$.next()
-    this.unsub$.complete()
   }
 
   private loadDevices (): void {

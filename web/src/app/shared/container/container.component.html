@@ -1,6 +1,12 @@
 <div id="container">
   <header>
-    <h1>{{ name }}</h1>
+    <div *ngIf="entityName">
+      <h1>{{ entityName }}</h1>
+      <h4 style="margin-top: 1rem;">{{ name }}</h4>
+    </div>
+    <div *ngIf="!entityName">
+      <h1>{{ name }}</h1>
+    </div>
     <ng-content select="[header]"></ng-content>
   </header>
 

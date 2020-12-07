@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core'
 })
 export class ContainerComponent implements OnInit {
  @Input() public name!: string
+ @Input() public entityName!: string
 
  public constructor () { }
 
