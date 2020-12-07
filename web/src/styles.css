@@ -102,3 +102,9 @@ textarea {
   padding: 1.5rem 2rem;
   border-top-color: var(--color-area-border);
 }
+
+.tooltip-inner {
+  border-radius: 1rem;
+  background-color: var(--color-dark-background);
+}
+
