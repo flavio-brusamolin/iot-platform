@@ -46,6 +46,10 @@
   margin-top: 0.01rem;
 }
 
+.broker-card .options-icon {
+  cursor: pointer;
+}
+
 .dropdown-toggle::after {
   display:none;
 }
