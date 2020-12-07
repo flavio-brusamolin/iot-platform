@@ -1,6 +1,6 @@
 <div class="device-card" [routerLink]="['/home/devices/', device.id]">
   <header>
-    <fa-icon [icon]="icons.info" [class]="['info-icon']"></fa-icon>
+    <fa-icon [icon]="icons.info" [class]="['info-icon']" placement="bottom" [ngbTooltip]="deviceInfoTemplate"></fa-icon>
     <div class="options-icon" ngbDropdown (click)="$event.stopPropagation()">
       <fa-icon [icon]="icons.options" ngbDropdownToggle></fa-icon>
       <div class="menu-options" ngbDropdownMenu>
@@ -37,3 +37,12 @@
 
 
 </ng-template>
+
+<ng-template #deviceInfoTemplate> 
+  <div>
+    <h3>Topic: {{ device.mqttInfo?.topic }}</h3>
+    <h3>Broker Name: {{ brokerName }}</h3>
+  </div>
+
+</ng-template>
+
