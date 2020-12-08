@@ -1,4 +1,4 @@
-<app-container name="Devices | Members" entityName={{collectionName}}>
+<app-container *ngIf="collectionName" name="Devices | Members" entityName={{collectionName}}>
 
   <button header (click)="openCreateDeviceModal(createDeviceModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
