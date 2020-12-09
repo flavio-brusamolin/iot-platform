@@ -17,6 +17,10 @@ export class DeviceService {
     return this.http.get<Device[]>(`${this.url}/collections/${collectionId}/devices`)
   }
 
+  public loadDeviceById (deviceId: string): Observable<Device> {
+    return this.http.get<Device>(`${this.url}/devices/${deviceId}`)
+  }
+
   public createDevice (collectionId: string, deviceData: DeviceCreationData): Observable<Device> {
     return this.http.post<Device>(`${this.url}/collections/${collectionId}/devices`, deviceData)
   }
