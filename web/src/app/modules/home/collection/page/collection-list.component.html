@@ -1,11 +1,11 @@
-<app-container name="Collections">
+<app-container *ngIf="(collections$ | async) as collections; else loadingOrError" name="Collections">
 
   <button header (click)="openCreateCollectionModal(createCollectionModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New collection
   </button>
 
-  <main content *ngIf="(collections$ | async) as collections; else loadingOrError">
+  <main content>
     <ng-container *ngIf="collections?.length; else empty">
       <app-collection-card *ngFor="let collection of collections" [collection]="collection"></app-collection-card>
     </ng-container>
@@ -17,25 +17,25 @@
     </ng-template>
   </main>
 
-  <ng-template #loadingOrError>
-    <app-error *ngIf="error$ | async; else loading"></app-error>
+  <ng-template #createCollectionModal let-modal>
+    <app-modal modalTitle="Create Collection" [canContinue]="createCollectionForm.valid"
+      (closeEmitter)="modal.dismiss()" (continueEmitter)="modal.close()">
 
-    <ng-template #loading>
-      <app-loading></app-loading>
-    </ng-template>
+      <form [formGroup]="createCollectionForm" (ngSubmit)="modal.close()" autocomplete="off">
+        <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+
+        <button type="submit" class="invisible" [disabled]="!createCollectionForm.valid"></button>
+      </form>
+
+    </app-modal>
   </ng-template>
 
 </app-container>
 
-<ng-template #createCollectionModal let-modal>
-  <app-modal modalTitle="Create Collection" [canContinue]="createCollectionForm.valid" (closeEmitter)="modal.dismiss()"
-    (continueEmitter)="modal.close()">
+<ng-template #loadingOrError>
+  <app-error *ngIf="error$ | async; else loading"></app-error>
 
-    <form [formGroup]="createCollectionForm" (ngSubmit)="modal.close()" autocomplete="off">
-      <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
-
-      <button type="submit" class="invisible" [disabled]="!createCollectionForm.valid"></button>
-    </form>
-
-  </app-modal>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
 </ng-template>
