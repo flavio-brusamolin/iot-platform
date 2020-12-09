@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms'
 
 import { faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { Observable } from 'rxjs'
-import { Broker, Device } from 'src/app/data/models'
+
+import { MergedDeviceData } from '../../page/device-list.component'
 
 @Component({
   selector: 'app-device-card',
@@ -19,9 +19,7 @@ export class DeviceCardComponent implements OnInit {
 
   public updateForm!: FormGroup
 
-  @Input() public device!: Device
-  @Input() public brokers!: Observable<Broker[] | null>
-  public brokerName!: string
+  @Input() public device!: MergedDeviceData
 
   @Output() updateDeviceEmitter = new EventEmitter()
 
@@ -32,7 +30,6 @@ export class DeviceCardComponent implements OnInit {
 
   public ngOnInit (): void {
     this.initializeForms()
-    this.brokers.subscribe((brokers) => brokers?.forEach(broker => this.device.mqttInfo?.brokerId === broker.id ? this.brokerName = broker.name : null))
   }
 
   private initializeForms (): void {

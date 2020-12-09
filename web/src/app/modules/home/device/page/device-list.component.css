@@ -49,28 +49,23 @@ app-container main app-device-card {
   }
 }
 
-.modal-header {
-  background-color: black;
+app-modal form .mqttInfo {
+  display: flex;
+  flex-direction: column;
 }
 
-.modal-body {
-  background-color: var(--color-dark-background);
+app-modal form .mqttInfo app-input {
+  margin-top: 1.5rem;
 }
 
-.modal-footer {
-  background-color: var(--color-dark-background);
-}
-
-.modal-footer button {
-  outline: 0;
-  border: none;
+app-modal form .mqttInfo p {
+  margin-top: 2.5rem;
+  margin-bottom: 0;
   font-size: 1.4rem;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  background-color: transparent;
-  color: var(--color-dark-white);
+  color: var(--color-text-base-darkness);
 }
 
-.modal-footer button:hover {
-  opacity: 0.9;
+.select-label {
+  margin: 1.5rem 1rem 1rem 0; 
+  font-size: 1.3rem;
 }

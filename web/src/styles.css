@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
 @import '~ngx-toastr/toastr';
 
 :root {
@@ -103,8 +104,41 @@ textarea {
   border-top-color: var(--color-area-border);
 }
 
+/* NgbTooltip custom style */
 .tooltip-inner {
   border-radius: 1rem;
   background-color: var(--color-dark-background);
 }
 
+/* NgSelect custom style */
+.ng-select .ng-select-container, .ng-select.ng-select-opened>.ng-select-container {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-area-border);
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder,
+.ng-select.ng-select-single .ng-select-container .ng-value-container,
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+  color: var(--color-text-base);
+  font-size: 1.4rem;
+}
+
+.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+  box-shadow: none;
+  border: 1px solid var(--color-area-border);
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-disabled {
+  color: var(--color-background);
+  font-size: 1.4rem;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option,
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  font-size: 1.4rem;
+}
+
+.ng-select .ng-clear-wrapper {
+  display: none;
+}

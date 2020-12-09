@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { NgxSpinnerModule } from 'ngx-spinner'
 import { ChartsModule } from 'ng2-charts'
+import { NgSelectModule } from '@ng-select/ng-select'
 
 import { InputComponent } from './input/input.component'
 import { ContainerComponent } from './container/container.component'
@@ -35,6 +36,7 @@ import { ModalComponent } from './modal/modal.component'
     FontAwesomeModule,
     NgxSpinnerModule,
     ChartsModule,
+    NgSelectModule,
 
     InputComponent,
     ContainerComponent,

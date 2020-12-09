@@ -1,12 +1,10 @@
 <div id="container">
   <header>
-    <div *ngIf="entityName">
-      <h1>{{ entityName }}</h1>
-      <h4 style="margin-top: 1rem;">{{ name }}</h4>
-    </div>
-    <div *ngIf="!entityName">
+    <div class="title">
       <h1>{{ name }}</h1>
+      <h3>{{ complement }}</h3>
     </div>
+
     <ng-content select="[header]"></ng-content>
   </header>
 

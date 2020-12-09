@@ -6,10 +6,10 @@ import { Component, Input, OnInit } from '@angular/core'
   styleUrls: ['./container.component.css']
 })
 export class ContainerComponent implements OnInit {
- @Input() public name!: string
- @Input() public entityName!: string
+  @Input() public name!: string
+  @Input() public complement?: string
 
- public constructor () { }
+  public constructor () { }
 
- public ngOnInit (): void { }
+  public ngOnInit (): void { }
 }

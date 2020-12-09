@@ -45,6 +45,22 @@
   display:none;
 }
 
+.device-tooltip {
+  padding: 1rem;
+  letter-spacing: 0.04rem;
+  text-align: left;
+}
+
+.device-tooltip h4 + h4 {
+  margin-bottom: 0;
+}
+
+.device-tooltip h4 span {
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+/* temporary */
 .modal-header {
   background-color: black;
 }

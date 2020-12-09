@@ -4,9 +4,18 @@
   align-items: flex-end;
 }
 
-#container header h1 {
+#container header .title {
   letter-spacing: 0.05rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+#container header .title h1, h3 {
   margin-bottom: 0;
+}
+
+#container header .title h3 {
+  margin-left: 0.8rem;
 }
 
 #container hr {
@@ -22,7 +31,7 @@
     align-items: center;
   }
 
-  #container header h1 {
+  #container header .title h1 {
     font-size: 2.3rem;
   }
 }

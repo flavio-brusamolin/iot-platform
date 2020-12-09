@@ -1,14 +1,15 @@
-<app-container *ngIf="collectionName" name="Devices | Members" entityName={{collectionName}}>
+<app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.collection.name" complement="> Devices">
 
   <button header (click)="openCreateDeviceModal(createDeviceModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New device
   </button>
 
-  <main content *ngIf="(devices$ | async) as devices; else loadingOrError">
-    <ng-container *ngIf="devices?.length; else empty">
-      <app-device-card *ngFor="let device of devices" [device]="device" [brokers]="brokers$"
-        (updateDeviceEmitter)="updateDevice(device, $event)"></app-device-card>
+  <main content>
+    <ng-container *ngIf="pageData?.devices.length; else empty">
+      <app-device-card *ngFor="let device of pageData?.devices" [device]="mergeDeviceData(device, pageData?.brokers)"
+        (updateDeviceEmitter)="updateDevice(device, $event)">
+      </app-device-card>
     </ng-container>
 
     <ng-template #empty>
@@ -18,50 +19,48 @@
     </ng-template>
   </main>
 
-  <ng-template #loadingOrError>
-    <app-error *ngIf="error$ | async; else loading"></app-error>
+  <ng-template #createDeviceModal let-modal>
+    <app-modal modalTitle="Create Device" [canContinue]="createDeviceForm.valid" (closeEmitter)="modal.dismiss()"
+      (continueEmitter)="modal.close()">
 
-    <ng-template #loading>
-      <app-loading></app-loading>
-    </ng-template>
+      <form [formGroup]="createDeviceForm" (ngSubmit)="modal.close()" autocomplete="off">
+        <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+
+        <label class="select-label">Protocol</label>
+        <ng-select appendTo="body" [items]="protocols" [hideSelected]="true" bindLabel="label" bindValue="value"
+          formControlName="protocol">
+        </ng-select>
+
+        <div formGroupName="mqttInfo" class="mqttInfo" *ngIf="createDeviceForm.value.protocol === 'mqtt'">
+          <ng-container *ngIf="pageData?.brokers?.length; else brokerWarning">
+            <label class="select-label">Broker</label>
+            <ng-select appendTo="body" [items]="pageData?.brokers" [hideSelected]="true" bindLabel="label"
+              bindValue="value" formControlName="brokerId">
+            </ng-select>
+
+            <app-input label="Topic" name="topic" type="text" formControlName="topic"></app-input>
+          </ng-container>
+
+          <ng-template #brokerWarning>
+            <p>
+              <fa-icon [icon]=icons.warning></fa-icon>
+              Register a broker to continue.
+            </p>
+          </ng-template>
+        </div>
+
+        <button type="submit" class="invisible" [disabled]="!createDeviceForm.valid"></button>
+      </form>
+
+    </app-modal>
   </ng-template>
 
 </app-container>
 
-<ng-template #createDeviceModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Create Collection</h4>
-  </div>
+<ng-template #loadingOrError>
+  <app-error *ngIf="error$ | async; else loading"></app-error>
 
-  <div class="modal-body">
-    <form [formGroup]="createDeviceForm" (ngSubmit)="createDevice(createDeviceForm.value); modal.dismiss()">
-      <div class="select-group">
-      </div>
-      <app-input label="Name" name="name" type="string" formControlName="name"></app-input>
-
-      <label style="margin-right: 1rem;">Protocol</label>
-      <select class="selectpicker" formControlName="protocol">
-        <option>mqtt</option>
-      </select>
-      
-      <div formGroupName="mqttInfo">
-        <app-input label="Topic" name="topic" type="string" formControlName="topic"></app-input>
-
-        <label style="margin-right: 1rem;">Broker</label>
-        <main content *ngIf="(brokers$ | async) as brokers;">
-          <ng-container *ngIf="brokers?.length;">
-            <select class="selectpicker" formControlName="brokerId">
-              <option *ngFor="let broker of brokers" [value]="broker.id"> {{broker.name}} </option>
-            </select>
-          </ng-container>
-        </main>    
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" (click)="modal.dismiss()">Close</button>
-        <button type="submit" [disabled]="!createDeviceForm.valid">Create</button>
-      </div>
-    </form>
-
-  </div>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
 </ng-template>

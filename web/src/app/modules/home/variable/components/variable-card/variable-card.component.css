@@ -19,6 +19,10 @@
   border-left-color: var(--color-secondary);
 }
 
+.variable-card:focus {
+  outline: 0;
+}
+
 .variable-card small {
   color: var(--color-text-base-darkness);
 }
