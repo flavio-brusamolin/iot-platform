@@ -142,3 +142,16 @@ textarea {
 .ng-select .ng-clear-wrapper {
   display: none;
 }
+
+/* NgbTooltip custom style */
+.tooltip-inner {
+  background-color: var(--color-dark-background);
+  box-shadow: 0px 0px 12px -4px rgba(0, 0, 0, 0.6);
+  max-width: 45rem;
+  border: 1px solid var(--color-dark);
+  padding: 0;
+}
+
+.tooltip.show {
+  opacity: 0.98;
+}
