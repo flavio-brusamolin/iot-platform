@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 
-import { faEllipsisV, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisV, faInfoCircle, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { MergedDeviceData } from '../../page/device-list.component'
@@ -14,7 +14,8 @@ import { MergedDeviceData } from '../../page/device-list.component'
 export class DeviceCardComponent implements OnInit {
   public readonly icons = {
     options: faEllipsisV,
-    info: faInfoCircle
+    info: faInfoCircle,
+    edit: faEdit
   }
 
   public updateForm!: FormGroup

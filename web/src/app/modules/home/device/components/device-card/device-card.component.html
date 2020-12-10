@@ -1,13 +1,12 @@
 <div class="device-card" [routerLink]="['/home/devices/', device.id]">
   <header>
-    <fa-icon [icon]="icons.info" [class]="['info-icon']" [ngbTooltip]="deviceInfoTemplate">
-    </fa-icon>
+    <fa-icon [icon]="icons.info" [class]="['info-icon']" [ngbTooltip]="deviceInfoTemplate"></fa-icon>
 
     <div class="options-icon" ngbDropdown (click)="$event.stopPropagation()">
       <fa-icon [icon]="icons.options" ngbDropdownToggle></fa-icon>
 
       <div class="menu-options" ngbDropdownMenu>
-        <i ngbDropdownItem (click)="openUpdationModal(updationModal)">Update Device</i>
+        <a ngbDropdownItem (click)="openUpdationModal(updationModal)">Edit<fa-icon [icon]="icons.edit"></fa-icon></a>
       </div>
     </div>
   </header>
@@ -45,7 +44,7 @@
       <span>Broker:</span>
       {{ device.mqttInfo?.brokerName }}
     </h4>
-    
+
     <h4>
       <span>Topic:</span>
       {{ device.mqttInfo?.topic }}
