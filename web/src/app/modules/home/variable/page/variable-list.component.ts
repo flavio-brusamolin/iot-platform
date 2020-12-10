@@ -4,14 +4,20 @@ import { ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Observable, of, Subject } from 'rxjs'
-import { catchError, takeUntil } from 'rxjs/operators'
+import { forkJoin, Observable, of, Subject } from 'rxjs'
+import { catchError, map, takeUntil } from 'rxjs/operators'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { VariableCreationData } from 'src/app/data/dtos'
 import { VariableService } from 'src/app/data/services/variable.service'
-import { Variable } from 'src/app/data/models'
+import { Device, Variable } from 'src/app/data/models'
+import { DeviceService } from 'src/app/data/services/device.service'
+
+interface PageData {
+  device: Device
+  variables: Variable[]
+}
 
 @Component({
   selector: 'app-variable-list',
@@ -27,7 +33,7 @@ export class VariableListComponent implements OnInit, OnDestroy {
 
   public createVariableForm!: FormGroup
 
-  public variables$!: Observable<Variable[] | null>
+  public pageData$!: Observable<PageData | null>
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
@@ -37,14 +43,15 @@ export class VariableListComponent implements OnInit, OnDestroy {
     private readonly modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
     private readonly variableService: VariableService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly deviceService: DeviceService
   ) {
     this.deviceId = this.activatedRoute.snapshot.params.deviceId
   }
 
   public ngOnInit (): void {
     this.initializeForms()
-    this.loadVariables()
+    this.loadData()
   }
 
   public ngOnDestroy (): void {
@@ -59,17 +66,24 @@ export class VariableListComponent implements OnInit, OnDestroy {
     })
   }
 
-  private loadVariables (): void {
-    this.variables$ = this.variableService
-      .loadVariables(this.deviceId)
-      .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
+  private loadData (): void {
+    this.pageData$ = forkJoin([
+      this.deviceService.loadDeviceById(this.deviceId),
+      this.variableService.loadVariables(this.deviceId)
+    ]).pipe(
+      map(([device, variables]) => ({
+        device,
+        variables
+      })),
+      catchError(({ error: httpError }: HttpErrorResponse) => {
         console.error(httpError)
 
         this.notificationService.error('Error!', httpError.error)
         this.error$.next(true)
 
         return of(null)
-      }))
+      })
+    )
   }
 
   public openCreateVariableModal (content: any): void {
@@ -89,7 +103,7 @@ export class VariableListComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.notificationService.success('Very well!', 'Variable successfully created')
-          this.loadVariables()
+          this.loadData()
         },
         ({ error: httpError }: HttpErrorResponse) => {
           console.error(httpError)

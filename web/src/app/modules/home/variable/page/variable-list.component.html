@@ -1,13 +1,14 @@
-<app-container name="Variables">
+<app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.device.name"
+  complement="> Variables">
 
   <button header (click)="openCreateVariableModal(createVariableModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New variable
   </button>
 
-  <main content *ngIf="(variables$ | async) as variables; else loadingOrError">
-    <ng-container *ngIf="variables?.length; else empty">
-      <app-variable-card *ngFor="let variable of variables" [variable]="variable"></app-variable-card>
+  <main content>
+    <ng-container *ngIf="pageData?.variables.length; else empty">
+      <app-variable-card *ngFor="let variable of pageData?.variables" [variable]="variable"></app-variable-card>
     </ng-container>
 
     <ng-template #empty>
@@ -17,26 +18,26 @@
     </ng-template>
   </main>
 
-  <ng-template #loadingOrError>
-    <app-error *ngIf="error$ | async; else loading"></app-error>
+  <ng-template #createVariableModal let-modal>
+    <app-modal modalTitle="Create Variable" [canContinue]="createVariableForm.valid" (closeEmitter)="modal.dismiss()"
+      (continueEmitter)="modal.close()">
 
-    <ng-template #loading>
-      <app-loading></app-loading>
-    </ng-template>
+      <form [formGroup]="createVariableForm" (ngSubmit)="modal.close()" autocomplete="off">
+        <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+        <app-input label="Key" name="key" type="text" formControlName="key"></app-input>
+
+        <button type="submit" class="invisible" [disabled]="!createVariableForm.valid"></button>
+      </form>
+
+    </app-modal>
   </ng-template>
 
 </app-container>
 
-<ng-template #createVariableModal let-modal>
-  <app-modal modalTitle="Create Variable" [canContinue]="createVariableForm.valid" (closeEmitter)="modal.dismiss()"
-    (continueEmitter)="modal.close()">
+<ng-template #loadingOrError>
+  <app-error *ngIf="error$ | async; else loading"></app-error>
 
-    <form [formGroup]="createVariableForm" (ngSubmit)="modal.close()" autocomplete="off">
-      <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
-      <app-input label="Key" name="key" type="text" formControlName="key"></app-input>
-
-      <button type="submit" class="invisible" [disabled]="!createVariableForm.valid"></button>
-    </form>
-
-  </app-modal>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
 </ng-template>
