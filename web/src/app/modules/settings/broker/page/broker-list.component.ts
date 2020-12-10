@@ -97,12 +97,12 @@ export class BrokerListComponent implements OnInit, OnDestroy {
       )
   }
 
-  public reprocessBroker (broker: Broker): void {
-    this.brokerService.reprocessBroker(broker.id)
+  public reprocessBroker (brokerId: string): void {
+    this.brokerService.reprocessBroker(brokerId)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
-          this.notificationService.success('Very well!', 'Broker ' + broker.name + ' is reprocessing!')
+          this.notificationService.success('Very well!', 'Action successfully performed')
           this.loadBrokers()
         },
         ({ error: httpError }: HttpErrorResponse) => {

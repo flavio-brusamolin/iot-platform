@@ -1,14 +1,15 @@
-<app-container name="Brokers">
+<app-container *ngIf="(brokers$ | async) as brokers; else loadingOrError" name="Brokers">
 
   <button header (click)="openCreateBrokerModal(createBrokerModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     New broker
   </button>
 
-  <main content *ngIf="(brokers$ | async) as brokers; else loadingOrError">
+  <main content>
     <ng-container *ngIf="brokers?.length; else empty">
       <app-broker-card *ngFor="let broker of brokers" [broker]="broker"
-        (reprocessBrokerEmitter)="reprocessBroker($event)"></app-broker-card>
+        (reprocessBrokerEvent)="reprocessBroker(broker.id)">
+      </app-broker-card>
     </ng-container>
 
     <ng-template #empty>
@@ -18,32 +19,32 @@
     </ng-template>
   </main>
 
-  <ng-template #loadingOrError>
-    <app-error *ngIf="error$ | async; else loading"></app-error>
+  <ng-template #createBrokerModal let-modal>
+    <app-modal modalTitle="Create Broker" [canContinue]="createBrokerForm.valid" (closeEmitter)="modal.dismiss()"
+      (continueEmitter)="modal.close()">
 
-    <ng-template #loading>
-      <app-loading></app-loading>
-    </ng-template>
+      <form [formGroup]="createBrokerForm" (ngSubmit)="modal.close()" autocomplete="off">
+        <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+
+        <div formGroupName="credentials" class="credentials">
+          <app-input label="Username" name="username" type="text" formControlName="username"></app-input>
+          <app-input label="Password" name="password" type="password" formControlName="password"></app-input>
+          <app-input label="Address" name="address" type="text" formControlName="address"></app-input>
+          <app-input label="Port" name="port" type="number" formControlName="port"></app-input>
+        </div>
+
+        <button type="submit" class="invisible" [disabled]="!createBrokerForm.valid"></button>
+      </form>
+
+    </app-modal>
   </ng-template>
 
 </app-container>
 
-<ng-template #createBrokerModal let-modal>
-  <app-modal modalTitle="Create Broker" [canContinue]="createBrokerForm.valid" (closeEmitter)="modal.dismiss()"
-    (continueEmitter)="modal.close()">
+<ng-template #loadingOrError>
+  <app-error *ngIf="error$ | async; else loading"></app-error>
 
-    <form [formGroup]="createBrokerForm" (ngSubmit)="modal.close()" autocomplete="off">
-      <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
-
-      <div formGroupName="credentials" class="credentials">
-        <app-input label="Username" name="username" type="text" formControlName="username"></app-input>
-        <app-input label="Password" name="password" type="password" formControlName="password"></app-input>
-        <app-input label="Address" name="address" type="text" formControlName="address"></app-input>
-        <app-input label="Port" name="port" type="number" formControlName="port"></app-input>
-      </div>
-
-      <button type="submit" class="invisible" [disabled]="!createBrokerForm.valid"></button>
-    </form>
-
-  </app-modal>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
 </ng-template>

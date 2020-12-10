@@ -18,11 +18,14 @@ export class BrokerCardComponent implements OnInit {
     info: faInfoCircle
   }
 
-  @Output() reprocessBrokerEmitter = new EventEmitter()
-
   @Input() public broker!: Broker
+  @Output() public reprocessBrokerEvent = new EventEmitter()
 
   public constructor () { }
 
   public ngOnInit (): void { }
+
+  public reprocessBroker (): void {
+    this.reprocessBrokerEvent.emit()
+  }
 }
