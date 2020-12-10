@@ -1,13 +1,16 @@
-<app-container name="Members">
+<app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.collection.name"
+  complement="Members">
 
-  <button header (click)="openCreateDeviceModal(addMemberModal)">
+  <button header (click)="openAddMemberModal(addMemberModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
     Add member
   </button>
 
-  <main content *ngIf="(members$ | async) as members; else loadingOrError">
-    <ng-container *ngIf="members?.length; else empty">
-      <app-member-card *ngFor="let member of members" [member]="member" (deleteMemberEmitter)="deleteMember($event)"></app-member-card>
+  <main content>
+    <ng-container *ngIf="pageData?.members.length; else empty">
+      <app-member-card *ngFor="let member of pageData?.members" [member]="member"
+        (deleteMemberEvent)="deleteMember(member.id)">
+      </app-member-card>
     </ng-container>
 
     <ng-template #empty>
@@ -17,36 +20,30 @@
     </ng-template>
   </main>
 
-  <ng-template #loadingOrError>
-    <app-error *ngIf="error$ | async; else loading"></app-error>
+  <ng-template #addMemberModal let-modal>
+    <app-modal modalTitle="Add Member" [canContinue]="addMemberForm.valid" (closeEmitter)="modal.dismiss()"
+      (continueEmitter)="modal.close()">
 
-    <ng-template #loading>
-      <app-loading></app-loading>
-    </ng-template>
+      <form [formGroup]="addMemberForm" (ngSubmit)="modal.close()" autocomplete="off">
+        <app-input label="E-mail" name="email" type="text" formControlName="email"></app-input>
+
+        <label class="select-label">Role</label>
+        <ng-select appendTo="body" [items]="roles" [hideSelected]="true" bindLabel="label" bindValue="value"
+          formControlName="role">
+        </ng-select>
+
+        <button type="submit" class="invisible" [disabled]="!addMemberForm.valid"></button>
+      </form>
+
+    </app-modal>
   </ng-template>
 
 </app-container>
 
-<ng-template #addMemberModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Create Collection</h4>
-  </div>
+<ng-template #loadingOrError>
+  <app-error *ngIf="error$ | async; else loading"></app-error>
 
-  <div class="modal-body">
-    <form [formGroup]="addMemberForm" (ngSubmit)="addMember(addMemberForm.value); modal.dismiss()">
-      <div class="select-group">
-      </div>
-      <app-input label="Email" name="name" type="string" formControlName="email"></app-input>
-      <select class="selectpicker" formControlName="role">
-        <option>basic</option>
-        <option>advanced</option>
-      </select>
-
-      <div class="modal-footer">
-        <button type="button" (click)="modal.dismiss()">Close</button>
-        <button type="submit" [disabled]="!addMemberForm.valid">Create</button>
-      </div>
-    </form>
-
-  </div>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
 </ng-template>

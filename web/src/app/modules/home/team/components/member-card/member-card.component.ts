@@ -1,18 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { ActivatedRoute } from '@angular/router'
 
 import { faTrashAlt, faUser, faEnvelope, faShieldAlt } from '@fortawesome/free-solid-svg-icons'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { of, Subject } from 'rxjs'
-import { Observable } from 'rxjs/internal/Observable'
-import { takeUntil } from 'rxjs/internal/operators/takeUntil'
-import { catchError } from 'rxjs/operators'
-import { NotificationService } from 'src/app/core/services/notification.service'
-import { Collection, CompleteMemberData } from 'src/app/data/models'
-import { CollectionService } from 'src/app/data/services/collection.service'
-import { TeamService } from 'src/app/data/services/team.service'
+
+import { CompleteMemberData } from 'src/app/data/models'
 
 @Component({
   selector: 'app-member-card',
@@ -27,80 +18,19 @@ export class MemberCardComponent implements OnInit {
     permission: faShieldAlt
   }
 
-  private collectionId: string
-  private accessGroupId: any
-
-  public collection$!: Observable<Collection | null>
-  public members$!: Observable<CompleteMemberData[] | null>
-  public error$ = new Subject<boolean>()
-
-  private unsub$ = new Subject<void>()
-
-  public form!: FormGroup
-
-  @Output() deleteMemberEmitter = new EventEmitter()
-
   @Input() public member!: CompleteMemberData
+  @Output() public deleteMemberEvent = new EventEmitter()
 
-  public constructor (
-    private formBuilder: FormBuilder,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly collectionService: CollectionService,
-    private readonly teamService: TeamService,
-    private readonly notificationService: NotificationService,
-    private modal: NgbModal
-  ) {
-    this.collectionId = this.activatedRoute.snapshot.params.collectionId
-  }
+  public constructor (private readonly modal: NgbModal) { }
 
-  public ngOnInit (): void {
-    // this.loadCollection()
-    this.initializeForms()
-  }
+  public ngOnInit (): void { }
 
-  private initializeForms (): void {
-    this.form = this.formBuilder.group({
-    })
-  }
-
-  // private loadCollection (): void {
-  //   this.collectionService
-  //     .loadCollectionById(this.collectionId)
-  //     .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
-  //       console.error(httpError)
-
-  //       this.notificationService.error('Error!', httpError.error)
-  //       this.error$.next(true)
-
-  //       return of(null)
-  //     }))
-  //     .subscribe(collection => {
-  //       this.accessGroupId = collection?.accessGroupId
-  //     })
-  // }
-
-  public openConfirmModal (content: any): void {
+  public openConfirmationModal (content: any): void {
     this.modal.open(content, { centered: true })
-      .result.then(
-        () => {},
-        () => {
-          this.form.reset()
-        }
-      )
+      .result.then(() => this.deleteMember())
   }
 
-  // public deleteMember (memberId: string): void {
-  //   this.modal.dismissAll()
-  //   this.teamService.deleteMember(this.accessGroupId, memberId)
-  //     .pipe(takeUntil(this.unsub$))
-  //     .subscribe(
-  //       () => {
-  //         this.notificationService.success('Very well!', 'Member successfully deleted. Refresh your page!')
-  //       },
-  //       ({ error: httpError }: HttpErrorResponse) => {
-  //         console.error(httpError)
-  //         this.notificationService.error('Error!', httpError.error)
-  //       }
-  //     )
-  // }
+  private deleteMember (): void {
+    this.deleteMemberEvent.emit()
+  }
 }

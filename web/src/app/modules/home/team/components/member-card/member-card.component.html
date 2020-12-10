@@ -13,26 +13,15 @@
     </div>
   </div>
 
-  <fa-icon [icon]="icons.remove" class="icon-delete" (click)="openConfirmModal(confirmationModal)"></fa-icon>
+  <fa-icon [icon]="icons.remove" (click)="openConfirmationModal(confirmationModal)"></fa-icon>
 </div>
 
 <ng-template #confirmationModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Warning</h4>
-  </div>
+  <app-modal modalTitle="Remove Member" (closeEmitter)="modal.dismiss()" (continueEmitter)="modal.close()">
 
-  <div class="modal-body">
-    <form [formGroup]="form">
-      <div class="select-group">
-      </div>
+    <div class="confirmation-content">
+      {{ member.name }} will be removed from this team. Are you sure?
+    </div>
 
-      <h1>Are you sure to remove {{ member.name }} from this team?</h1>
-    </form>
-
-  </div>
-
-  <div class="modal-footer">
-    <button type="button" (click)="modal.dismiss()">Close</button>
-    <button type="button" (click)="deleteMemberEmitter.emit(member); modal.dismiss()">Confirm</button>
-  </div>
+  </app-modal>
 </ng-template>

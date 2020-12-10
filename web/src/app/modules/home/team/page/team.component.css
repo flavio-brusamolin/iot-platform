@@ -49,28 +49,7 @@ app-container main app-member-card {
   }
 }
 
-.modal-header {
-  background-color: black;
-}
-
-.modal-body {
-  background-color: var(--color-dark-background);
-}
-
-.modal-footer {
-  background-color: var(--color-dark-background);
-}
-
-.modal-footer button {
-  outline: 0;
-  border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  background-color: transparent;
-  color: var(--color-dark-white);
-}
-
-.modal-footer button:hover {
-  opacity: 0.9;
+.select-label {
+  margin: 1.5rem 1rem 1rem 0; 
+  font-size: 1.3rem;
 }

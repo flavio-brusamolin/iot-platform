@@ -5,8 +5,9 @@ import { ActivatedRoute } from '@angular/router'
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { NgOption } from '@ng-select/ng-select'
 import { Observable, of, Subject } from 'rxjs'
-import { catchError, map, takeUntil } from 'rxjs/operators'
+import { catchError, concatMap, map, takeUntil, tap } from 'rxjs/operators'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { MemberCreationData } from 'src/app/data/dtos'
@@ -14,6 +15,11 @@ import { Role } from 'src/app/data/enums/role.enum'
 import { Collection, CompleteMemberData } from 'src/app/data/models'
 import { CollectionService } from 'src/app/data/services/collection.service'
 import { TeamService } from 'src/app/data/services/team.service'
+
+interface PageData {
+  collection: Collection
+  members: CompleteMemberData[]
+}
 
 @Component({
   selector: 'app-team',
@@ -25,22 +31,24 @@ export class TeamComponent implements OnInit, OnDestroy {
     plus: faPlus
   }
 
+  private collectionId: string
+  private teamId!: string
+
   public addMemberForm!: FormGroup
 
-  private collectionId: string
-  private accessGroupId: any
-
-  public role = Role.BASIC // temporary
-
-  public collection$!: Observable<Collection | null>
-  public members$!: Observable<CompleteMemberData[] | null>
+  public pageData$!: Observable<PageData | null>
   public error$ = new Subject<boolean>();
 
   private unsub$ = new Subject<void>()
 
+  public roles: NgOption[] = Object.values(Role).map(role => ({
+    label: this.capitalize(role),
+    value: role
+  }))
+
   public constructor (
-    private formBuilder: FormBuilder,
-    private modal: NgbModal,
+    private readonly formBuilder: FormBuilder,
+    private readonly modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
     private readonly collectionService: CollectionService,
     private readonly teamService: TeamService,
@@ -50,25 +58,8 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit (): void {
-    this.loadCollection()
     this.initializeForms()
-  }
-
-  private initializeForms (): void {
-    this.addMemberForm = this.formBuilder.group({
-      email: [null, Validators.required],
-      role: [null, Validators.required]
-    })
-  }
-
-  public openCreateDeviceModal (content: any): void {
-    this.modal.open(content, { centered: true })
-      .result.then(
-        () => {},
-        () => {
-          this.addMemberForm.reset()
-        }
-      )
+    this.loadData()
   }
 
   public ngOnDestroy (): void {
@@ -76,9 +67,19 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.unsub$.complete()
   }
 
-  private loadCollection (): void {
-    this.collectionService
-      .loadCollectionById(this.collectionId)
+  private initializeForms (): void {
+    this.addMemberForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      role: [null, Validators.required]
+    })
+  }
+
+  private loadData (): void {
+    this.pageData$ = this.collectionService.loadCollectionById(this.collectionId)
+      .pipe(concatMap(collection => this.teamService.loadTeamById(collection.accessGroupId).pipe(
+        tap(({ id }) => this.teamId = id),
+        map(({ members }) => ({ collection, members }))))
+      )
       .pipe(catchError(({ error: httpError }: HttpErrorResponse) => {
         console.error(httpError)
 
@@ -87,35 +88,26 @@ export class TeamComponent implements OnInit, OnDestroy {
 
         return of(null)
       }))
-      .subscribe(collection => {
-        this.loadTeam(collection?.accessGroupId)
-        this.accessGroupId = collection?.accessGroupId
-      })
   }
 
-  private loadTeam (accessGroupId: any): void {
-    this.members$ = this.teamService
-      .loadTeamById(accessGroupId)
-      .pipe(
-        map(team => team.members),
-        catchError(({ error: httpError }: HttpErrorResponse) => {
-          console.error(httpError)
-
-          this.notificationService.error('Error!', httpError.error)
-          this.error$.next(true)
-
-          return of(null)
-        })
+  public openAddMemberModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {
+          this.addMember(this.addMemberForm.value)
+          this.addMemberForm.reset()
+        },
+        () => this.addMemberForm.reset()
       )
   }
 
-  public addMember (memberData: MemberCreationData): void {
-    this.teamService.addMember(this.accessGroupId, memberData)
+  private addMember (memberData: MemberCreationData): void {
+    this.teamService.addMember(this.teamId, memberData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
           this.notificationService.success('Very well!', 'Member successfully added')
-          this.loadTeam(this.accessGroupId)
+          this.loadData()
         },
         ({ error: httpError }: HttpErrorResponse) => {
           console.error(httpError)
@@ -124,18 +116,22 @@ export class TeamComponent implements OnInit, OnDestroy {
       )
   }
 
-  public deleteMember (member: CompleteMemberData): void {
-    this.teamService.deleteMember(this.accessGroupId, member.id)
+  public deleteMember (memberId: string): void {
+    this.teamService.deleteMember(this.teamId, memberId)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
-          this.notificationService.success('Very well!', 'Member successfully deleted.!')
-          this.loadTeam(this.accessGroupId)
+          this.notificationService.success('Very well!', 'Member successfully removed')
+          this.loadData()
         },
         ({ error: httpError }: HttpErrorResponse) => {
           console.error(httpError)
           this.notificationService.error('Error!', httpError.error)
         }
       )
+  }
+
+  private capitalize (str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1)
   }
 }

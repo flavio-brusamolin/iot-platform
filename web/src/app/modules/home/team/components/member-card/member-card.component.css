@@ -13,6 +13,10 @@
   border-left-color: var(--color-secondary);
 }
 
+.member-card fa-icon {
+  cursor: pointer;
+}
+
 .member-card .info {
   flex-grow: 2;
   display: flex;
@@ -34,10 +38,6 @@
   letter-spacing: 0.05rem;
 }
 
-.member-card .icon-delete{
-  cursor: pointer;
-}
-
 .member-card .info .details h3 {
   font-weight: 600;
   font-size: 1.58rem;
@@ -57,28 +57,9 @@
   color: var(--color-text-base);
 }
 
-.modal-header {
-  background-color: black;
-}
-
-.modal-body {
-  background-color: var(--color-dark-background);
-}
-
-.modal-footer {
-  background-color: var(--color-dark-background);
-}
-
-.modal-footer button {
-  outline: 0;
-  border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  background-color: transparent;
-  color: var(--color-dark-white);
-}
-
-.modal-footer button:hover {
-  opacity: 0.9;
+.confirmation-content {
+  text-align: center;
+  margin-top: 1.5rem;
+  letter-spacing: 0.03rem;
+  font-size: 1.5rem;
 }
