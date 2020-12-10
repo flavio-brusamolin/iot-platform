@@ -1,4 +1,4 @@
-<app-container *ngIf="(info$ | async) as info; else loadingOrError" [name]="info?.name" complement="> Analytics">
+<app-container *ngIf="(info$ | async) as info; else loadingOrError" [name]="info?.name" complement="Analytics">
 
   <main content>
     <ng-container *ngIf="info?.data?.length; else empty">

@@ -1,4 +1,4 @@
-<app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.collection.name" complement="> Devices">
+<app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.collection.name" complement="Devices">
 
   <button header (click)="openCreateDeviceModal(createDeviceModal)">
     <fa-icon [icon]=icons.plus></fa-icon>

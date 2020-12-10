@@ -2,7 +2,11 @@
   <header>
     <div class="title">
       <h1>{{ name }}</h1>
-      <h3>{{ complement }}</h3>
+
+      <ng-container *ngIf="complement">
+        <fa-icon [icon]="icons.arrow"></fa-icon>
+        <h3>{{ complement }}</h3>
+      </ng-container>
     </div>
 
     <ng-content select="[header]"></ng-content>

@@ -10,12 +10,20 @@
   align-items: flex-end;
 }
 
-#container header .title h1, h3 {
+#container header .title h1 {
   margin-bottom: 0;
+  margin-right: 1rem;
+}
+
+#container header .title fa-icon {
+  margin-bottom: 0.1rem;
 }
 
 #container header .title h3 {
-  margin-left: 0.8rem;
+  margin-bottom: 0.1rem;
+  margin-left: 1rem;
+  font-size: 1.9rem;
+  letter-spacing: 0.06rem;
 }
 
 #container hr {
