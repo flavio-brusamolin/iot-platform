@@ -1,6 +1,6 @@
-<app-container name="Analytics">
+<app-container *ngIf="(info$ | async) as info; else loadingOrError" [name]="info?.name" complement="> Analytics">
 
-  <main content *ngIf="(info$ | async) as info; else loadingOrError">
+  <main content>
     <ng-container *ngIf="info?.data?.length; else empty">
       <div class="monitoring">
         <app-info-card description="Current value" [value]="info?.currentValue" symbol="current"></app-info-card>
@@ -22,12 +22,12 @@
     </ng-template>
   </main>
 
-  <ng-template #loadingOrError>
-    <app-error *ngIf="error$ | async; else loading"></app-error>
-
-    <ng-template #loading>
-      <app-loading></app-loading>
-    </ng-template>
-  </ng-template>
-
 </app-container>
+
+<ng-template #loadingOrError>
+  <app-error *ngIf="error$ | async; else loading"></app-error>
+
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
+</ng-template>

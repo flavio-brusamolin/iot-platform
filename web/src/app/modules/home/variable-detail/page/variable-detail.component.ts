@@ -10,6 +10,7 @@ import { VariableService } from 'src/app/data/services/variable.service'
 import { Data } from 'src/app/data/models'
 
 interface Info {
+  name: string
   currentValue?: string
   highestValue?: string
   lowestValue?: string
@@ -43,9 +44,9 @@ export class VariableDetailComponent implements OnInit {
   private loadVariable (): void {
     this.info$ = timer(0, 2000).pipe(
       concatMap(() => this.variableService.loadVariableById(this.variableId)),
-      map(({ data }) => {
+      map(({ name, data }) => {
         if (!data.length) {
-          return { data }
+          return { name, data }
         }
 
         const values = data.map(({ value }) => value)
@@ -56,6 +57,7 @@ export class VariableDetailComponent implements OnInit {
         const averageValue = this.reduceByFn(values, this.average)
 
         return {
+          name,
           currentValue,
           highestValue,
           lowestValue,
