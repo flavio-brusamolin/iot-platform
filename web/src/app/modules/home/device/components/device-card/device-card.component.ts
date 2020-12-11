@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
 
 import { faEllipsisV, faInfoCircle, faEdit } from '@fortawesome/free-solid-svg-icons'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { MergedDeviceData } from '../../page/device-list.component'
 
@@ -18,35 +16,14 @@ export class DeviceCardComponent implements OnInit {
     edit: faEdit
   }
 
-  public updateForm!: FormGroup
-
   @Input() public device!: MergedDeviceData
+  @Output() public updateDeviceEvent = new EventEmitter()
 
-  @Output() updateDeviceEmitter = new EventEmitter()
+  public constructor () { }
 
-  public constructor (
-    private readonly formBuilder: FormBuilder,
-    private readonly modal: NgbModal
-  ) { }
+  public ngOnInit (): void { }
 
-  public ngOnInit (): void {
-    this.initializeForms()
-  }
-
-  private initializeForms (): void {
-    this.updateForm = this.formBuilder.group({
-      deviceName: [null],
-      deviceTopic: [null]
-    })
-  }
-
-  public openUpdationModal (content: any): void {
-    this.modal.open(content, { centered: true })
-      .result.then(
-        () => {},
-        () => {
-          this.updateForm.reset()
-        }
-      )
+  public updateDevice (): void {
+    this.updateDeviceEvent.emit()
   }
 }

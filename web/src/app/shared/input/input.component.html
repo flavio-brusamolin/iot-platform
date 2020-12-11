@@ -1,4 +1,4 @@
 <div class="input-block">
   <label [for]="name">{{ label }}</label>
-  <input [type]="type" [id]="name" (input)="updateValue($event)" />
+  <input [type]="type" [id]="name" [value]="value" (input)="updateValue($event)" />
 </div>

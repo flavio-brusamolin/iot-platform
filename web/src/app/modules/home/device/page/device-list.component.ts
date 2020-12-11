@@ -44,6 +44,7 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   private collectionId: string
 
   public createDeviceForm!: FormGroup
+  public updateDeviceForm!: FormGroup
 
   public pageData$!: Observable<PageData | null>
   public error$ = new Subject<boolean>();
@@ -79,6 +80,15 @@ export class DeviceListComponent implements OnInit, OnDestroy {
 
   private initializeForms (): void {
     this.createDeviceForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      protocol: [null, Validators.required],
+      mqttInfo: this.formBuilder.group({
+        topic: ['', Validators.required],
+        brokerId: [null, Validators.required]
+      })
+    })
+
+    this.updateDeviceForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       protocol: [null, Validators.required],
       mqttInfo: this.formBuilder.group({
@@ -139,16 +149,21 @@ export class DeviceListComponent implements OnInit, OnDestroy {
       )
   }
 
-  // review
-  public updateDevice (device: Device, updateFormData: any): void {
-    const updateData: Partial<Device> = { // Check if exists a better way to create avoiding null values
-      name: updateFormData.deviceName,
-      mqttInfo: {
-        topic: updateFormData.deviceTopic,
-        brokerId: '5fc7aab3091d8c0019dadd9f'
-      }
-    }
-    this.deviceService.updateDevice(device.id, updateData)
+  public openUpdateDeviceModal (content: any, device: Device): void {
+    this.updateDeviceForm.patchValue(device)
+
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {
+          this.updateDevice(device.id, this.updateDeviceForm.value)
+          this.updateDeviceForm.reset()
+        },
+        () => this.updateDeviceForm.reset()
+      )
+  }
+
+  private updateDevice (deviceId: string, deviceData: Partial<DeviceCreationData>): void {
+    this.deviceService.updateDevice(deviceId, deviceData)
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {

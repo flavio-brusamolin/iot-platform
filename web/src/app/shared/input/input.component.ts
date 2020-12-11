@@ -16,6 +16,8 @@ export class InputComponent implements ControlValueAccessor {
   @Input() public name!: string
   @Input() public type!: string
 
+  public value!: string
+
   private propagateChange = (_: string): void => { }
 
   public registerOnChange (fn: any): void {
@@ -26,6 +28,9 @@ export class InputComponent implements ControlValueAccessor {
     this.propagateChange((<HTMLInputElement>event.target).value)
   }
 
-  public writeValue (_: string): void { }
+  public writeValue (value: string): void {
+    this.value = value
+  }
+
   public registerOnTouched (_: any): void { }
 }

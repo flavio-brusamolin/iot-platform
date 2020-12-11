@@ -1,4 +1,5 @@
-<app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.collection.name" complement="Devices">
+<app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.collection.name"
+  complement="Devices">
 
   <button header (click)="openCreateDeviceModal(createDeviceModal)">
     <fa-icon [icon]=icons.plus></fa-icon>
@@ -8,7 +9,7 @@
   <main content>
     <ng-container *ngIf="pageData?.devices.length; else empty">
       <app-device-card *ngFor="let device of pageData?.devices" [device]="mergeDeviceData(device, pageData?.brokers)"
-        (updateDeviceEmitter)="updateDevice(device, $event)">
+        (updateDeviceEvent)="openUpdateDeviceModal(updateDeviceModal, device)">
       </app-device-card>
     </ng-container>
 
@@ -50,6 +51,42 @@
         </div>
 
         <button type="submit" class="invisible" [disabled]="!createDeviceForm.valid"></button>
+      </form>
+
+    </app-modal>
+  </ng-template>
+
+  <ng-template #updateDeviceModal let-modal>
+    <app-modal modalTitle="Edit Device" [canContinue]="updateDeviceForm.valid" (closeEmitter)="modal.dismiss()"
+      (continueEmitter)="modal.close()">
+
+      <form [formGroup]="updateDeviceForm" (ngSubmit)="modal.close()" autocomplete="off">
+        <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
+
+        <label class="select-label">Protocol</label>
+        <ng-select appendTo="body" [items]="protocols" [hideSelected]="true" bindLabel="label" bindValue="value"
+          formControlName="protocol">
+        </ng-select>
+
+        <div formGroupName="mqttInfo" class="mqttInfo" *ngIf="updateDeviceForm.value.protocol === 'mqtt'">
+          <ng-container *ngIf="pageData?.brokers?.length; else brokerWarning">
+            <label class="select-label">Broker</label>
+            <ng-select appendTo="body" [items]="pageData?.brokers" [hideSelected]="true" bindLabel="label"
+              bindValue="value" formControlName="brokerId">
+            </ng-select>
+
+            <app-input label="Topic" name="topic" type="text" formControlName="topic"></app-input>
+          </ng-container>
+
+          <ng-template #brokerWarning>
+            <p>
+              <fa-icon [icon]=icons.warning></fa-icon>
+              Register a broker to continue.
+            </p>
+          </ng-template>
+        </div>
+
+        <button type="submit" class="invisible" [disabled]="!updateDeviceForm.valid"></button>
       </form>
 
     </app-modal>
