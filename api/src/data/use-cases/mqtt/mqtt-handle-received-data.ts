@@ -13,9 +13,9 @@ export class MqttHandleReceivedData implements HandleReceivedData {
     const keys = variables.map(({ key }) => key)
 
     for (const key in data) {
-      const value = data[key]
+      const value = Number(data[key])
 
-      if (keys.includes(key) && typeof value === 'number') {
+      if (keys.includes(key) && value) {
         const { id } = variables.find(variable => variable.key === key)
 
         console.log(`Message received. => Value: ${value} | Key: ${key} | VariableId: ${id} | DeviceId: ${deviceId}`)
