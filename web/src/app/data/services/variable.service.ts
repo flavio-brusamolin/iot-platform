@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
-import { VariableCreationData } from '../dtos'
+import { VariableCreationData, VariableDataSending } from '../dtos'
 import { Variable } from '../models'
 
 @Injectable()
@@ -23,5 +23,9 @@ export class VariableService {
 
   public loadVariableById (variableId: string): Observable<Required<Variable>> {
     return this.http.get<Required<Variable>>(`${this.url}/variables/${variableId}`)
+  }
+
+  public sendVariableData (variableId: string, data: VariableDataSending): Observable<void> {
+    return this.http.post<void>(`${this.url}/variables/${variableId}/data`, data)
   }
 }

@@ -1,3 +1,17 @@
+app-container button {
+  background-color: var(--color-primary);
+  border-radius: 0.5rem;
+  outline: 0;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.45rem;
+  transition: background-color 0.2s;
+}
+
+app-container button:hover {
+  background-color: var(--color-dark-primary);
+}
+
 app-container main .monitoring {
   display: flex;
   flex-wrap: wrap;

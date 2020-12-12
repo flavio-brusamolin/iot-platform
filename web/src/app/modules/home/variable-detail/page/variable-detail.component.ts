@@ -1,13 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { Observable, of, Subject, timer } from 'rxjs'
-import { catchError, concatMap, map } from 'rxjs/operators'
+import { catchError, concatMap, map, takeUntil } from 'rxjs/operators'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { VariableService } from 'src/app/data/services/variable.service'
 import { Data } from 'src/app/data/models'
+import { VariableDataSending } from 'src/app/data/dtos'
 
 interface Info {
   name: string
@@ -23,13 +27,23 @@ interface Info {
   templateUrl: './variable-detail.component.html',
   styleUrls: ['./variable-detail.component.css']
 })
-export class VariableDetailComponent implements OnInit {
+export class VariableDetailComponent implements OnInit, OnDestroy {
+  public readonly icons = {
+    send: faPaperPlane
+  }
+
   private variableId: string
+
+  public sendDataForm!: FormGroup
 
   public info$!: Observable<Info | null>
   public error$ = new Subject<boolean>();
 
+  private unsub$ = new Subject<void>()
+
   public constructor (
+    private readonly formBuilder: FormBuilder,
+    private readonly modal: NgbModal,
     private readonly activatedRoute: ActivatedRoute,
     private readonly variableService: VariableService,
     private readonly notificationService: NotificationService
@@ -38,7 +52,19 @@ export class VariableDetailComponent implements OnInit {
   }
 
   public ngOnInit (): void {
+    this.initializeForms()
     this.loadVariable()
+  }
+
+  public ngOnDestroy (): void {
+    this.unsub$.next()
+    this.unsub$.complete()
+  }
+
+  private initializeForms (): void {
+    this.sendDataForm = this.formBuilder.group({
+      value: ['', Validators.required]
+    })
   }
 
   private loadVariable (): void {
@@ -73,6 +99,29 @@ export class VariableDetailComponent implements OnInit {
 
         return of(null)
       }))
+  }
+
+  public openSendDataModal (content: any): void {
+    this.modal.open(content, { centered: true })
+      .result.then(
+        () => {
+          this.sendData(this.sendDataForm.value)
+          this.sendDataForm.reset()
+        },
+        () => this.sendDataForm.reset()
+      )
+  }
+
+  private sendData (data: VariableDataSending): void {
+    this.variableService.sendVariableData(this.variableId, data)
+      .pipe(takeUntil(this.unsub$))
+      .subscribe(
+        () => this.notificationService.success('Very well!', 'Data successfully sent'),
+        ({ error: httpError }: HttpErrorResponse) => {
+          console.error(httpError)
+          this.notificationService.error('Error!', httpError.error)
+        }
+      )
   }
 
   private reduceByFn (values: number[], fn: any): string {

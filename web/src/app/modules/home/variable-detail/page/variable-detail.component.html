@@ -1,5 +1,10 @@
 <app-container *ngIf="(info$ | async) as info; else loadingOrError" [name]="info?.name" complement="Analytics">
 
+  <button header (click)="openSendDataModal(sendDataModal)">
+    <fa-icon [icon]=icons.send></fa-icon>
+    Send data
+  </button>
+
   <main content>
     <ng-container *ngIf="info?.data?.length; else empty">
       <div class="monitoring">
@@ -21,6 +26,19 @@
       </div>
     </ng-template>
   </main>
+
+  <ng-template #sendDataModal let-modal>
+    <app-modal modalTitle="Send Data" [canContinue]="sendDataForm.valid" (closeEmitter)="modal.dismiss()"
+      (continueEmitter)="modal.close()">
+
+      <form [formGroup]="sendDataForm" (ngSubmit)="modal.close()" autocomplete="off">
+        <app-input label="Value" name="value" type="number" formControlName="value"></app-input>
+
+        <button type="submit" class="invisible" [disabled]="!sendDataForm.valid"></button>
+      </form>
+
+    </app-modal>
+  </ng-template>
 
 </app-container>
 
