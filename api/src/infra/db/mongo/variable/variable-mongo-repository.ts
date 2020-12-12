@@ -34,7 +34,7 @@ export class VariableMongoRepository implements LoadVariableByKeyConstraintRepos
     }
 
     const variableRecord = await VariableMongoSchema.findById(variableId)
-    return VariableMongoMapper.toEntity(variableRecord)
+    return variableRecord && VariableMongoMapper.toEntity(variableRecord)
   }
 
   public async insertData (variableId: string, data: Data): Promise<Variable> {

@@ -15,6 +15,12 @@ interface SubscriptionData {
   topic: string
 }
 
+interface PublicationData {
+  clientId: string
+  topic: string
+  data: Record<string, any>
+}
+
 export default class MqttProvider {
   private static clients: AsyncMqttClient[] = []
 
@@ -65,6 +71,16 @@ export default class MqttProvider {
       await client.unsubscribe(topic)
 
       console.log(`Subscription removed. => Topic: ${topic} | BrokerId: ${clientId}`)
+    }
+  }
+
+  public async publish ({ clientId, topic, data }: PublicationData): Promise<void> {
+    const client = this.findClient(clientId)
+
+    if (client) {
+      await client.publish(topic, JSON.stringify(data))
+
+      console.log(`Message sent. => Value: ${JSON.stringify(data)} Topic: ${topic}`)
     }
   }
 
