@@ -63,28 +63,21 @@
       <form [formGroup]="updateDeviceForm" (ngSubmit)="modal.close()" autocomplete="off">
         <app-input label="Name" name="name" type="text" formControlName="name"></app-input>
 
-        <label class="select-label">Protocol</label>
-        <ng-select appendTo="body" [items]="protocols" [hideSelected]="true" bindLabel="label" bindValue="value"
-          formControlName="protocol">
-        </ng-select>
+        <ng-container *ngIf="updateDeviceForm.value.protocol">
+          <label class="select-label">Protocol</label>
+          <ng-select appendTo="body" [items]="protocols" [hideSelected]="true" bindLabel="label" bindValue="value"
+            formControlName="protocol">
+          </ng-select>
 
-        <div formGroupName="mqttInfo" class="mqttInfo" *ngIf="updateDeviceForm.value.protocol === 'mqtt'">
-          <ng-container *ngIf="pageData?.brokers?.length; else brokerWarning">
-            <label class="select-label">Broker</label>
+          <div formGroupName="mqttInfo" class="mqttInfo" *ngIf="updateDeviceForm.value.protocol === 'mqtt'">
+            <label class=" select-label">Broker</label>
             <ng-select appendTo="body" [items]="pageData?.brokers" [hideSelected]="true" bindLabel="label"
               bindValue="value" formControlName="brokerId">
             </ng-select>
 
             <app-input label="Topic" name="topic" type="text" formControlName="topic"></app-input>
-          </ng-container>
-
-          <ng-template #brokerWarning>
-            <p>
-              <fa-icon [icon]=icons.warning></fa-icon>
-              Register a broker to continue.
-            </p>
-          </ng-template>
-        </div>
+          </div>
+        </ng-container>
 
         <button type="submit" class="invisible" [disabled]="!updateDeviceForm.valid"></button>
       </form>

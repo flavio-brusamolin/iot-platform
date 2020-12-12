@@ -5,13 +5,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { faPlus, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import { forkJoin, Observable, of, Subject } from 'rxjs'
-import { catchError, map, takeUntil } from 'rxjs/operators'
+import { catchError, map, takeUntil, tap } from 'rxjs/operators'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { NgOption } from '@ng-select/ng-select'
 
 import { NotificationService } from 'src/app/core/services/notification.service'
 import { DeviceCreationData } from 'src/app/data/dtos'
-import { Collection, Device } from 'src/app/data/models'
+import { Broker, Collection, Device } from 'src/app/data/models'
 import { DeviceService } from 'src/app/data/services/device.service'
 import { Protocol } from 'src/app/data/enums'
 import { BrokerService } from 'src/app/data/services/broker.service'
@@ -56,6 +56,8 @@ export class DeviceListComponent implements OnInit, OnDestroy {
     value: protocol
   }))
 
+  private brokers!: Broker[]
+
   public constructor (
     private readonly formBuilder: FormBuilder,
     private readonly modal: NgbModal,
@@ -90,10 +92,10 @@ export class DeviceListComponent implements OnInit, OnDestroy {
 
     this.updateDeviceForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      protocol: [null, Validators.required],
+      protocol: null,
       mqttInfo: this.formBuilder.group({
-        topic: ['', Validators.required],
-        brokerId: [null, Validators.required]
+        topic: '',
+        brokerId: null
       })
     })
   }
@@ -104,6 +106,7 @@ export class DeviceListComponent implements OnInit, OnDestroy {
       this.deviceService.loadDevices(this.collectionId),
       this.brokerService.loadBrokers()
     ]).pipe(
+      tap(([, , brokers]) => this.brokers = brokers),
       map(([collection, devices, brokers]) => ({
         collection,
         devices,
@@ -150,7 +153,7 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   }
 
   public openUpdateDeviceModal (content: any, device: Device): void {
-    this.updateDeviceForm.patchValue(device)
+    this.updateDeviceForm.patchValue(this.adjustDeviceData(device))
 
     this.modal.open(content, { centered: true })
       .result.then(
@@ -163,7 +166,7 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   }
 
   private updateDevice (deviceId: string, deviceData: Partial<DeviceCreationData>): void {
-    this.deviceService.updateDevice(deviceId, deviceData)
+    this.deviceService.updateDevice(deviceId, this.adjustDeviceData(deviceData))
       .pipe(takeUntil(this.unsub$))
       .subscribe(
         () => {
@@ -177,14 +180,27 @@ export class DeviceListComponent implements OnInit, OnDestroy {
       )
   }
 
+  private adjustDeviceData ({ mqttInfo, protocol, ...device }: Device | Partial<DeviceCreationData>): any {
+    const broker = this.brokers.find(({ id: brokerId }) => brokerId === mqttInfo?.brokerId)
+    if (broker) {
+      return {
+        ...device,
+        mqttInfo,
+        protocol
+      }
+    }
+
+    return device
+  }
+
   public mergeDeviceData ({ mqttInfo, ...device }: Device, brokers: NgOption[]): MergedDeviceData {
-    const { label: brokerName }: any = brokers.find(({ value: brokerId }) => brokerId === mqttInfo?.brokerId)
+    const broker = brokers.find(({ value: brokerId }) => brokerId === mqttInfo?.brokerId)
 
     return {
       ...device,
       mqttInfo: {
         topic: mqttInfo?.topic,
-        brokerName
+        brokerName: broker?.label
       }
     }
   }

@@ -21,7 +21,7 @@
   <div class="device-tooltip">
     <h4>
       <span>Broker:</span>
-      {{ device.mqttInfo?.brokerName }}
+      {{ device.mqttInfo?.brokerName ? device.mqttInfo?.brokerName : '*Available only to the broker owner*' }}
     </h4>
 
     <h4>
