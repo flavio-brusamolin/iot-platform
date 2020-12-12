@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core'
-import { NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 
 import { SharedModule } from 'src/app/shared/shared.module'
 import { DataModule } from 'src/app/data/data.module'
@@ -16,8 +15,6 @@ import { DeviceCardComponent } from './components/device-card/device-card.compon
   imports: [
     DeviceRoutingModule,
 
-    NgbModule,
-    NgbTooltipModule,
     SharedModule,
     DataModule
   ]

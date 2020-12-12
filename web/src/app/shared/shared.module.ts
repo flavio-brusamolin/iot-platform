@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { RouterModule } from '@angular/router'
 import { ReactiveFormsModule } from '@angular/forms'
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { NgxSpinnerModule } from 'ngx-spinner'
 import { ChartsModule } from 'ng2-charts'
@@ -25,7 +27,9 @@ import { ModalComponent } from './modal/modal.component'
   ],
   imports: [
     CommonModule,
+    RouterModule,
 
+    NgbModule,
     FontAwesomeModule,
     NgxSpinnerModule
   ],
@@ -33,6 +37,7 @@ import { ModalComponent } from './modal/modal.component'
     CommonModule,
     ReactiveFormsModule,
 
+    NgbModule,
     FontAwesomeModule,
     NgxSpinnerModule,
     ChartsModule,
