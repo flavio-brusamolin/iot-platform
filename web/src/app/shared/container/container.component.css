@@ -34,6 +34,38 @@
   margin-top: 3rem;
 }
 
+#container .dropdown {
+  cursor: pointer;
+}
+
+#container .dropdown .dropdown-toggle::after {
+  font-size: 1.6rem;
+  margin-bottom: 0.1rem;
+  vertical-align: 0;
+}
+
+#container .dropdown .menu-options {
+  background-color: var(--color-background);
+  box-shadow: 0px 0px 12px -4px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  padding: 0;
+}
+
+#container .dropdown .menu-options a {
+  font-size: 1.4rem;
+  padding: 1rem;
+  color: var(--color-text-base);
+}
+
+#container .dropdown .menu-options a + a {
+  border-top: 1px solid var(--color-area-border);
+}
+
+#container .dropdown .menu-options a:hover {
+  color: var(--color-text-base);
+  background-color: var(--color-dark-background);
+}
+
 @media (max-width: 576px) {
   #container header {
     align-items: center;

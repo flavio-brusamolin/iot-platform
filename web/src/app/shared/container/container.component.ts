@@ -2,6 +2,11 @@ import { Component, Input, OnInit } from '@angular/core'
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
+interface Tab {
+  label: string
+  destination: string
+}
+
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
@@ -14,6 +19,7 @@ export class ContainerComponent implements OnInit {
 
   @Input() public name!: string
   @Input() public complement?: string
+  @Input() public tabs?: Tab[]
 
   public constructor () { }
 

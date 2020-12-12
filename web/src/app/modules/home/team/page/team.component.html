@@ -1,5 +1,5 @@
 <app-container *ngIf="(pageData$ | async) as pageData; else loadingOrError" [name]="pageData?.collection.name"
-  complement="Members">
+  complement="Members" [tabs]="[{ label: 'Devices', destination: '../devices' }]">
 
   <button header (click)="openAddMemberModal(addMemberModal)">
     <fa-icon [icon]=icons.plus></fa-icon>

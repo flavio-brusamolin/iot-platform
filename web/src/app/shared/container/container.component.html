@@ -5,7 +5,15 @@
 
       <ng-container *ngIf="complement">
         <fa-icon [icon]="icons.arrow"></fa-icon>
-        <h3>{{ complement }}</h3>
+        <h3 *ngIf="!tabs">{{ complement }}</h3>
+
+        <div class="dropdown" *ngIf="tabs" ngbDropdown>
+          <h3 ngbDropdownToggle>{{ complement }}</h3>
+
+          <div class="menu-options" ngbDropdownMenu>
+            <a *ngFor="let tab of tabs" [routerLink]="[tab.destination]" ngbDropdownItem>{{ tab.label }}</a>
+          </div>
+        </div>
       </ng-container>
     </div>
 
