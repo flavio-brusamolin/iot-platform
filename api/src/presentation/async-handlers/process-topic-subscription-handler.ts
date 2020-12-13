@@ -35,6 +35,7 @@ export class ProcessTopicSubscriptionHandler implements AsyncHandler {
       return true
     } catch (error) {
       console.error(error)
+      return true
     }
   }
 }

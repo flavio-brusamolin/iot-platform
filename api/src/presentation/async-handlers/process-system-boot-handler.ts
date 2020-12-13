@@ -10,6 +10,7 @@ export class ProcessSystemBootHandler implements AsyncHandler {
       return true
     } catch (error) {
       console.error(error)
+      return true
     }
   }
 }
