@@ -15,7 +15,7 @@ services:
     image: rabbitmq:3-management
     hostname: rabbit
     restart: always
-    environment: 
+    environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-admin}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-admin}
     ports:
@@ -38,6 +38,7 @@ services:
     depends_on:
       - database
       - message-queue
+    command: bash -c "/usr/wait-for-it.sh --timeout=0 message-queue:5672 && npm run dev"
 
   web:
     container_name: iot-platform-web
@@ -47,10 +48,11 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/web/node_modules
-    ports: 
+    ports:
       - 4200:4200
     depends_on:
       - api
+    command: npm start
 
 volumes:
   mongo:
